@@ -1,7 +1,21 @@
-import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import { Home, Dashboard, Transaction, New } from "./pages";
+import { SideBar, TopBar } from "./navigationbar";
 
-export default function App() {
+const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline text-red-500">Hello world!</h1>
+    <div className="flex h-screen">
+      <SideBar />
+      <main className="content">
+        <TopBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="transaction" element={<Transaction />} />
+          <Route path="new" element={<New />} />
+        </Routes>
+      </main>
+    </div>
   );
-}
+};
+export default App;
