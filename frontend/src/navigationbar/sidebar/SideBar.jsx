@@ -24,14 +24,22 @@ const MySideBar = () => {
 
   useEffect(() => {
     collapseSidebar();
-
     const handleResize = () => {
-      if (window.innerWidth < 700 && !collapsed) {
-        collapseSidebar();
+      console.log(window.innerWidth);
+      if (window.innerWidth < 700) {
+        collapseSidebar(true);
+        setCollapsed(false);
+      } else {
+        collapseSidebar(false);
+        setCollapsed(false);
       }
     };
 
-    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const handleToggleCollapse = () => {
@@ -41,12 +49,16 @@ const MySideBar = () => {
 
   return (
     <Box className="bg-gray-200">
-      <Sidebar className="h-screen" backgroundColor="#141B2D">
+      <Sidebar
+        className="h-screen"
+        backgroundColor="#141B2D"
+        transitionDuration={800}
+      >
         <Menu iconShape="square">
           <section>
             <MenuItem
               component={<Link to="/" className="link" />}
-              className="menu1 hidden sm:flex"
+              className="menu1 hidden md:block"
               icon={
                 <MenuRoundedIcon
                   onClick={() => {
@@ -67,23 +79,24 @@ const MySideBar = () => {
               </Box>
             </MenuItem>
 
-            <MenuItem className="menu1 sm:hidden mt-10">
+            <MenuItem className="menu1 md:hidden mt-10 flex justify-center">
               <img
                 alt="profile-user"
                 src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=600"
                 className="pointer rounded-full object-cover"
-                width={200}
+                width={100}
               />
             </MenuItem>
 
             {!collapsed && (
-              <Box className="my-10">
+              <Box className="hidden md:block">
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <img
                     alt="profile-user"
                     src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=600"
                     className="pointer rounded-full object-cover"
                     width={100}
+                    height={100}
                   />
                 </Box>
                 <Box textAlign="center">
@@ -92,10 +105,15 @@ const MySideBar = () => {
                     color="rgb(184, 184, 184)"
                     fontWeight="bold"
                     sx={{ m: "10px 0 0 0" }}
+                    className=""
                   >
                     Jerome Decinco
                   </Typography>
-                  <Typography variant="h7" color="rgb(184, 184, 184)">
+                  <Typography
+                    variant="h7"
+                    color="rgb(184, 184, 184)"
+                    className=""
+                  >
                     DevOps Engineer
                   </Typography>
                 </Box>
