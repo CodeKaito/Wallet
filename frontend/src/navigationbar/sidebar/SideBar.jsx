@@ -57,7 +57,6 @@ const MySideBar = () => {
         <Menu iconShape="square">
           <section>
             <MenuItem
-              component={<Link to="/" className="link" />}
               className="menu1 hidden md:block"
               icon={
                 <MenuRoundedIcon
