@@ -25,7 +25,6 @@ const MySideBar = () => {
   useEffect(() => {
     collapseSidebar();
     const handleResize = () => {
-      console.log(window.innerWidth);
       if (window.innerWidth < 700) {
         collapseSidebar(true);
         setCollapsed(false);
@@ -119,69 +118,65 @@ const MySideBar = () => {
               </Box>
             )}
 
-            <MenuItem
-              component={<Link to="dashboard" className="link" />}
-              icon={<GridViewRoundedIcon />}
-            >
-              Dashboard
-            </MenuItem>
-            <MenuItem
-              component={<Link to="new" className="link" />}
-              icon={<AddIcon />}
-            >
-              Add payment
-            </MenuItem>
-            <MenuItem className="link" icon={<ReceiptRoundedIcon />}>
-              Invoices
-            </MenuItem>
-            <MenuItem
-              component={<Link to="transaction" className="link" />}
-              icon={<MonetizationOnRoundedIcon />}
-            >
-              Transactions
-            </MenuItem>
-            <MenuItem
-              component={<Link to="savings" className="link" />}
-              icon={<WalletRoundedIcon />}
-            >
-              Wallet
-            </MenuItem>
-            <MenuItem
-              component={<Link to="savings" className="link" />}
-              icon={<AccountBalanceRoundedIcon />}
-            >
-              Balance
-            </MenuItem>
-            <MenuItem
-              component={<Link to="savings" className="link" />}
-              icon={<TodayIcon />}
-            >
-              Calendar
-            </MenuItem>
-            <MenuItem
-              component={<Link to="savings" className="link" />}
-              icon={<SavingsRoundedIcon />}
-            >
-              Savings
-            </MenuItem>
-            <MenuItem
-              component={<Link to="savings" className="link" />}
-              icon={<BarChartRoundedIcon />}
-            >
-              BarChart
-            </MenuItem>
-            <MenuItem
-              component={<Link to="savings" className="link" />}
-              icon={<TimelineRoundedIcon />}
-            >
-              TimeLine
-            </MenuItem>
-            <MenuItem
-              component={<Link to="savings" className="link" />}
-              icon={<BubbleChartRoundedIcon />}
-            >
-              BubbleChart
-            </MenuItem>
+            <Box paddingLeft={collapsed ? undefined : "10%"}>
+              <MenuItem
+                component={<Link to="/" className="link" />}
+                icon={<GridViewRoundedIcon />}
+              >
+                Dashboard
+              </MenuItem>
+              <MenuItem className="link" icon={<ReceiptRoundedIcon />}>
+                Invoices
+              </MenuItem>
+              <MenuItem
+                component={<Link to="transaction" className="link" />}
+                icon={<MonetizationOnRoundedIcon />}
+              >
+                Transactions
+              </MenuItem>
+              <MenuItem
+                component={<Link to="savings" className="link" />}
+                icon={<WalletRoundedIcon />}
+              >
+                Wallet
+              </MenuItem>
+              <MenuItem
+                component={<Link to="savings" className="link" />}
+                icon={<AccountBalanceRoundedIcon />}
+              >
+                Balance
+              </MenuItem>
+              <MenuItem
+                component={<Link to="savings" className="link" />}
+                icon={<TodayIcon />}
+              >
+                Calendar
+              </MenuItem>
+              <MenuItem
+                component={<Link to="savings" className="link" />}
+                icon={<SavingsRoundedIcon />}
+              >
+                Savings
+              </MenuItem>
+              <MenuItem
+                component={<Link to="savings" className="link" />}
+                icon={<BarChartRoundedIcon />}
+              >
+                BarChart
+              </MenuItem>
+              <MenuItem
+                component={<Link to="savings" className="link" />}
+                icon={<TimelineRoundedIcon />}
+              >
+                TimeLine
+              </MenuItem>
+              <MenuItem
+                component={<Link to="savings" className="link" />}
+                icon={<BubbleChartRoundedIcon />}
+              >
+                BubbleChart
+              </MenuItem>
+            </Box>
           </section>
           <div className="mt-auto">
             <MenuItem

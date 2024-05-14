@@ -9,8 +9,7 @@ const App = () => {
       <main className="content">
         <TopBar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="transaction" element={<Transaction />} />
           <Route path="new" element={<New />} />
         </Routes>

@@ -1,24 +1,26 @@
-import { Box } from "@mui/material";
+import { Box, responsiveFontSizes } from "@mui/material";
 import { Header } from "../../components";
 import { DataGrid } from "@mui/x-data-grid";
 import { DataTransactions } from "../../data";
 
 const Transaction = () => {
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    { field: "date", headerName: "Date", width: 250 },
-    { field: "amount", headerName: "Amount", width: 150 },
-    { field: "type", headerName: "Type", width: 150 },
-    { field: "note", headerName: "Note", width: 150 },
+    { field: "date", headerName: "Date", resizable: true },
+    { field: "amount", headerName: "Amount", resizable: true },
+    { field: "type", headerName: "Type", resizable: true, flex: 0.2 },
+    { field: "note", headerName: "Note", resizable: true, flex: 1 },
   ];
 
   return (
     <Box m="20px">
-      <Box className="flex justify-between align-center">
-        <Header title="Transactions" />
-      </Box>
-      <Box m="40px 0 0 0" height="75vh">
-        <DataGrid checkboxSelection rows={DataTransactions} columns={columns} />
+      <Header title="Transactions" />
+      <Box m="40px 0 0 0" height="75vh" style={{ maxWidth: "175vh" }}>
+        <DataGrid
+          checkboxSelection
+          rows={DataTransactions}
+          columns={columns}
+          autoHeight
+        />
       </Box>
     </Box>
   );

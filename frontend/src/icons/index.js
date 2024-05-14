@@ -16,6 +16,7 @@ import MonetizationOnRoundedIcon from "@mui/icons-material/MonetizationOnRounded
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import TodayIcon from "@mui/icons-material/Today";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 
 export {
   // TopBar icons
@@ -39,4 +40,7 @@ export {
   LogoutRoundedIcon,
   TodayIcon,
   AddIcon,
+
+  // Modal Icon
+  CloseIcon,
 };
