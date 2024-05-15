@@ -13,7 +13,12 @@ const Dashboard = () => {
 
       <Box
         display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
+        gridTemplateColumns={{
+          xs: "1fr",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(4, 1fr)",
+          lg: "repeat(12, 1fr)",
+        }}
         gridAutoRows="140px"
         gap="16px"
       >
@@ -176,11 +181,8 @@ const Dashboard = () => {
             mt="25px"
           >
             <ProgressCircle size="125" />
-            <Typography variant="h5" color="#EDEDED" sx={{ mt: "15px" }}>
+            <Typography color="#EDEDED" sx={{ mt: "15px" }}>
               $48,352 revenue generated
-            </Typography>
-            <Typography color="#EDEDED">
-              Includes extra misc expenditures and costs
             </Typography>
           </Box>
         </Box>
