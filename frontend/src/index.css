@@ -55,3 +55,7 @@ body,
 .header-font-clamp {
   font-size: 1000px;
 }
+
+.fc .fc-toolbar-title {
+  font-size: clamp(14px, 20px, 30px);
+}

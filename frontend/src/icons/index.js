@@ -17,6 +17,7 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import TodayIcon from "@mui/icons-material/Today";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import PieChartIcon from "@mui/icons-material/PieChart";
 
 export {
   // TopBar icons
@@ -40,6 +41,7 @@ export {
   LogoutRoundedIcon,
   TodayIcon,
   AddIcon,
+  PieChartIcon,
 
   // Modal Icon
   CloseIcon,

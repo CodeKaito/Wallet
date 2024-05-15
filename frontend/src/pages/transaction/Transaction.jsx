@@ -21,11 +21,7 @@ const Transaction = () => {
           height="75vh"
           sx={{ display: "grid", gridTemplateColumns: "1fr" }}
         >
-          <DataGrid
-            checkboxSelection
-            rows={DataTransactions}
-            columns={columns}
-          />
+          <DataGrid rows={DataTransactions} columns={columns} />
         </Box>
       </Box>
     </Container>

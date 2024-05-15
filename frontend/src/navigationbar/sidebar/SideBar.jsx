@@ -8,14 +8,13 @@ import {
   ReceiptRoundedIcon,
   BarChartRoundedIcon,
   TimelineRoundedIcon,
-  BubbleChartRoundedIcon,
+  PieChartIcon,
   WalletRoundedIcon,
   AccountBalanceRoundedIcon,
   SavingsRoundedIcon,
   MonetizationOnRoundedIcon,
   LogoutRoundedIcon,
   TodayIcon,
-  AddIcon,
 } from "../../icons";
 
 const MySideBar = () => {
@@ -147,7 +146,7 @@ const MySideBar = () => {
                 Balance
               </MenuItem>
               <MenuItem
-                component={<Link to="savings" className="link" />}
+                component={<Link to="calendar" className="link" />}
                 icon={<TodayIcon />}
               >
                 Calendar
@@ -159,22 +158,22 @@ const MySideBar = () => {
                 Savings
               </MenuItem>
               <MenuItem
-                component={<Link to="savings" className="link" />}
+                component={<Link to="bar" className="link" />}
                 icon={<BarChartRoundedIcon />}
               >
                 BarChart
               </MenuItem>
               <MenuItem
-                component={<Link to="savings" className="link" />}
+                component={<Link to="line" className="link" />}
                 icon={<TimelineRoundedIcon />}
               >
                 TimeLine
               </MenuItem>
               <MenuItem
-                component={<Link to="savings" className="link" />}
-                icon={<BubbleChartRoundedIcon />}
+                component={<Link to="pie" className="link" />}
+                icon={<PieChartIcon />}
               >
-                BubbleChart
+                PieChart
               </MenuItem>
             </Box>
           </section>
