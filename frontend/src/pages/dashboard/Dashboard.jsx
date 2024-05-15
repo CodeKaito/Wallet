@@ -35,8 +35,8 @@ const Dashboard = () => {
             borderRadius="10px"
           >
             <StatBox
-              title="12,361"
-              subtitle="Emails Sent"
+              title="€4450"
+              subtitle="Savings"
               progress="0.75"
               increase="+14%"
             />
@@ -51,10 +51,10 @@ const Dashboard = () => {
             borderRadius="10px"
           >
             <StatBox
-              title="431,225"
-              subtitle="Sales Obtained"
+              title="€1121"
+              subtitle="Total Expenses"
               progress="0.50"
-              increase="+21%"
+              increase="-21%"
             />
           </Box>
           <Box
@@ -67,8 +67,8 @@ const Dashboard = () => {
             borderRadius="10px"
           >
             <StatBox
-              title="32,441"
-              subtitle="New Clients"
+              title="€32,41"
+              subtitle="Saved this month"
               progress="0.30"
               increase="+5%"
             />
@@ -83,8 +83,8 @@ const Dashboard = () => {
             borderRadius="10px"
           >
             <StatBox
-              title="1,325,134"
-              subtitle="Traffic Received"
+              title="€732"
+              subtitle="Others"
               progress="0.80"
               increase="+43%"
             />
