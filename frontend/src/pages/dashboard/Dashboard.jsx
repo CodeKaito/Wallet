@@ -11,192 +11,230 @@ const Dashboard = () => {
         <Header title="Dashboard" />
       </Box>
 
-      <Box
-        display="grid"
-        gridTemplateColumns={{
-          xs: "1fr",
-          sm: "repeat(2, 1fr)",
-          md: "repeat(4, 1fr)",
-          lg: "repeat(12, 1fr)",
-        }}
-        gridAutoRows="140px"
-        gap="16px"
-      >
+      <Box gap="16px">
         {/* ROW 1 */}
         <Box
-          gridColumn="span 3"
-          backgroundColor="#141B2D"
-          color="#EDEDED"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          borderRadius="10px"
+          display="grid"
+          gridTemplateColumns={{
+            xs: "repeat(6, 1fr)",
+            sm: "repeat(6, 1fr)",
+            md: "repeat(6, 1fr)",
+            lg: "repeat(12, 1fr)",
+          }}
+          gridAutoRows="140px"
+          gap="16px"
         >
-          <StatBox
-            title="12,361"
-            subtitle="Emails Sent"
-            progress="0.75"
-            increase="+14%"
-          />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor="#141B2D"
-          color="#EDEDED"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          borderRadius="10px"
-        >
-          <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
-            progress="0.50"
-            increase="+21%"
-          />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor="#141B2D"
-          color="#EDEDED"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          borderRadius="10px"
-        >
-          <StatBox
-            title="32,441"
-            subtitle="New Clients"
-            progress="0.30"
-            increase="+5%"
-          />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor="#141B2D"
-          color="#EDEDED"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          borderRadius="10px"
-        >
-          <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
-            progress="0.80"
-            increase="+43%"
-          />
-        </Box>
-
-        {/* ROW 2 */}
-        <Box
-          gridColumn="span 8"
-          gridRow="span 2"
-          color="#EDEDED"
-          borderRadius="10px"
-        >
+          {/* StatBox */}
           <Box
-            mt="25px"
-            p="0 30px"
-            display="flex "
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Box>
-              <Typography variant="h6" fontWeight="600" color="#141B2D">
-                Revenue Generated
-              </Typography>
-              <Typography variant="h5" fontWeight="bold" color="#141B2D">
-                $59,342.32
-              </Typography>
-            </Box>
-          </Box>
-          <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
-          </Box>
-        </Box>
-
-        <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          overflow="auto"
-          borderRadius="10px"
-        >
-          <Box
+            gridColumn="span 3"
+            backgroundColor="#141B2D"
+            color="#EDEDED"
             display="flex"
-            justifyContent="space-between"
             alignItems="center"
-            borderBottom={`4px solid #141B2D"`}
-            colors="gray"
-            p="15px"
+            justifyContent="center"
             borderRadius="10px"
           >
-            <Typography color="#141B2D" variant="h5" fontWeight="600" m={1}>
-              Recent Transactions
-            </Typography>
+            <StatBox
+              title="12,361"
+              subtitle="Emails Sent"
+              progress="0.75"
+              increase="+14%"
+            />
           </Box>
-          {DataTransactions.map((transaction, i) => (
+          <Box
+            gridColumn="span 3"
+            backgroundColor="#141B2D"
+            color="#EDEDED"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            borderRadius="10px"
+          >
+            <StatBox
+              title="431,225"
+              subtitle="Sales Obtained"
+              progress="0.50"
+              increase="+21%"
+            />
+          </Box>
+          <Box
+            gridColumn="span 3"
+            backgroundColor="#141B2D"
+            color="#EDEDED"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            borderRadius="10px"
+          >
+            <StatBox
+              title="32,441"
+              subtitle="New Clients"
+              progress="0.30"
+              increase="+5%"
+            />
+          </Box>
+          <Box
+            gridColumn="span 3"
+            backgroundColor="#141B2D"
+            color="#EDEDED"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            borderRadius="10px"
+          >
+            <StatBox
+              title="1,325,134"
+              subtitle="Traffic Received"
+              progress="0.80"
+              increase="+43%"
+            />
+          </Box>
+        </Box>
+
+        {/* SECOND ROW */}
+        <Box
+          marginTop={2}
+          display="grid"
+          gridTemplateColumns={{
+            xs: "1fr",
+            lg: "repeat(12, 1fr)",
+          }}
+          gridAutoRows="140px"
+          gap="16px"
+        >
+          {/* Line Chart */}
+          <Box
+            gridColumn="span 8"
+            gridRow="span 2"
+            color="#EDEDED"
+            borderRadius="10px"
+            className="hidden 2xl:block"
+          >
             <Box
-              key={`${transaction.txId}-${i}`}
+              mt="25px"
+              p="0 30px"
+              display="flex "
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Box>
+                <Typography variant="h6" fontWeight="600" color="#141B2D">
+                  Revenue Generated
+                </Typography>
+                <Typography variant="h5" fontWeight="bold" color="#141B2D">
+                  $59,342.32
+                </Typography>
+              </Box>
+            </Box>
+            <Box height="250px" m="-20px 0 0 0">
+              <LineChart isDashboard={true} />
+            </Box>
+          </Box>
+
+          {/* Transactions */}
+          <Box
+            gridColumn={{ lg: "span 12", xl: "span 4" }}
+            gridRow="span 2"
+            overflow="auto"
+          >
+            <Box
               display="flex"
               justifyContent="space-between"
               alignItems="center"
+              borderBottom={`4px solid #141B2D"`}
+              colors="gray"
               p="15px"
+              borderRadius="10px"
             >
-              <Box color="#141B2D">{transaction.date}</Box>
-              <Box>
-                <Typography color="#141B2D" variant="h5" fontWeight="600">
-                  {transaction.txId}
-                </Typography>
-                <Typography color="#141B2D">{transaction.type}</Typography>
-              </Box>
-
-              <Box
-                backgroundColor="#EDEDED"
-                p="5px 10px"
-                borderRadius="4px"
-                style={{ width: "70px" }}
-              >
-                ${transaction.amount}
-              </Box>
+              <Typography color="#141B2D" variant="h5" fontWeight="600" m={1}>
+                Recent Transactions
+              </Typography>
             </Box>
-          ))}
-        </Box>
+            {DataTransactions.map((transaction, i) => (
+              <Box
+                key={`${transaction.txId}-${i}`}
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                p="15px"
+              >
+                <Box color="#141B2D">{transaction.date}</Box>
+                <Box>
+                  <Typography color="#141B2D" variant="h5" fontWeight="600">
+                    {transaction.txId}
+                  </Typography>
+                  <Typography color="#141B2D">{transaction.type}</Typography>
+                </Box>
 
-        {/* ROW 3 */}
-        <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor="#141B2D"
-          p="30px"
-          borderRadius="10px"
-        >
-          <Typography variant="h5" fontWeight="600" color="#EDEDED">
-            Campaign
-          </Typography>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            mt="25px"
-          >
-            <ProgressCircle size="125" />
-            <Typography color="#EDEDED" sx={{ mt: "15px" }}>
-              $48,352 revenue generated
-            </Typography>
+                <Box
+                  backgroundColor="#EDEDED"
+                  p="5px 10px"
+                  borderRadius="4px"
+                  style={{ width: "70px" }}
+                >
+                  ${transaction.amount}
+                </Box>
+              </Box>
+            ))}
           </Box>
         </Box>
-        <Box gridColumn="span 8" gridRow="span 2" borderRadius="10px">
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            sx={{ padding: "30px 30px 0 30px" }}
-            color="#141B2D"
+
+        {/* THIRD ROW */}
+        <Box
+          marginTop={2}
+          display="grid"
+          gridTemplateColumns={{
+            xs: "1fr",
+            sm: "repeat(3, 1fr)",
+            md: "repeat(6, 1fr)",
+            lg: "repeat(12, 1fr)",
+          }}
+          gridAutoRows="140px"
+          gap="16px"
+        >
+          {/* OPTIMIZED */}
+          <Box
+            gridColumn="span 4"
+            gridRow="span 2"
+            backgroundColor="#141B2D"
+            p="30px"
+            borderRadius="10px"
+            className="hidden 2xl:block"
           >
-            Sales Quantity
-          </Typography>
-          <Box height="250px" mt="-20px">
-            <BarChart isDashboard={true} />
+            <Typography variant="h5" fontWeight="600" color="#EDEDED">
+              Optimized
+            </Typography>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              mt="25px"
+            >
+              <ProgressCircle size="125" />
+              <Typography color="#EDEDED" sx={{ mt: "15px" }}>
+                $48,352 revenue generated
+              </Typography>
+            </Box>
+          </Box>
+
+          {/* BAR CHART */}
+          <Box
+            gridColumn="span 8"
+            gridRow="span 2"
+            borderRadius="10px"
+            className="hidden 2xl:block"
+          >
+            <Typography
+              variant="h5"
+              fontWeight="600"
+              sx={{ padding: "30px 30px 0 30px" }}
+              color="#141B2D"
+            >
+              Sales Quantity
+            </Typography>
+            <Box height="250px" mt="-20px">
+              <BarChart isDashboard={true} />
+            </Box>
           </Box>
         </Box>
       </Box>
