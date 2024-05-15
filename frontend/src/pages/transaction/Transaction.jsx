@@ -1,4 +1,4 @@
-import { Box, responsiveFontSizes } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { Header } from "../../components";
 import { DataGrid } from "@mui/x-data-grid";
 import { DataTransactions } from "../../data";
@@ -12,17 +12,23 @@ const Transaction = () => {
   ];
 
   return (
-    <Box m="20px">
-      <Header title="Transactions" />
-      <Box m="40px 0 0 0" height="75vh" style={{ maxWidth: "175vh" }}>
-        <DataGrid
-          checkboxSelection
-          rows={DataTransactions}
-          columns={columns}
-          autoHeight
-        />
+    <Container>
+      <Box m="20px">
+        <Header title="Transactions" />
+
+        <Box
+          m="40px 0 0 0"
+          height="75vh"
+          sx={{ display: "grid", gridTemplateColumns: "1fr" }}
+        >
+          <DataGrid
+            checkboxSelection
+            rows={DataTransactions}
+            columns={columns}
+          />
+        </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

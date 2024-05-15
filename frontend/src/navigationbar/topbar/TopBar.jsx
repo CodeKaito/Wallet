@@ -24,10 +24,10 @@ const TopBar = () => {
   return (
     <>
       {modalOpen && <AddPaymentModal onClose={handleCloseModal} />}
-      <Box className="flex justify-end sm:justify-between p-2">
+      <Box display="flex" justifyContent="space-between" p={2}>
         <Box className="hidden sm:flex bg-gray-100 p-1 rounded-lg">
-          <InputBase className="ml-2 flex-1" placeholder="Search..." />
-          <IconButton type="button" className="px-1">
+          <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search..." />
+          <IconButton type="button" sx={{ p: 1 }}>
             <SearchIcon />
           </IconButton>
         </Box>
