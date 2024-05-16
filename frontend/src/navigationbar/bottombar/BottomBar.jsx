@@ -14,7 +14,7 @@ const BottomBar = () => {
   return (
     <Box display="flex" justifyContent="center">
       <BottomNavigation
-        sx={{ position: "absolute", bottom: 0 }}
+        sx={{ position: "fixed", bottom: 0 }}
         showLabels
         value={value}
         onChange={(event, newValue) => {
