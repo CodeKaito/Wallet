@@ -12,7 +12,7 @@ export const DataTransactions = [
     category: randomJobTitle(),
     label: randomStatusOptions(),
     payment: randomPrice(),
-    date: randomCreatedDate(),
+    dateCreated: randomCreatedDate(),
     lastLogin: randomUpdatedDate(),
   },
   {
@@ -20,7 +20,7 @@ export const DataTransactions = [
     category: randomJobTitle(),
     label: randomStatusOptions(),
     payment: randomPrice(),
-    date: randomCreatedDate(),
+    dateCreated: randomCreatedDate(),
     lastLogin: randomUpdatedDate(),
   },
   {
@@ -28,7 +28,7 @@ export const DataTransactions = [
     category: randomJobTitle(),
     label: randomStatusOptions(),
     payment: randomPrice(),
-    date: randomCreatedDate(),
+    dateCreated: randomCreatedDate(),
     lastLogin: randomUpdatedDate(),
   },
   {
@@ -36,7 +36,7 @@ export const DataTransactions = [
     category: randomJobTitle(),
     label: randomStatusOptions(),
     payment: randomPrice(),
-    date: randomCreatedDate(),
+    dateCreated: randomCreatedDate(),
     lastLogin: randomUpdatedDate(),
   },
   {
@@ -44,7 +44,7 @@ export const DataTransactions = [
     category: randomJobTitle(),
     label: randomStatusOptions(),
     payment: randomPrice(),
-    date: randomCreatedDate(),
+    dateCreated: randomCreatedDate(),
     lastLogin: randomUpdatedDate(),
   },
 ];

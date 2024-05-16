@@ -42,9 +42,9 @@ const Transaction = () => {
     {
       field: "note",
       headerName: "Notes",
-      type: "string",
+      type: "number",
       editable: true,
-      align: "left",
+      align: "center",
       headerAlign: "left",
     },
   ];
@@ -59,7 +59,7 @@ const Transaction = () => {
           const transformedData = data.map((item) => {
             return {
               ...item,
-              date: new Date(item.date),
+              date: new Date(item.date), // Trasforma la stringa data in un oggetto Date
             };
           });
           setData(transformedData);
