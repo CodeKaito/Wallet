@@ -1,14 +1,34 @@
 import { Box, Container } from "@mui/material";
 import { Header } from "../../components";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { DataTransactions } from "../../data";
 
 const Transaction = () => {
   const columns = [
-    { field: "date", headerName: "Date", resizable: true },
-    { field: "amount", headerName: "Amount", resizable: true },
-    { field: "type", headerName: "Type", resizable: true, flex: 0.2 },
-    { field: "note", headerName: "Note", resizable: true, flex: 1 },
+    {
+      field: "category",
+      headerName: "Category",
+      type: "string",
+      editable: true,
+      align: "left",
+      headerAlign: "left",
+    },
+    {
+      field: "label",
+      headerName: "Label",
+      type: "string",
+      editable: true,
+      align: "left",
+      headerAlign: "left",
+    },
+    {
+      field: "payment",
+      headerName: "Payment Amount",
+      type: "number",
+      editable: true,
+      align: "left",
+      headerAlign: "left",
+    },
   ];
 
   return (
@@ -21,7 +41,11 @@ const Transaction = () => {
           height="75vh"
           sx={{ display: "grid", gridTemplateColumns: "1fr" }}
         >
-          <DataGrid rows={DataTransactions} columns={columns} />
+          <DataGrid
+            rows={DataTransactions}
+            columns={columns}
+            slots={{ toolbar: GridToolbar }}
+          />
         </Box>
       </Box>
     </Container>

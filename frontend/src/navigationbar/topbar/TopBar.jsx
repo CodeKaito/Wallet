@@ -7,22 +7,10 @@ import {
   SearchIcon,
   AddIcon,
 } from "../../icons";
-import AddPaymentModal from "../../utils/AddPaymentModal";
 
-const TopBar = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleAddButtonClick = () => {
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
-
+const TopBar = ({ openModal }) => {
   return (
     <>
-      {modalOpen && <AddPaymentModal onClose={handleCloseModal} />}
       <Box display="flex" justifyContent={{ xs: "space-between" }} p={2}>
         <Box className="hidden sm:flex bg-gray-100 p-1 rounded-lg">
           <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search..." />
@@ -45,8 +33,8 @@ const TopBar = () => {
 
         {/* Icons */}
         <Box className="flex">
-          <IconButton>
-            <AddIcon onClick={handleAddButtonClick} />
+          <IconButton onClick={openModal}>
+            <AddIcon />
           </IconButton>
           <IconButton>
             <NotificationsOutlinedIcon />
