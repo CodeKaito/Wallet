@@ -7,10 +7,10 @@ const paymentSchema = new mongoose.Schema(
     //   ref: "User",
     //   required: false,
     // },
-    // date: {
-    //   type: Date,
-    //   required: false,
-    // },
+    date: {
+      type: Date,
+      required: true,
+    },
     amount: {
       type: Number,
       required: true,

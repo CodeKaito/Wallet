@@ -17,13 +17,21 @@ import { CloseIcon } from "../icons";
 
 const AddPaymentModal = ({ open, onClose }) => {
   const [formData, setFormData] = useState({
-    date: "",
+    date: new Date(),
     amount: "",
     note: "",
     category: "",
     label: "",
   });
-  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      date: date,
+    }));
+    console.log(date);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -32,45 +40,36 @@ const AddPaymentModal = ({ open, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const form = new FormData();
-      form.append("date", formData.date);
-      form.append("amount", formData.amount);
-      form.append("note", formData.note);
-      form.append("category", formData.category);
-      form.append("label", formData.label);
+      const requestBody = {
+        date: formData.date,
+        amount: formData.amount,
+        note: formData.note,
+        category: formData.category,
+        label: formData.label,
+      };
 
-      console.log(formData.amount);
-      console.log(formData.note);
-      console.log(formData.category);
-      console.log(formData.label);
-
-      console.log(form);
+      console.log(requestBody);
 
       const response = await fetch("http://localhost:5000/api/payments", {
         method: "POST",
-        body: form,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
       });
+
       const paymentData = await response.json();
       if (response.ok) {
-        console.log("response.ok: " + paymentData);
-        console.log(paymentData);
+        console.log("response.ok: ", paymentData);
       } else {
-        console.log("response.nok");
-        console.log(paymentData);
+        console.log("response.nok: ", paymentData);
         throw new Error("Failed to upload form data");
       }
-
-      const responseData = await response.json();
-      console.log("Response:", responseData);
     } catch (error) {
       console.error("Error:", error);
     }
-    onClose(); // Close modal after submission
+    onClose();
   };
-
-  // const handleDateChange = (date) => {
-  //   setFormData({ ...formData, date: date.toISOString().split("T")[0] });
-  // };
 
   const style = {
     position: "absolute",
@@ -102,13 +101,11 @@ const AddPaymentModal = ({ open, onClose }) => {
           <DatePicker
             label="Date"
             inputFormat="DD/MM/YYYY"
-            renderInput={(params) => <TextField {...params} />}
-            value={selectedDate}
+            name="date"
             views={["day", "month", "year"]}
+            renderInput={(params) => <TextField {...params} />}
             slotProps={{ textField: { fullWidth: true } }}
-            onChange={(newValue) => {
-              setSelectedDate(newValue);
-            }}
+            onChange={handleDateChange}
           />
           <div className="mt-5">
             <FormControl fullWidth>
