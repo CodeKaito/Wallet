@@ -39,6 +39,14 @@ const Transaction = () => {
       align: "left",
       headerAlign: "left",
     },
+    {
+      field: "note",
+      headerName: "Notes",
+      type: "string",
+      editable: true,
+      align: "left",
+      headerAlign: "left",
+    },
   ];
 
   useEffect(() => {
