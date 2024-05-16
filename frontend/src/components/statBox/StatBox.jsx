@@ -7,7 +7,10 @@ const StatBox = ({ title, subtitle, icon, progress, increase }) => {
       <Box display="flex" justifyContent="space-between">
         <Box>
           {icon}
-          <Typography variant="h5" fontWeight="bold">
+          <Typography
+            fontWeight="bold"
+            sx={{ fontSize: { xs: "1.2rem", md: "2rem" } }}
+          >
             {title}
           </Typography>
         </Box>
@@ -16,8 +19,13 @@ const StatBox = ({ title, subtitle, icon, progress, increase }) => {
         </Box>
       </Box>
       <Box display="flex" justifyContent="space-between" mt="2px">
-        <Typography>{subtitle}</Typography>
-        <Typography variant="h6" fontStyle="italic">
+        <Typography sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}>
+          {subtitle}
+        </Typography>
+        <Typography
+          sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}
+          fontStyle="italic"
+        >
           {increase}
         </Typography>
       </Box>

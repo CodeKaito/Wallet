@@ -3,14 +3,49 @@ import { Header, PieChart } from "../../components";
 
 const Pie = () => {
   return (
-    <Container>
+    <>
       <Box m="20px">
         <Header title="Pie Chart" />
-        <Box height="75vh">
-          <PieChart />
+      </Box>
+      <Box>
+        <Box
+          display="grid"
+          gridTemplateColumns={{
+            xs: "repeat(6, 1fr)",
+            sm: "repeat(6, 1fr)",
+            md: "repeat(6, 1fr)",
+            lg: "repeat(12, 1fr)",
+          }}
+          height="40vh"
+        >
+          <Box gridColumn="span 6" gridRow="span 6">
+            <PieChart />
+          </Box>
+          <Box gridColumn="span 6" gridRow="span 6">
+            <PieChart />
+          </Box>
         </Box>
       </Box>
-    </Container>
+      <Box>
+        <Box
+          display="grid"
+          gridTemplateColumns={{
+            xs: "repeat(6, 1fr)",
+            sm: "repeat(6, 1fr)",
+            md: "repeat(6, 1fr)",
+            lg: "repeat(12, 1fr)",
+          }}
+          height="40vh"
+        >
+          <Box gridColumn="span 6" gridRow="span 6">
+            <PieChart />
+          </Box>
+          <Box gridColumn="span 6" gridRow="span 6">
+            <PieChart />
+          </Box>
+        </Box>
+      </Box>
+    </>
   );
 };
 

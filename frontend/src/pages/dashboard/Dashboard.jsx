@@ -36,7 +36,7 @@ const Dashboard = () => {
           >
             <StatBox
               title="€4450"
-              subtitle="Savings"
+              subtitle="Earn"
               progress="0.75"
               increase="+14%"
             />
@@ -52,7 +52,7 @@ const Dashboard = () => {
           >
             <StatBox
               title="€1121"
-              subtitle="Total Expenses"
+              subtitle="Expenses"
               progress="0.50"
               increase="-21%"
             />
@@ -68,7 +68,7 @@ const Dashboard = () => {
           >
             <StatBox
               title="€32,41"
-              subtitle="Saved this month"
+              subtitle="Saved"
               progress="0.30"
               increase="+5%"
             />
@@ -146,7 +146,12 @@ const Dashboard = () => {
               p="15px"
               borderRadius="10px"
             >
-              <Typography color="#141B2D" variant="h5" fontWeight="600" m={1}>
+              <Typography
+                color="#141B2D"
+                fontWeight="600"
+                m={1}
+                sx={{ fontSize: { xs: "1.2rem", md: "2rem" } }}
+              >
                 Recent Transactions
               </Typography>
             </Box>
@@ -158,19 +163,31 @@ const Dashboard = () => {
                 alignItems="center"
                 p="15px"
               >
-                <Box color="#141B2D">{transaction.date}</Box>
+                <Box
+                  color="#141B2D"
+                  sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}
+                >
+                  {transaction.date}
+                </Box>
                 <Box>
-                  <Typography color="#141B2D" variant="h5" fontWeight="600">
-                    {transaction.txId}
+                  <Typography
+                    sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}
+                    color="#141B2D"
+                  >
+                    {transaction.type}
                   </Typography>
-                  <Typography color="#141B2D">{transaction.type}</Typography>
                 </Box>
 
                 <Box
                   backgroundColor="#EDEDED"
                   p="5px 10px"
                   borderRadius="4px"
-                  style={{ width: "70px" }}
+                  style={{
+                    width: "70px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}
                 >
                   ${transaction.amount}
                 </Box>
