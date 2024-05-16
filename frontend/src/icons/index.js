@@ -18,6 +18,7 @@ import TodayIcon from "@mui/icons-material/Today";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import PieChartIcon from "@mui/icons-material/PieChart";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
 
 export {
   // TopBar icons
@@ -42,6 +43,7 @@ export {
   TodayIcon,
   AddIcon,
   PieChartIcon,
+  AnalyticsIcon,
 
   // Modal Icon
   CloseIcon,
