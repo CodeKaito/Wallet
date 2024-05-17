@@ -5,15 +5,13 @@ const LineChart = ({ isDashboard = false }) => {
   return (
     <ResponsiveLine
       data={DataLineData}
-      colors={isDashboard ? { scheme: "paired" } : { scheme: "nivo" }}
+      colors={{ scheme: "category10" }}
       margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
         min: "auto",
         max: "auto",
-        stacked: true,
-        reverse: false,
       }}
       yFormat=" >-.2f"
       curve="catmullRom"
@@ -21,7 +19,7 @@ const LineChart = ({ isDashboard = false }) => {
       axisRight={null}
       axisBottom={{
         orient: "bottom",
-        tickSize: 0,
+        tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
         legend: isDashboard ? undefined : "transportation",
@@ -64,7 +62,7 @@ const LineChart = ({ isDashboard = false }) => {
             {
               on: "hover",
               style: {
-                itemBackground: "rgba(0, 0, 0, 1)",
+                itemBackground: "rgba(0, 0, 0, 0)",
                 itemOpacity: 1,
               },
             },

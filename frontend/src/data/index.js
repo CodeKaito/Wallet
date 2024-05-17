@@ -61,7 +61,6 @@ export const DataBarChart = [
     month: "Feb",
     House: 55,
     Food: 28,
-
     Transportation: 58,
     Personal: 29,
   },
@@ -200,161 +199,108 @@ export const DataPieChart2 = [
 
 export const DataLineData = [
   {
-    id: "japan",
+    id: "Income",
     data: [
       {
-        x: "plane",
-        y: 101,
+        x: "Jan",
+        y: 150,
       },
       {
-        x: "helicopter",
+        x: "Feb",
         y: 75,
       },
       {
-        x: "boat",
+        x: "Mar",
         y: 36,
       },
       {
-        x: "train",
+        x: "Apr",
         y: 216,
       },
       {
-        x: "subway",
+        x: "May",
         y: 35,
       },
       {
-        x: "bus",
+        x: "Jun",
         y: 236,
       },
       {
-        x: "car",
+        x: "Jul",
         y: 88,
       },
       {
-        x: "moto",
+        x: "Aug",
         y: 232,
       },
       {
-        x: "bicycle",
+        x: "Sep",
         y: 281,
       },
       {
-        x: "horse",
+        x: "Oct",
         y: 1,
       },
       {
-        x: "skateboard",
+        x: "Nov",
         y: 35,
       },
       {
-        x: "others",
+        x: "Dec",
         y: 14,
       },
     ],
   },
   {
-    id: "france",
+    id: "Expenses",
     data: [
       {
-        x: "plane",
-        y: 212,
+        x: "Jan",
+        y: 10,
       },
       {
-        x: "helicopter",
+        x: "Feb",
         y: 190,
       },
       {
-        x: "boat",
+        x: "Mar",
         y: 270,
       },
       {
-        x: "train",
+        x: "Apr",
         y: 9,
       },
       {
-        x: "subway",
+        x: "May",
         y: 75,
       },
       {
-        x: "bus",
+        x: "Jun",
         y: 175,
       },
       {
-        x: "car",
+        x: "Jul",
         y: 33,
       },
       {
-        x: "moto",
+        x: "Aug",
         y: 189,
       },
       {
-        x: "bicycle",
+        x: "Sep",
         y: 97,
       },
       {
-        x: "horse",
+        x: "Oct",
         y: 87,
       },
       {
-        x: "skateboard",
+        x: "Nov",
         y: 299,
       },
       {
-        x: "others",
+        x: "Dec",
         y: 251,
-      },
-    ],
-  },
-  {
-    id: "us",
-    data: [
-      {
-        x: "plane",
-        y: 191,
-      },
-      {
-        x: "helicopter",
-        y: 136,
-      },
-      {
-        x: "boat",
-        y: 91,
-      },
-      {
-        x: "train",
-        y: 190,
-      },
-      {
-        x: "subway",
-        y: 211,
-      },
-      {
-        x: "bus",
-        y: 152,
-      },
-      {
-        x: "car",
-        y: 189,
-      },
-      {
-        x: "moto",
-        y: 152,
-      },
-      {
-        x: "bicycle",
-        y: 8,
-      },
-      {
-        x: "horse",
-        y: 197,
-      },
-      {
-        x: "skateboard",
-        y: 107,
-      },
-      {
-        x: "others",
-        y: 170,
       },
     ],
   },

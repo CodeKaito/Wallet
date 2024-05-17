@@ -124,21 +124,25 @@ const MySideBar = () => {
               >
                 Dashboard
               </MenuItem>
-              <MenuItem className="link" icon={<ReceiptRoundedIcon />}>
-                Invoices
-              </MenuItem>
-              <MenuItem
-                component={<Link to="transaction" className="link" />}
-                icon={<MonetizationOnRoundedIcon />}
-              >
-                Transactions
-              </MenuItem>
               <MenuItem
                 component={<Link to="savings" className="link" />}
                 icon={<WalletRoundedIcon />}
               >
                 Wallet
               </MenuItem>
+              <MenuItem
+                component={<Link to="transaction" className="link" />}
+                icon={<ReceiptRoundedIcon />}
+              >
+                Transactions
+              </MenuItem>
+              <MenuItem
+                component={<Link to="/" className="link" />}
+                icon={<MonetizationOnRoundedIcon />}
+              >
+                Income
+              </MenuItem>
+
               <MenuItem
                 component={<Link to="savings" className="link" />}
                 icon={<AccountBalanceRoundedIcon />}

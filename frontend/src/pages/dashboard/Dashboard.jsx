@@ -2,10 +2,12 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { LineChart, BarChart, ProgressCircle, StatBox } from "../../components";
 import { usePaymentData } from "../../context/DashboardPaymentDataContext";
+import { useBarChartData } from "../../context/BarChartDataContext";
 import { Header } from "../../components";
 
 const Dashboard = () => {
   const { paymentData } = usePaymentData();
+  const dataBarChart = useBarChartData();
   return (
     <Box mx="20px">
       <Box className="flex justify-between align-center">
@@ -120,10 +122,7 @@ const Dashboard = () => {
             >
               <Box>
                 <Typography variant="h6" fontWeight="600" color="#141B2D">
-                  Revenue Generated
-                </Typography>
-                <Typography variant="h5" fontWeight="bold" color="#141B2D">
-                  $59,342.32
+                  Line Chart
                 </Typography>
               </Box>
             </Box>
@@ -179,6 +178,22 @@ const Dashboard = () => {
                   </Typography>
                 </Box>
 
+                <Box>
+                  <Typography
+                    style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      width: "5rem",
+                      whiteSpace: "nowrap",
+                    }}
+                    sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}
+                    color="#141B2D"
+                    truncate="auto"
+                  >
+                    {transaction.label}
+                  </Typography>
+                </Box>
+
                 <Box
                   backgroundColor="#EDEDED"
                   p="5px 10px"
@@ -220,7 +235,7 @@ const Dashboard = () => {
             className="hidden 2xl:block"
           >
             <Typography variant="h5" fontWeight="600" color="#EDEDED">
-              Optimized
+              Balance
             </Typography>
             <Box
               display="flex"
@@ -230,7 +245,7 @@ const Dashboard = () => {
             >
               <ProgressCircle size="125" />
               <Typography color="#EDEDED" sx={{ mt: "15px" }}>
-                $48,352 revenue generated
+                $48,352 Income Amount
               </Typography>
             </Box>
           </Box>
@@ -248,10 +263,10 @@ const Dashboard = () => {
               sx={{ padding: "30px 30px 0 30px" }}
               color="#141B2D"
             >
-              Sales Quantity
+              Bar chart
             </Typography>
             <Box height="250px" mt="-20px">
-              <BarChart isDashboard={true} />
+              <BarChart data={dataBarChart} />
             </Box>
           </Box>
         </Box>
