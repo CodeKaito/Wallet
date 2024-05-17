@@ -1,30 +1,33 @@
 import { ResponsivePie } from "@nivo/pie";
-import { DataPieChart } from "../../data";
 
-const PieChart = () => {
+const PieChart = ({ data }) => {
+  // const colors = ["purple_blue_green", "nivo", "accent", "paired"];
   return (
     <ResponsivePie
-      data={DataPieChart}
+      data={data}
       margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
       innerRadius={0.5}
       padAngle={0.7}
       cornerRadius={3}
       activeOuterRadiusOffset={8}
-      colors={{ scheme: "purple_blue_green" }}
+      colors={{ scheme: "paired" }}
       borderColor={{
         from: "color",
         modifiers: [["darker", 0.2]],
       }}
-      arcLinkLabelsSkipAngle={10}
-      arcLinkLabelsTextColor="grey"
-      arcLinkLabelsThickness={2}
-      arcLinkLabelsColor={{ from: "color" }}
-      enableArcLabels={false}
-      arcLabelsRadiusOffset={0.4}
-      arcLabelsSkipAngle={7}
+      arcLinkLabelsSkipAngle={45}
+      arcLinkLabelsTextOffset={36}
+      arcLinkLabelsTextColor="#000000"
+      arcLinkLabelsOffset={24}
+      arcLinkLabelsDiagonalLength={36}
+      arcLinkLabelsStraightLength={36}
+      arcLinkLabelsThickness={4}
+      arcLinkLabelsColor={{ from: "color", modifiers: [] }}
+      arcLabelsSkipAngle={10}
+      arcLabel={(e) => "€" + e.value}
       arcLabelsTextColor={{
         from: "color",
-        modifiers: [["darker", 2]],
+        modifiers: [["darker", 10]],
       }}
       defs={[
         {
@@ -48,24 +51,25 @@ const PieChart = () => {
       ]}
       legends={[
         {
-          anchor: "bottom",
-          direction: "row",
+          anchor: "bottom-right",
+          direction: "column",
           justify: false,
-          translateX: 0,
-          translateY: 56,
+          translateX: 35,
+          translateY: 20,
           itemsSpacing: 0,
-          itemWidth: 100,
-          itemHeight: 18,
+          itemWidth: 140,
+          itemHeight: 25,
           itemTextColor: "#999",
           itemDirection: "left-to-right",
           itemOpacity: 1,
-          symbolSize: 18,
+          symbolSize: 14,
           symbolShape: "circle",
+          itemTextColor: "#000000",
           effects: [
             {
               on: "hover",
               style: {
-                itemTextColor: "#000",
+                itemTextColor: "#000000",
               },
             },
           ],

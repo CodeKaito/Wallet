@@ -1,11 +1,10 @@
 import { Box, Container } from "@mui/material";
 import { Header } from "../../components";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { DataTransactions as dataTest } from "../../data";
-import { useEffect, useState } from "react";
+import { usePaymentData } from "../../context/PaymentDataContext";
 
 const Transaction = () => {
-  const [data, setData] = useState([]);
+  const { paymentData } = usePaymentData();
   const columns = [
     {
       field: "date",
@@ -14,6 +13,7 @@ const Transaction = () => {
       editable: true,
       align: "left",
       headerAlign: "left",
+      width: 120,
     },
     {
       field: "category",
@@ -22,6 +22,7 @@ const Transaction = () => {
       editable: true,
       align: "left",
       headerAlign: "left",
+      width: 150,
     },
     {
       field: "label",
@@ -30,6 +31,7 @@ const Transaction = () => {
       editable: true,
       align: "left",
       headerAlign: "left",
+      width: 150,
     },
     {
       field: "amount",
@@ -38,6 +40,7 @@ const Transaction = () => {
       editable: true,
       align: "left",
       headerAlign: "left",
+      width: 100,
     },
     {
       field: "note",
@@ -45,41 +48,15 @@ const Transaction = () => {
       type: "number",
       editable: true,
       align: "center",
-      headerAlign: "left",
+      headerAlign: "center",
+      width: 200,
     },
   ];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/payments");
-        if (response.ok) {
-          const data = await response.json();
-          setData(data);
-          const transformedData = data.map((item) => {
-            return {
-              ...item,
-              date: new Date(item.date), // Trasforma la stringa data in un oggetto Date
-            };
-          });
-          setData(transformedData);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-  console.log(data);
-  console.log(dataTest);
-
-  const getRowId = (row) => row._id;
 
   return (
     <Container>
       <Box m="20px">
-        <Header title="Transactions" />
+        <Header title="Expenses list" />
 
         <Box
           m="40px 0 0 0"
@@ -87,9 +64,12 @@ const Transaction = () => {
           sx={{ display: "grid", gridTemplateColumns: "1fr" }}
         >
           <DataGrid
-            rows={data}
+            rows={paymentData.map((row, index) => ({
+              ...row,
+              id: row.paymentId || index,
+            }))}
             columns={columns}
-            getRowId={getRowId}
+            getRowId={(row) => row._id}
             slots={{ toolbar: GridToolbar }}
           />
         </Box>

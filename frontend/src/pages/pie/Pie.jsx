@@ -1,11 +1,23 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import { Header, PieChart } from "../../components";
+import { DataPieChart, DataPieChart2 } from "../../data";
+import {
+  useHouseData,
+  useFoodData,
+  useTransportData,
+  usePersonalData,
+} from "../../context/PieChartDataContext";
 
 const Pie = () => {
+  const houseData = useHouseData();
+  const foodData = useFoodData();
+  const transportData = useTransportData();
+  const personalData = usePersonalData();
+
   return (
     <>
       <Box m="20px">
-        <Header title="Pie Chart" />
+        <Header title="Expenses" />
       </Box>
       <Box>
         <Box
@@ -19,10 +31,10 @@ const Pie = () => {
           height="40vh"
         >
           <Box gridColumn="span 6" gridRow="span 6">
-            <PieChart />
+            <PieChart data={houseData} />
           </Box>
           <Box gridColumn="span 6" gridRow="span 6">
-            <PieChart />
+            <PieChart data={foodData} />
           </Box>
         </Box>
       </Box>
@@ -38,10 +50,10 @@ const Pie = () => {
           height="40vh"
         >
           <Box gridColumn="span 6" gridRow="span 6">
-            <PieChart />
+            <PieChart data={transportData} />
           </Box>
           <Box gridColumn="span 6" gridRow="span 6">
-            <PieChart />
+            <PieChart data={personalData} />
           </Box>
         </Box>
       </Box>

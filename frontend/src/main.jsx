@@ -1,19 +1,32 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App.jsx";
-import "./index.css";
-import { BrowserRouter } from "react-router-dom";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import ReactDOM from "react-dom/client";
+import { PaymentDataContextProvider } from "./context/PaymentDataContext";
+import { DashboardPaymentDataContextProvider } from "./context/DashboardPaymentDataContext";
+import { PieChartDataContextProvider } from "./context/PieChartDataContext";
+import { BarChartDataContextProvider } from "./context/BarChartDataContext";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import "dayjs/locale/en-gb";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { ProSidebarProvider } from "react-pro-sidebar";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+import "./index.css";
+
+import "dayjs/locale/en-gb";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ProSidebarProvider>
       <BrowserRouter>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-          <App />
+          <PaymentDataContextProvider>
+            <DashboardPaymentDataContextProvider>
+              <PieChartDataContextProvider>
+                <BarChartDataContextProvider>
+                  <App />
+                </BarChartDataContextProvider>
+              </PieChartDataContextProvider>
+            </DashboardPaymentDataContextProvider>
+          </PaymentDataContextProvider>
         </LocalizationProvider>
       </BrowserRouter>
     </ProSidebarProvider>

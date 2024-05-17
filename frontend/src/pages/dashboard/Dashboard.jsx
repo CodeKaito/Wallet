@@ -1,10 +1,11 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { LineChart, BarChart, ProgressCircle, StatBox } from "../../components";
-import { DataTransactions } from "../../data";
+import { usePaymentData } from "../../context/DashboardPaymentDataContext";
 import { Header } from "../../components";
 
 const Dashboard = () => {
+  const { paymentData } = usePaymentData();
   return (
     <Box mx="20px">
       <Box className="flex justify-between align-center">
@@ -155,9 +156,9 @@ const Dashboard = () => {
                 Recent Transactions
               </Typography>
             </Box>
-            {DataTransactions.map((transaction, i) => (
+            {paymentData.map((transaction, i) => (
               <Box
-                key={`${transaction.txId}-${i}`}
+                key={`${transaction._id}-${i}`}
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
@@ -174,7 +175,7 @@ const Dashboard = () => {
                     sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}
                     color="#141B2D"
                   >
-                    {transaction.type}
+                    {transaction.category}
                   </Typography>
                 </Box>
 
@@ -189,7 +190,7 @@ const Dashboard = () => {
                   }}
                   sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}
                 >
-                  ${transaction.amount}
+                  {transaction.amount}
                 </Box>
               </Box>
             ))}

@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { expensesData } from "../data";
 import { CloseIcon } from "../icons";
 
 const AddPaymentModal = ({ open, onClose }) => {
@@ -29,7 +30,6 @@ const AddPaymentModal = ({ open, onClose }) => {
       ...prevData,
       date: date,
     }));
-    console.log(date);
   };
 
   const handleChange = (e) => {
@@ -38,7 +38,6 @@ const AddPaymentModal = ({ open, onClose }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
       const requestBody = {
         date: formData.date,
@@ -47,8 +46,6 @@ const AddPaymentModal = ({ open, onClose }) => {
         category: formData.category,
         label: formData.label,
       };
-
-      console.log(requestBody);
 
       const response = await fetch("http://localhost:5000/api/payments", {
         method: "POST",
@@ -107,7 +104,7 @@ const AddPaymentModal = ({ open, onClose }) => {
             slotProps={{ textField: { fullWidth: true } }}
             onChange={handleDateChange}
           />
-          <div className="mt-5">
+          <Box className="mt-5">
             <FormControl fullWidth>
               <InputLabel htmlFor="outlined-adornment-amount">
                 Amount
@@ -125,8 +122,8 @@ const AddPaymentModal = ({ open, onClose }) => {
                 inputProps={{ min: 0, step: 0.01 }}
               />
             </FormControl>
-          </div>
-          <div className="mt-5">
+          </Box>
+          <Box className="mt-5">
             <FormControl fullWidth>
               <InputLabel id="category">Category</InputLabel>
               <Select
@@ -136,14 +133,18 @@ const AddPaymentModal = ({ open, onClose }) => {
                 value={formData.category}
                 label="Category"
                 onChange={handleChange}
+                disabled={!!formData.label}
               >
-                <MenuItem value={"School"}>School</MenuItem>
-                <MenuItem value={"Health"}>Health</MenuItem>
-                <MenuItem value={"Home"}>Home</MenuItem>
+                <MenuItem value="">Select Category</MenuItem>
+                {Object.keys(expensesData).map((category) => (
+                  <MenuItem key={category} value={category}>
+                    {category}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
-          </div>
-          <div className="mt-5">
+          </Box>
+          <Box className="mt-5">
             <FormControl fullWidth>
               <InputLabel id="label">Label</InputLabel>
               <Select
@@ -153,14 +154,19 @@ const AddPaymentModal = ({ open, onClose }) => {
                 value={formData.label}
                 label="Label"
                 onChange={handleChange}
+                disabled={!formData.category}
               >
-                <MenuItem value={"School"}>School</MenuItem>
-                <MenuItem value={"Health"}>Health</MenuItem>
-                <MenuItem value={"Home"}>Home</MenuItem>
+                <MenuItem value="">Select Subcategory</MenuItem>
+                {formData.category &&
+                  expensesData[formData.category].map((subcategory) => (
+                    <MenuItem key={subcategory} value={subcategory}>
+                      {subcategory}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
-          </div>
-          <div className="mt-5">
+          </Box>
+          <Box>
             <FormControl fullWidth>
               <TextField
                 fullWidth
@@ -171,7 +177,7 @@ const AddPaymentModal = ({ open, onClose }) => {
                 onChange={handleChange}
               />
             </FormControl>
-          </div>
+          </Box>
 
           <Button type="submit" variant="contained" color="primary">
             Submit
