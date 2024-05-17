@@ -107,11 +107,11 @@ const Dashboard = () => {
         >
           {/* Line Chart */}
           <Box
-            gridColumn="span 8"
+            gridColumn={{ lg: "span 12", xl: "span 8" }}
             gridRow="span 2"
             color="#EDEDED"
             borderRadius="10px"
-            className="hidden 2xl:block"
+            className="hidden xl:block"
           >
             <Box
               mt="25px"
@@ -263,7 +263,7 @@ const Dashboard = () => {
               sx={{ padding: "30px 30px 0 30px" }}
               color="#141B2D"
             >
-              Bar chart
+              Bar Chart
             </Typography>
             <Box height="250px" mt="-20px">
               <BarChart data={dataBarChart} />

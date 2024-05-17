@@ -24,7 +24,7 @@ const BarChartDataContextProvider = ({ children }) => {
     const currentYear = new Date().getFullYear();
 
     const monthlyData = months.map((month, index) => ({
-      id: index + 1,
+      id: index,
       year: currentYear,
       month: month,
       House: 0,
@@ -91,6 +91,8 @@ const BarChartDataContextProvider = ({ children }) => {
               Personal: personalTotal,
             };
           });
+
+          console.log(updatedDataBarChart);
 
           setDataBarChart(updatedDataBarChart);
         } else {

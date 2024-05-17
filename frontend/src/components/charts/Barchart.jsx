@@ -11,7 +11,7 @@ const Barchart = ({ isDashboard = false, data }) => {
       padding={0.3}
       valueScale={{ type: "linear" }}
       indexScale={{ type: "band", round: true }}
-      colors={isDashboard ? { scheme: "blue_green" } : { scheme: "nivo" }}
+      colors={isDashboard ? { scheme: "blue_green" } : { scheme: "paired" }}
       defs={[
         {
           id: "dots",

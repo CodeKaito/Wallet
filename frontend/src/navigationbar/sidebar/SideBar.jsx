@@ -134,7 +134,7 @@ const MySideBar = () => {
                 component={<Link to="transaction" className="link" />}
                 icon={<ReceiptRoundedIcon />}
               >
-                Transactions
+                Expenses
               </MenuItem>
               <MenuItem
                 component={<Link to="/" className="link" />}

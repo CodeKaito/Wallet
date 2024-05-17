@@ -203,15 +203,15 @@ export const DataLineData = [
     data: [
       {
         x: "Jan",
-        y: 150,
+        y: 1650,
       },
       {
         x: "Feb",
-        y: 75,
+        y: 1800,
       },
       {
         x: "Mar",
-        y: 36,
+        y: 1600,
       },
       {
         x: "Apr",
@@ -256,51 +256,51 @@ export const DataLineData = [
     data: [
       {
         x: "Jan",
-        y: 10,
+        y: 2256,
       },
       {
         x: "Feb",
-        y: 190,
+        y: 1500,
       },
       {
         x: "Mar",
-        y: 270,
+        y: 3400,
       },
       {
         x: "Apr",
-        y: 9,
+        y: 1300,
       },
       {
         x: "May",
-        y: 75,
+        y: 1650,
       },
       {
         x: "Jun",
-        y: 175,
+        y: 2250,
       },
       {
         x: "Jul",
-        y: 33,
+        y: 3300,
       },
       {
         x: "Aug",
-        y: 189,
+        y: 1890,
       },
       {
         x: "Sep",
-        y: 97,
+        y: 2400,
       },
       {
         x: "Oct",
-        y: 87,
+        y: 2870,
       },
       {
         x: "Nov",
-        y: 299,
+        y: 1300,
       },
       {
         x: "Dec",
-        y: 251,
+        y: 2100,
       },
     ],
   },

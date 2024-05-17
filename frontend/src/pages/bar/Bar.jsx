@@ -11,7 +11,7 @@ const Bar = () => {
       <Box m="20px">
         <Header title="Bar Chart" />
         <Box height="75vh">
-          <BarChart data={DataBarChart} />
+          <BarChart data={dataBarChart} />
         </Box>
       </Box>
     </Container>
