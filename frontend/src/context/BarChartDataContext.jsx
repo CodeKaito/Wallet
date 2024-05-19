@@ -92,8 +92,6 @@ const BarChartDataContextProvider = ({ children }) => {
             };
           });
 
-          console.log(updatedDataBarChart);
-
           setDataBarChart(updatedDataBarChart);
         } else {
           console.log("Error fetching chart data");

@@ -1,10 +1,9 @@
 import { ResponsiveLine } from "@nivo/line";
-import { DataLineData } from "../../data";
 
-const LineChart = ({ isDashboard = false }) => {
+const LineChart = ({ isDashboard = false, data }) => {
   return (
     <ResponsiveLine
-      data={DataLineData}
+      data={data}
       colors={{ scheme: "category10" }}
       margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}

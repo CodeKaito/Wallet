@@ -19,7 +19,10 @@ const PieChartDataContextProvider = ({ children }) => {
         const response = await fetch("http://localhost:5000/api/payments");
         if (response.ok) {
           const paymentData = await response.json();
-          const transformedData = paymentData.map((item) => ({
+          const filteredData = paymentData.filter(
+            (item) => item.type !== "Income"
+          );
+          const transformedData = filteredData.map((item) => ({
             ...item,
             _id: item._id,
             id: item.label,

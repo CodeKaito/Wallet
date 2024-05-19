@@ -15,6 +15,10 @@ const paymentSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    type: {
+      type: String,
+      required: true,
+    },
     category: {
       type: String,
       required: true,
@@ -25,7 +29,6 @@ const paymentSchema = new mongoose.Schema(
     },
     note: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }

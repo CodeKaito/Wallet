@@ -4,6 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import { Dashboard, Transaction, Calendar, Bar, Pie, Line } from "./pages";
 import { SideBar, TopBar, BottomBar } from "./navigationbar";
 import AddPaymentModal from "./utils/AddPaymentModal";
+import Savings from "./pages/savings/Savings";
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -23,6 +24,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="transaction" element={<Transaction />} />
+            <Route path="savings" element={<Savings />} />
             <Route path="calendar" element={<Calendar />} />
             <Route path="bar" element={<Bar />} />
             <Route path="pie" element={<Pie />} />

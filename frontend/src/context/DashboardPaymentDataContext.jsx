@@ -11,11 +11,14 @@ const DashboardPaymentDataContextProvider = ({ children }) => {
         const response = await fetch("http://localhost:5000/api/payments");
         if (response.ok) {
           const paymentData = await response.json();
-          const transformedData = paymentData.map((item) => ({
-            ...item,
-            date: item.date.split("T")[0],
-            amount: `-€${item.amount}`,
-          }));
+          const transformedData = paymentData.map((item) => {
+            const symbol = item.type === "Income" ? "+" : "-";
+            return {
+              ...item,
+              date: item.date.split("T")[0],
+              amount: `${symbol}€${item.amount}`,
+            };
+          });
           setPaymentData(transformedData);
         }
       } catch (error) {

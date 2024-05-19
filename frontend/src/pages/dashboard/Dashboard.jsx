@@ -1,12 +1,24 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import { LineChart, BarChart, ProgressCircle, StatBox } from "../../components";
 import { usePaymentData } from "../../context/DashboardPaymentDataContext";
 import { useBarChartData } from "../../context/BarChartDataContext";
+import { useLineChartData } from "../../context/LineChartDataContext";
 import { Header } from "../../components";
 
 const Dashboard = () => {
   const { paymentData } = usePaymentData();
+  const dataLineChart = useLineChartData();
   const dataBarChart = useBarChartData();
   return (
     <Box mx="20px">
@@ -127,7 +139,7 @@ const Dashboard = () => {
               </Box>
             </Box>
             <Box height="250px" m="-20px 0 0 0">
-              <LineChart isDashboard={true} />
+              <LineChart isDashboard={true} data={dataLineChart} />
             </Box>
           </Box>
 
@@ -138,7 +150,6 @@ const Dashboard = () => {
             overflow="auto"
           >
             <Box
-              display="flex"
               justifyContent="space-between"
               alignItems="center"
               borderBottom={`4px solid #141B2D"`}
@@ -150,65 +161,53 @@ const Dashboard = () => {
                 color="#141B2D"
                 fontWeight="600"
                 m={1}
-                sx={{ fontSize: { xs: "1.2rem", md: "2rem" } }}
+                sx={{ fontSize: { xs: "1.2rem", md: "1,5rem" } }}
               >
                 Recent Transactions
               </Typography>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 350 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="left">Date</TableCell>
+                      <TableCell align="right">Category</TableCell>
+                      <TableCell align="left">Label</TableCell>
+                      <TableCell align="right">Amount</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {paymentData.slice(0, 5).map((transaction) => (
+                      <TableRow
+                        key={transaction._id}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="transaction">
+                          {transaction.date}
+                        </TableCell>
+                        <TableCell align="right">
+                          {transaction.category}
+                        </TableCell>
+                        <TableCell align="left">{transaction.label}</TableCell>
+                        <TableCell
+                          align="center"
+                          sx={{
+                            color: String(transaction.amount).includes("-")
+                              ? "red"
+                              : "green",
+                          }}
+                        >
+                          <Box className="bg-gray-100 rounded-full py-1 d-flex justify-center">
+                            {transaction.amount}
+                          </Box>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Box>
-            {paymentData.map((transaction, i) => (
-              <Box
-                key={`${transaction._id}-${i}`}
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                p="15px"
-              >
-                <Box
-                  color="#141B2D"
-                  sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}
-                >
-                  {transaction.date}
-                </Box>
-                <Box>
-                  <Typography
-                    sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}
-                    color="#141B2D"
-                  >
-                    {transaction.category}
-                  </Typography>
-                </Box>
-
-                <Box>
-                  <Typography
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      width: "5rem",
-                      whiteSpace: "nowrap",
-                    }}
-                    sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}
-                    color="#141B2D"
-                    truncate="auto"
-                  >
-                    {transaction.label}
-                  </Typography>
-                </Box>
-
-                <Box
-                  backgroundColor="#EDEDED"
-                  p="5px 10px"
-                  borderRadius="4px"
-                  style={{
-                    width: "70px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                  sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}
-                >
-                  {transaction.amount}
-                </Box>
-              </Box>
-            ))}
           </Box>
         </Box>
 
@@ -235,7 +234,7 @@ const Dashboard = () => {
             className="hidden 2xl:block"
           >
             <Typography variant="h5" fontWeight="600" color="#EDEDED">
-              Balance
+              Profit
             </Typography>
             <Box
               display="flex"

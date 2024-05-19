@@ -1,13 +1,17 @@
 import { Box, Container } from "@mui/material";
 import { Header, LineChart } from "../../components";
+import { useLineChartData } from "../../context/LineChartDataContext";
+import { DataLineData } from "../../data";
 
 const Line = () => {
+  const dataLineChart = useLineChartData();
+  console.log(dataLineChart);
   return (
     <Container>
       <Box m="20px">
         <Header title="Line Chart" />
         <Box height="75vh">
-          <LineChart />
+          <LineChart data={dataLineChart} />
         </Box>
       </Box>
     </Container>

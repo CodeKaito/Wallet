@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { expensesData } from "../data";
+import { incomeData, expensesData } from "../data";
 import { CloseIcon } from "../icons";
 
 const AddPaymentModal = ({ open, onClose }) => {
@@ -21,6 +21,7 @@ const AddPaymentModal = ({ open, onClose }) => {
     date: new Date(),
     amount: "",
     note: "",
+    type: "",
     category: "",
     label: "",
   });
@@ -42,9 +43,10 @@ const AddPaymentModal = ({ open, onClose }) => {
       const requestBody = {
         date: formData.date,
         amount: formData.amount,
-        note: formData.note,
+        type: formData.type,
         category: formData.category,
         label: formData.label,
+        note: formData.note,
       };
 
       const response = await fetch("http://localhost:5000/api/payments", {
@@ -82,6 +84,8 @@ const AddPaymentModal = ({ open, onClose }) => {
     p: 4,
   };
 
+  const data = formData.type === "Expenses" ? expensesData : incomeData;
+
   return (
     <Modal
       open={open}
@@ -92,7 +96,7 @@ const AddPaymentModal = ({ open, onClose }) => {
       <Box sx={style}>
         <CloseIcon className="mb-3 cursor-pointer" onClick={onClose} />
         <Typography variant="h6" gutterBottom>
-          Register a Payment
+          Register a Transaction
         </Typography>
         <form onSubmit={handleSubmit}>
           <DatePicker
@@ -125,6 +129,23 @@ const AddPaymentModal = ({ open, onClose }) => {
           </Box>
           <Box className="mt-5">
             <FormControl fullWidth>
+              <InputLabel id="type">Type</InputLabel>
+              <Select
+                labelId="type"
+                id="type"
+                name="type"
+                value={formData.type}
+                label="type"
+                onChange={handleChange}
+                disabled={!!formData.category}
+              >
+                <MenuItem value="Income">Income</MenuItem>
+                <MenuItem value="Expenses">Expenses</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <Box className="mt-5">
+            <FormControl fullWidth>
               <InputLabel id="category">Category</InputLabel>
               <Select
                 labelId="category"
@@ -136,7 +157,7 @@ const AddPaymentModal = ({ open, onClose }) => {
                 disabled={!!formData.label}
               >
                 <MenuItem value="">Select Category</MenuItem>
-                {Object.keys(expensesData).map((category) => (
+                {Object.keys(data).map((category) => (
                   <MenuItem key={category} value={category}>
                     {category}
                   </MenuItem>
@@ -158,7 +179,7 @@ const AddPaymentModal = ({ open, onClose }) => {
               >
                 <MenuItem value="">Select Subcategory</MenuItem>
                 {formData.category &&
-                  expensesData[formData.category].map((subcategory) => (
+                  data[formData.category].map((subcategory) => (
                     <MenuItem key={subcategory} value={subcategory}>
                       {subcategory}
                     </MenuItem>
