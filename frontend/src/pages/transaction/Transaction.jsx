@@ -1,7 +1,8 @@
 import { Box, Container } from "@mui/material";
 import { Header } from "../../components";
-import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { usePaymentData } from "../../context/PaymentDataContext";
+import { format } from "date-fns";
 
 const Transaction = () => {
   const { paymentData } = usePaymentData();
@@ -14,6 +15,10 @@ const Transaction = () => {
       align: "left",
       headerAlign: "left",
       width: 120,
+      renderCell: (params) => {
+        const formattedDate = format(new Date(params.value), "dd/MM/yyyy");
+        return formattedDate;
+      },
     },
     {
       field: "type",
@@ -50,11 +55,16 @@ const Transaction = () => {
       align: "left",
       headerAlign: "left",
       width: 100,
+      renderCell: (params) => {
+        const isExpense = params.row.type === "Expenses";
+        const amount = params.value;
+        return isExpense ? `-${amount}` : `+${amount}`;
+      },
     },
     {
       field: "note",
       headerName: "Notes",
-      type: "string",
+      type: "number",
       editable: true,
       align: "center",
       headerAlign: "center",
@@ -62,40 +72,41 @@ const Transaction = () => {
     },
   ];
 
-  console.log(paymentData);
-
   return (
     <Container>
       <Box m="20px">
         <Header title="Expenses list" />
 
-        <Box
-          m="40px 0 0 0"
-          height="75vh"
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "1fr",
-            [`.${gridClasses.cell}.income`]: {
-              backgroundColor: "#b9d5ff91",
-              color: "#1a3e72",
-            },
-            [`.${gridClasses.cell}.expenses`]: {
-              backgroundColor: "#ff943975",
-              color: "#1a3e72",
-            },
-          }}
-        >
+        <Box m="40px 0 0 0" height="75vh">
           <DataGrid
-            rows={paymentData}
+            rows={paymentData.map((row, index) => ({
+              ...row,
+              id: row.paymentId || index,
+            }))}
             columns={columns}
             getRowId={(row) => row._id}
             slots={{ toolbar: GridToolbar }}
-            getCellClassName={(row) => {
-              return row.type === "Income"
-                ? "income"
-                : row.type === "Expenses"
-                ? "expenses"
-                : "";
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "date", sort: "desc" }],
+              },
+            }}
+            getRowClassName={(params) =>
+              params.row.type === "Expenses" ? "expensesRow" : "incomeRow"
+            }
+            sx={{
+              "& .expensesRow": {
+                bgcolor: "rgb(255, 150, 150)",
+                "&:hover": {
+                  bgcolor: "rgb(255, 196, 196)",
+                },
+              },
+              "& .incomeRow": {
+                bgcolor: "rgb(150, 255, 157)",
+                "&:hover": {
+                  bgcolor: "rgb(196, 255, 218)",
+                },
+              },
             }}
           />
         </Box>

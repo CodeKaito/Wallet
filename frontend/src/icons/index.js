@@ -19,6 +19,10 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import PieChartIcon from "@mui/icons-material/PieChart";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
+import CottageIcon from "@mui/icons-material/Cottage";
+import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
+import DirectionsCarFilledIcon from "@mui/icons-material/DirectionsCarFilled";
+import LunchDiningIcon from "@mui/icons-material/LunchDining";
 
 export {
   // TopBar icons
@@ -47,4 +51,10 @@ export {
 
   // Modal Icon
   CloseIcon,
+
+  // Chart Icon
+  CottageIcon,
+  SelfImprovementIcon,
+  DirectionsCarFilledIcon,
+  LunchDiningIcon,
 };
