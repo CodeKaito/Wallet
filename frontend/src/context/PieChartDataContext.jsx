@@ -1,10 +1,12 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
+import { isToday, isThisWeek, isThisMonth, isThisYear } from "date-fns";
 
 const DataContext = createContext({
   HouseData: [],
   FoodData: [],
-  TransportationData: [],
+  TransportData: [],
   PersonalData: [],
+  filterData: () => {},
 });
 
 const PieChartDataContextProvider = ({ children }) => {
@@ -24,6 +26,7 @@ const PieChartDataContextProvider = ({ children }) => {
           );
           const transformedData = filteredData.map((item) => ({
             ...item,
+            date: new Date(item.date), // ensure date is a Date object
             _id: item._id,
             id: item.label,
             label: item.label,
@@ -57,6 +60,21 @@ const PieChartDataContextProvider = ({ children }) => {
     fetchData();
   }, []);
 
+  const filterData = (data, period) => {
+    switch (period) {
+      case "day":
+        return data.filter((item) => isToday(item.date));
+      case "week":
+        return data.filter((item) => isThisWeek(item.date));
+      case "month":
+        return data.filter((item) => isThisMonth(item.date));
+      case "year":
+        return data.filter((item) => isThisYear(item.date));
+      default:
+        return data;
+    }
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -64,6 +82,7 @@ const PieChartDataContextProvider = ({ children }) => {
         FoodData,
         TransportData,
         PersonalData,
+        filterData,
       }}
     >
       {children}
@@ -75,5 +94,6 @@ export const useHouseData = () => useContext(DataContext).HouseData;
 export const useFoodData = () => useContext(DataContext).FoodData;
 export const useTransportData = () => useContext(DataContext).TransportData;
 export const usePersonalData = () => useContext(DataContext).PersonalData;
+export const useFilterData = () => useContext(DataContext).filterData;
 
 export { PieChartDataContextProvider };

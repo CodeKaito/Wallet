@@ -54,7 +54,7 @@ const PieChart = ({ data }) => {
           anchor: "bottom-right",
           direction: "column",
           justify: false,
-          translateX: -300,
+          translateX: 0,
           translateY: 20,
           itemsSpacing: 0,
           itemWidth: 140,

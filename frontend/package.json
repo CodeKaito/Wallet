@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@date-io/date-fns": "^3.0.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fullcalendar/core": "^6.1.11",
@@ -24,13 +25,13 @@
     "@mui/material": "^5.15.17",
     "@mui/x-data-grid": "^7.3.2",
     "@mui/x-data-grid-generator": "^7.4.0",
-    "@mui/x-date-pickers": "^7.4.0",
+    "@mui/x-date-pickers-pro": "^7.5.0",
     "@nivo/bar": "^0.86.0",
     "@nivo/core": "^0.86.0",
     "@nivo/geo": "^0.86.0",
     "@nivo/line": "^0.86.0",
     "@nivo/pie": "^0.86.0",
-    "date-fns": "^3.6.0",
+    "date-fns": "^2.25.0 || ^3.2.0",
     "dayjs": "^1.11.11",
     "dotenv": "^16.4.5",
     "formik": "^2.4.6",
