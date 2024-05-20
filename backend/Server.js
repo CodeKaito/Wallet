@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const UserRoutes = require("./routes/UserRoutes");
 const PaymentRoutes = require("./routes/PaymentRoutes");
-const CalendarRoutes = require("./routes/CalendarRoutes");
+const EventRoutes = require("./routes/EventRoutes");
 
 const PORT = process.env.PORT || 5001;
 const db = process.env.MONGO_URI;
@@ -31,7 +31,7 @@ startServer();
 
 app.use("/api", UserRoutes);
 app.use("/api", PaymentRoutes);
-app.use("/api", CalendarRoutes);
+app.use("/api", EventRoutes);
 
 app.get("/", (req, res) => {
   // Leggi il file HTML e invialo come risposta

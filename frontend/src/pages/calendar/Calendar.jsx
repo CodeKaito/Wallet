@@ -17,74 +17,111 @@ import {
 } from "@mui/material";
 import { Header } from "../../components";
 import CalendarModal from "./CalendarModal";
+import { CloseIcon } from "../../icons";
 
 const Calendar = () => {
   const [currentEvents, setCurrentEvents] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openDetailsModal, setOpenDetailsModal] = useState(false);
   const [eventTitle, setEventTitle] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
-    const fetchPayments = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/payments");
-        if (!response.ok) {
-          throw new Error("Failed to fetch payments");
-        }
-        const payments = await response.json();
-
-        const events = payments.map((payment) => ({
-          id: payment._id,
-          title:
-            payment.type === "Income"
-              ? `+${payment.amount}`
-              : `-${payment.amount}`,
-          subtitle: payment.category,
-          type: payment.type,
-          start: payment.date,
-        }));
-        setCurrentEvents(events);
-      } catch (error) {
-        console.error("Error fetching payments:", error);
-      }
-    };
-
-    fetchPayments();
+    fetchAllData();
   }, []);
+
+  const fetchAllData = async () => {
+    try {
+      const eventsResponse = await fetch("http://localhost:5000/api/events");
+      const paymentsResponse = await fetch(
+        "http://localhost:5000/api/payments"
+      );
+
+      if (!eventsResponse.ok || !paymentsResponse.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const events = await eventsResponse.json();
+
+      const updatedEvents = events.map((event) => ({
+        id: event._id,
+        title: event.title,
+        start: event.start,
+      }));
+
+      const payments = await paymentsResponse.json();
+
+      const paymentEvents = payments.map((payment) => ({
+        id: payment._id,
+
+        title:
+          payment.type === "Income"
+            ? `+${payment.amount}`
+            : `-${payment.amount}`,
+        subtitle: payment.category,
+        type: payment.type,
+        start: payment.date,
+      }));
+
+      setCurrentEvents([...updatedEvents, ...paymentEvents]);
+      console.log(currentEvents);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const handleDateClick = (arg) => {
     setSelectedDate(arg);
-    setOpenModal(true);
+    setOpenAddModal(true);
   };
 
-  const handleSaveEvent = () => {
+  const handleSaveEvent = async () => {
     if (selectedDate && eventTitle) {
-      const calendarApi = selectedDate.view.calendar;
-      calendarApi.unselect();
-      calendarApi.addEvent({
-        id: `${selectedDate.dateStr}-${eventTitle}`,
+      const event = {
         title: eventTitle,
         start: selectedDate.startStr,
-        end: selectedDate.endStr,
-      });
-      setOpenModal(false);
-      setEventTitle("");
+      };
+
+      try {
+        const response = await fetch("http://localhost:5000/api/event", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(event),
+        });
+
+        console.log(event);
+
+        if (!response.ok) {
+          throw new Error("Failed to save event");
+        }
+
+        await fetchAllData();
+
+        setOpenAddModal(false);
+        setEventTitle("");
+      } catch (error) {
+        console.error("Error saving event:", error);
+      }
     }
   };
 
   const handleEventClick = (arg) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event '${arg.event.title}'`
-      )
-    ) {
-      arg.event.remove();
-    }
+    console.log(arg);
+    setSelectedEvent(arg.event);
+    setOpenDetailsModal(true);
   };
 
-  const handleCloseModal = () => {
-    setOpenModal(false);
+  const handleCloseAddModal = () => {
+    setOpenAddModal(false);
     setEventTitle("");
+  };
+
+  const handleCloseDetailsModal = () => {
+    setOpenDetailsModal(false);
+    setSelectedEvent(null);
   };
 
   return (
@@ -120,8 +157,15 @@ const Calendar = () => {
                 <ListItemText
                   className="flex"
                   primary={
-                    <Box>
-                      <Typography>{event.subtitle}</Typography>
+                    <Box>{/* <Typography>{event.subtitle}</Typography> */}</Box>
+                  }
+                  secondary={
+                    <Box color="white" marginLeft="">
+                      <Typography>
+                        {event.type === "Expenses" || event.type === "Income"
+                          ? `${event.title}€`
+                          : event.title}
+                      </Typography>
                       <Typography
                         color="rgb(209, 209, 209)"
                         variant="body2"
@@ -133,11 +177,6 @@ const Calendar = () => {
                           day: "numeric",
                         })}
                       </Typography>
-                    </Box>
-                  }
-                  secondary={
-                    <Box color="white" marginLeft="20px">
-                      <Typography>{event.title}€</Typography>
                     </Box>
                   }
                 />
@@ -175,15 +214,22 @@ const Calendar = () => {
                   <Container>
                     <Box
                       bgcolor={
-                        event.extendedProps.type === "Income"
-                          ? "#4CAF50"
-                          : "#F44336"
+                        event.extendedProps.type
+                          ? event.extendedProps.type === "Income"
+                            ? "#4CAF50"
+                            : "#F44336"
+                          : "#141B2D"
                       }
                       borderRadius="12px"
                       color="#FFFFFF"
                       paddingX="25px"
                     >
-                      {event.title}€
+                      <Typography>
+                        {event.extendedProps.type
+                          ? `${event.title.slice(0, 5)}€`
+                          : event.title.slice(0, 5)}
+                        {event.title.length > 20 ? "..." : ""}
+                      </Typography>
                     </Box>
                   </Container>
                 );
@@ -194,7 +240,16 @@ const Calendar = () => {
       </Box>
 
       {/* MODAL FOR ADDING EVENT */}
-      {/* <Modal open={openModal} onClose={handleCloseModal}>
+      <CalendarModal
+        open={openAddModal}
+        onClose={handleCloseAddModal}
+        eventTitle={eventTitle}
+        setEventTitle={setEventTitle}
+        handleSaveEvent={handleSaveEvent}
+      />
+
+      {/* MODAL FOR EVENT DETAILS */}
+      <Modal open={openDetailsModal} onClose={handleCloseDetailsModal}>
         <Box
           sx={{
             position: "absolute",
@@ -204,33 +259,42 @@ const Calendar = () => {
             bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
-            width: 400,
-            textAlign: "center",
+            borderRadius: "12px",
           }}
         >
-          <Typography variant="h6" gutterBottom>
-            Add Event
-          </Typography>
-          <TextField
-            label="Event Title"
-            value={eventTitle}
-            onChange={(e) => setEventTitle(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
-          <Button variant="contained" onClick={handleSaveEvent}>
-            Save
-          </Button>
-        </Box>
-      </Modal> */}
+          <Box mb={2}>
+            <CloseIcon
+              className="cursor-pointer"
+              onClick={handleCloseDetailsModal}
+            />
+          </Box>
 
-      <CalendarModal
-        open={openModal}
-        onClose={handleCloseModal}
-        eventTitle={eventTitle}
-        setEventTitle={setEventTitle}
-        handleSaveEvent={handleSaveEvent}
-      />
+          {selectedEvent && (
+            <div>
+              <Typography variant="h5">
+                {formatDate(selectedEvent.start, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </Typography>
+              <Typography variant="h5" display="flex" justifyContent="center">
+                {selectedEvent.title}
+              </Typography>
+              {selectedEvent.extendedProps.type && (
+                <Typography>
+                  Type: {selectedEvent.extendedProps.type}
+                </Typography>
+              )}
+              {selectedEvent.extendedProps.subtitle && (
+                <Typography>
+                  Subtitle: {selectedEvent.extendedProps.subtitle}
+                </Typography>
+              )}
+            </div>
+          )}
+        </Box>
+      </Modal>
     </Box>
   );
 };

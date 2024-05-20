@@ -6,7 +6,7 @@ const {
   createEvent,
   updateEvent,
   deleteEvent,
-} = require("../controllers/CalendarController");
+} = require("../controllers/EventController");
 
 const router = Router();
 
