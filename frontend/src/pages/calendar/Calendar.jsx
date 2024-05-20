@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import { formatDate } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -11,11 +11,18 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  Modal,
+  TextField,
+  Button,
 } from "@mui/material";
 import { Header } from "../../components";
+import CalendarModal from "./CalendarModal";
 
 const Calendar = () => {
   const [currentEvents, setCurrentEvents] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [eventTitle, setEventTitle] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     const fetchPayments = async () => {
@@ -46,29 +53,39 @@ const Calendar = () => {
   }, []);
 
   const handleDateClick = (arg) => {
-    const title = prompt("Enter a new title for the calendar");
-    const calendarApi = arg.view.calendar;
-    calendarApi.unselect();
+    setSelectedDate(arg);
+    setOpenModal(true);
+  };
 
-    if (title) {
+  const handleSaveEvent = () => {
+    if (selectedDate && eventTitle) {
+      const calendarApi = selectedDate.view.calendar;
+      calendarApi.unselect();
       calendarApi.addEvent({
-        id: `${arg.dateStr}-${title}`,
-        title,
-        start: arg.startStr,
-        end: arg.endStr,
+        id: `${selectedDate.dateStr}-${eventTitle}`,
+        title: eventTitle,
+        start: selectedDate.startStr,
+        end: selectedDate.endStr,
       });
+      setOpenModal(false);
+      setEventTitle("");
     }
   };
 
-  // const handleEventClick = (arg) => {
-  //   if (
-  //     window.confirm(
-  //       `Are you sure you want to delete the event '${arg.event.title}'`
-  //     )
-  //   ) {
-  //     arg.event.remove();
-  //   }
-  // };
+  const handleEventClick = (arg) => {
+    if (
+      window.confirm(
+        `Are you sure you want to delete the event '${arg.event.title}'`
+      )
+    ) {
+      arg.event.remove();
+    }
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setEventTitle("");
+  };
 
   return (
     <Box m="20px">
@@ -151,10 +168,9 @@ const Calendar = () => {
               selectMirror={true}
               dayMaxEvents={true}
               select={handleDateClick}
-              // eventClick={handleEventClick}
+              eventClick={handleEventClick}
               events={currentEvents}
               eventContent={({ event }) => {
-                console.log(event); // Aggiunto log dell'evento
                 return (
                   <Container>
                     <Box
@@ -176,6 +192,45 @@ const Calendar = () => {
           </Box>
         </Container>
       </Box>
+
+      {/* MODAL FOR ADDING EVENT */}
+      {/* <Modal open={openModal} onClose={handleCloseModal}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            width: 400,
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            Add Event
+          </Typography>
+          <TextField
+            label="Event Title"
+            value={eventTitle}
+            onChange={(e) => setEventTitle(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <Button variant="contained" onClick={handleSaveEvent}>
+            Save
+          </Button>
+        </Box>
+      </Modal> */}
+
+      <CalendarModal
+        open={openModal}
+        onClose={handleCloseModal}
+        eventTitle={eventTitle}
+        setEventTitle={setEventTitle}
+        handleSaveEvent={handleSaveEvent}
+      />
     </Box>
   );
 };
