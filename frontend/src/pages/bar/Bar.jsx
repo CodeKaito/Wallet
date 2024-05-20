@@ -5,7 +5,6 @@ import { DataBarChart } from "../../data";
 
 const Bar = () => {
   const dataBarChart = useBarChartData();
-  console.log(dataBarChart);
   return (
     <Container>
       <Box m="20px">

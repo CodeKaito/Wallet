@@ -1,5 +1,12 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { isToday, isThisWeek, isThisMonth, isThisYear } from "date-fns";
+import {
+  isToday,
+  isThisWeek,
+  isThisMonth,
+  isThisYear,
+  startOfWeek,
+  endOfWeek,
+} from "date-fns";
 
 const DataContext = createContext({
   HouseData: [],
@@ -26,7 +33,7 @@ const PieChartDataContextProvider = ({ children }) => {
           );
           const transformedData = filteredData.map((item) => ({
             ...item,
-            date: new Date(item.date), // ensure date is a Date object
+            date: new Date(item.date),
             _id: item._id,
             id: item.label,
             label: item.label,
@@ -61,11 +68,14 @@ const PieChartDataContextProvider = ({ children }) => {
   }, []);
 
   const filterData = (data, period) => {
+    const today = new Date();
     switch (period) {
       case "day":
         return data.filter((item) => isToday(item.date));
       case "week":
-        return data.filter((item) => isThisWeek(item.date));
+        const start = startOfWeek(today, { weekStartsOn: 1 });
+        const end = endOfWeek(today, { weekStartsOn: 1 });
+        return data.filter((item) => item.date >= start && item.date <= end);
       case "month":
         return data.filter((item) => isThisMonth(item.date));
       case "year":

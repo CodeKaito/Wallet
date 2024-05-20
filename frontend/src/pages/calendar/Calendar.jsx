@@ -4,7 +4,6 @@ import { formatDate } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import listPlugin from "@fullcalendar/list";
 import {
   Box,
   Container,
@@ -17,7 +16,34 @@ import { Header } from "../../components";
 
 const Calendar = () => {
   const [currentEvents, setCurrentEvents] = useState([]);
-  const [initialView, setInitialView] = useState("dayGridMonth");
+
+  useEffect(() => {
+    const fetchPayments = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/payments");
+        if (!response.ok) {
+          throw new Error("Failed to fetch payments");
+        }
+        const payments = await response.json();
+
+        const events = payments.map((payment) => ({
+          id: payment._id,
+          title:
+            payment.type === "Income"
+              ? `+${payment.amount}`
+              : `-${payment.amount}`,
+          subtitle: payment.category,
+          type: payment.type,
+          start: payment.date,
+        }));
+        setCurrentEvents(events);
+      } catch (error) {
+        console.error("Error fetching payments:", error);
+      }
+    };
+
+    fetchPayments();
+  }, []);
 
   const handleDateClick = (arg) => {
     const title = prompt("Enter a new title for the calendar");
@@ -30,36 +56,23 @@ const Calendar = () => {
         title,
         start: arg.startStr,
         end: arg.endStr,
-        allDay: arg.allDay,
       });
     }
   };
 
-  const handleEventClick = (arg) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event '${arg.event.title}'`
-      )
-    ) {
-      arg.event.remove();
-    }
-  };
-
-  //   useEffect(() => {
-  //     const handleSize = () => {
-  //       if (window.innerWidth < 800) {
-  //         setInitialView("timeGridDay");
-  //         console.log("Sono nell'if");
-  //       } else {
-  //         setInitialView("dayGridMonth");
-  //       }
-  //     };
-  //     window.addEventListener("resize", handleSize);
-  //   }, []);
+  // const handleEventClick = (arg) => {
+  //   if (
+  //     window.confirm(
+  //       `Are you sure you want to delete the event '${arg.event.title}'`
+  //     )
+  //   ) {
+  //     arg.event.remove();
+  //   }
+  // };
 
   return (
     <Box m="20px">
-      <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
+      <Header title="Calendar" />
 
       <Box display="flex" justifyContent="space-between">
         {/* CALENDAR SIDEBAR */}
@@ -68,12 +81,16 @@ const Calendar = () => {
           p="15px"
           borderRadius="4px"
           className="hidden lg:block"
+          sx={{
+            maxHeight: "75vh",
+            overflowY: "auto",
+          }}
         >
           <Typography variant="h5">Events</Typography>
           <List>
-            {currentEvents.map((event) => (
+            {currentEvents.map((event, index) => (
               <ListItem
-                key={event.id}
+                key={`${event.id}-${index}`}
                 sx={{
                   backgroundColor: "#141B2D",
                   color: "#FFFFFF",
@@ -84,15 +101,27 @@ const Calendar = () => {
                 }}
               >
                 <ListItemText
-                  primary={event.title}
+                  className="flex"
+                  primary={
+                    <Box>
+                      <Typography>{event.subtitle}</Typography>
+                      <Typography
+                        color="rgb(209, 209, 209)"
+                        variant="body2"
+                        sx={{ fontSize: "0.8rem" }}
+                      >
+                        {formatDate(event.start, {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </Typography>
+                    </Box>
+                  }
                   secondary={
-                    <Typography>
-                      {formatDate(event.start, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </Typography>
+                    <Box color="white" marginLeft="20px">
+                      <Typography>{event.title}€</Typography>
+                    </Box>
                   }
                 />
               </ListItem>
@@ -122,8 +151,27 @@ const Calendar = () => {
               selectMirror={true}
               dayMaxEvents={true}
               select={handleDateClick}
-              eventClick={handleEventClick}
-              eventsSet={(events) => setCurrentEvents(events)}
+              // eventClick={handleEventClick}
+              events={currentEvents}
+              eventContent={({ event }) => {
+                console.log(event); // Aggiunto log dell'evento
+                return (
+                  <Container>
+                    <Box
+                      bgcolor={
+                        event.extendedProps.type === "Income"
+                          ? "#4CAF50"
+                          : "#F44336"
+                      }
+                      borderRadius="12px"
+                      color="#FFFFFF"
+                      paddingX="25px"
+                    >
+                      {event.title}€
+                    </Box>
+                  </Container>
+                );
+              }}
             />
           </Box>
         </Container>

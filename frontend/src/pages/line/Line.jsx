@@ -5,7 +5,6 @@ import { DataLineData } from "../../data";
 
 const Line = () => {
   const dataLineChart = useLineChartData();
-  console.log(dataLineChart);
   return (
     <Container>
       <Box m="20px">

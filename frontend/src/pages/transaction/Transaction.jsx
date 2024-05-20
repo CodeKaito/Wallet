@@ -1,179 +1,118 @@
-import { Box, IconButton, Button, Typography } from "@mui/material";
-import { Header, PieChart } from "../../components";
-import { useState } from "react";
-import {
-  useHouseData,
-  useFoodData,
-  useTransportData,
-  usePersonalData,
-  useFilterData,
-} from "../../context/PieChartDataContext";
-import {
-  CottageIcon,
-  SelfImprovementIcon,
-  DirectionsCarFilledIcon,
-  LunchDiningIcon,
-} from "../../icons";
-import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers-pro/LocalizationProvider";
-import { AdapterDateFns } from "@mui/x-date-pickers-pro/AdapterDateFns";
+import { Box, Container } from "@mui/material";
+import { Header } from "../../components";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { usePaymentData } from "../../context/PaymentDataContext";
+import { format } from "date-fns";
 
-const Pie = () => {
-  const [selectedChart, setSelectedChart] = useState("house");
-  const [selectedCategory, setSelectedCategory] = useState("House");
-  const [selectedPeriod, setSelectedPeriod] = useState("month");
-  const [customRange, setCustomRange] = useState([null, null]);
-  const houseData = useHouseData();
-  const foodData = useFoodData();
-  const transportData = useTransportData();
-  const personalData = usePersonalData();
-  const filterData = useFilterData();
-
-  const handleChartChange = (chartType, categoryName) => {
-    setSelectedChart(chartType);
-    setSelectedCategory(categoryName);
-  };
-
-  const handlePeriodChange = (period) => {
-    setSelectedPeriod(period);
-  };
-
-  const renderSelectedChart = () => {
-    let data;
-    switch (selectedChart) {
-      case "house":
-        data = filterData(houseData, selectedPeriod, {
-          startDate: customRange[0],
-          endDate: customRange[1],
-        });
-        break;
-      case "food":
-        data = filterData(foodData, selectedPeriod, {
-          startDate: customRange[0],
-          endDate: customRange[1],
-        });
-        break;
-      case "transport":
-        data = filterData(transportData, selectedPeriod, {
-          startDate: customRange[0],
-          endDate: customRange[1],
-        });
-        break;
-      case "personal":
-        data = filterData(personalData, selectedPeriod, {
-          startDate: customRange[0],
-          endDate: customRange[1],
-        });
-        break;
-      default:
-        data = [];
-    }
-    return data.length > 0 ? (
-      <PieChart data={data} />
-    ) : (
-      <Typography>No data available for the filter</Typography>
-    );
-  };
+const Transaction = () => {
+  const { paymentData } = usePaymentData();
+  const columns = [
+    {
+      field: "date",
+      headerName: "Date",
+      type: "date",
+      editable: true,
+      align: "left",
+      headerAlign: "left",
+      width: 120,
+      renderCell: (params) => {
+        const formattedDate = format(new Date(params.value), "dd/MM/yyyy");
+        return formattedDate;
+      },
+    },
+    {
+      field: "type",
+      headerName: "Type",
+      type: "string",
+      editable: true,
+      align: "left",
+      headerAlign: "left",
+      width: 150,
+    },
+    {
+      field: "category",
+      headerName: "Category",
+      type: "string",
+      editable: true,
+      align: "left",
+      headerAlign: "left",
+      width: 150,
+    },
+    {
+      field: "label",
+      headerName: "Label",
+      type: "string",
+      editable: true,
+      align: "left",
+      headerAlign: "left",
+      width: 150,
+    },
+    {
+      field: "amount",
+      headerName: "Payment Amount",
+      type: "number",
+      editable: true,
+      align: "left",
+      headerAlign: "left",
+      width: 100,
+      renderCell: (params) => {
+        const isExpense = params.row.type === "Expenses";
+        const amount = params.value;
+        return isExpense ? `-${amount}` : `+${amount}`;
+      },
+    },
+    {
+      field: "note",
+      headerName: "Notes",
+      type: "number",
+      editable: true,
+      align: "center",
+      headerAlign: "center",
+      width: 200,
+    },
+  ];
 
   return (
-    <>
+    <Container>
       <Box m="20px">
-        <Header title={`Expenses for ${selectedCategory}`} />
-        <Box display="flex" alignItems="center">
-          <IconButton
-            color={selectedChart === "house" ? "primary" : "default"}
-            onClick={() => handleChartChange("house", "House")}
-          >
-            <CottageIcon />
-          </IconButton>
-          <IconButton
-            color={selectedChart === "food" ? "primary" : "default"}
-            onClick={() => handleChartChange("food", "Food")}
-          >
-            <LunchDiningIcon />
-          </IconButton>
-          <IconButton
-            color={selectedChart === "transport" ? "primary" : "default"}
-            onClick={() => handleChartChange("transport", "Transport")}
-          >
-            <DirectionsCarFilledIcon />
-          </IconButton>
-          <IconButton
-            color={selectedChart === "personal" ? "primary" : "default"}
-            onClick={() => handleChartChange("personal", "Personal")}
-          >
-            <SelfImprovementIcon />
-          </IconButton>
+        <Header title="Expenses list" />
+
+        <Box m="40px 0 0 0" height="75vh">
+          <DataGrid
+            rows={paymentData.map((row, index) => ({
+              ...row,
+              id: row.paymentId || index,
+            }))}
+            columns={columns}
+            getRowId={(row) => row._id}
+            slots={{ toolbar: GridToolbar }}
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "date", sort: "desc" }],
+              },
+            }}
+            getRowClassName={(params) =>
+              params.row.type === "Expenses" ? "expensesRow" : "incomeRow"
+            }
+            sx={{
+              "& .expensesRow": {
+                bgcolor: "rgb(255, 150, 150)",
+                "&:hover": {
+                  bgcolor: "rgb(255, 196, 196)",
+                },
+              },
+              "& .incomeRow": {
+                bgcolor: "rgb(150, 255, 157)",
+                "&:hover": {
+                  bgcolor: "rgb(196, 255, 218)",
+                },
+              },
+            }}
+          />
         </Box>
-        <Box display="flex" justifyContent="center" mt="20px">
-          <Button
-            variant={selectedPeriod === "day" ? "contained" : "outlined"}
-            color="primary"
-            onClick={() => handlePeriodChange("day")}
-          >
-            Day
-          </Button>
-          <Button
-            variant={selectedPeriod === "week" ? "contained" : "outlined"}
-            color="primary"
-            onClick={() => handlePeriodChange("week")}
-            style={{ marginLeft: "10px" }}
-          >
-            Week
-          </Button>
-          <Button
-            variant={selectedPeriod === "month" ? "contained" : "outlined"}
-            color="primary"
-            onClick={() => handlePeriodChange("month")}
-            style={{ marginLeft: "10px" }}
-          >
-            Month
-          </Button>
-          <Button
-            variant={selectedPeriod === "year" ? "contained" : "outlined"}
-            color="primary"
-            onClick={() => handlePeriodChange("year")}
-            style={{ marginLeft: "10px" }}
-          >
-            Year
-          </Button>
-          <Button
-            variant={selectedPeriod === "custom" ? "contained" : "outlined"}
-            color="primary"
-            onClick={() => handlePeriodChange("custom")}
-            style={{ marginLeft: "10px" }}
-          >
-            Custom
-          </Button>
-        </Box>
-        {selectedPeriod === "custom" && (
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DateRangePicker
-              startText="Start Date"
-              endText="End Date"
-              value={customRange}
-              onChange={(newValue) => setCustomRange(newValue)}
-              renderInput={(startProps, endProps) => (
-                <>
-                  <TextField {...startProps} />
-                  <Box sx={{ mx: 2 }}> to </Box>
-                  <TextField {...endProps} />
-                </>
-              )}
-            />
-          </LocalizationProvider>
-        )}
       </Box>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="70vh"
-      >
-        {renderSelectedChart()}
-      </Box>
-    </>
+    </Container>
   );
 };
 
-export default Pie;
+export default Transaction;
