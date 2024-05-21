@@ -9,10 +9,8 @@ import {
   Container,
   List,
   ListItem,
-  ListItemText,
   Typography,
   Modal,
-  TextField,
   Button,
 } from "@mui/material";
 import { Header } from "../../components";
@@ -122,6 +120,32 @@ const Calendar = () => {
   const handleCloseDetailsModal = () => {
     setOpenDetailsModal(false);
     setSelectedEvent(null);
+  };
+
+  const handleDeleteEvent = async () => {
+    if (selectedEvent) {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/event/${selectedEvent.id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to delete event");
+        }
+
+        await fetchAllData();
+        setOpenDetailsModal(false);
+        setSelectedEvent(null);
+      } catch (error) {
+        console.error("Error deleting event:", error);
+      }
+    }
   };
 
   return (
@@ -267,28 +291,54 @@ const Calendar = () => {
           </Box>
 
           {selectedEvent && (
-            <div>
-              <Typography variant="h5">
-                {formatDate(selectedEvent.start, {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </Typography>
-              <Typography variant="h5" display="flex" justifyContent="center">
-                {selectedEvent.title}
-              </Typography>
-              {selectedEvent.extendedProps.type && (
-                <Typography>
-                  Type: {selectedEvent.extendedProps.type}
+            <Container>
+              <Box marginX="40px">
+                <Typography variant="h5">
+                  {formatDate(selectedEvent.start, {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
                 </Typography>
-              )}
-              {selectedEvent.extendedProps.subtitle && (
-                <Typography>
-                  Subtitle: {selectedEvent.extendedProps.subtitle}
+                <Typography variant="h5" display="flex" justifyContent="center">
+                  {!selectedEvent.extendedProps.type
+                    ? "Task: " + selectedEvent.title
+                    : selectedEvent.extendedProps.type === "Expenses"
+                    ? "Expenses: " + selectedEvent.title + "€"
+                    : "Income: " + selectedEvent.title + "€"}
                 </Typography>
-              )}
-            </div>
+                {selectedEvent.extendedProps.subtitle && (
+                  <Typography
+                    variant="body1"
+                    display="flex"
+                    justifyContent="center"
+                  >
+                    Reason: {selectedEvent.extendedProps.subtitle}
+                  </Typography>
+                )}
+                {!selectedEvent.extendedProps.type && (
+                  <>
+                    <Box marginTop="20px">
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={handleDeleteEvent}
+                        sx={{
+                          "&:hover": {
+                            backgroundColor: "error.main",
+                            borderColor: "error.main",
+                            color: "white",
+                            variant: "contained",
+                          },
+                        }}
+                      >
+                        Delete task
+                      </Button>
+                    </Box>
+                  </>
+                )}
+              </Box>
+            </Container>
           )}
         </Box>
       </Modal>

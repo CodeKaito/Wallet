@@ -23,6 +23,10 @@ import CottageIcon from "@mui/icons-material/Cottage";
 import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
 import DirectionsCarFilledIcon from "@mui/icons-material/DirectionsCarFilled";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Close";
 
 export {
   // TopBar icons
@@ -57,4 +61,10 @@ export {
   SelfImprovementIcon,
   DirectionsCarFilledIcon,
   LunchDiningIcon,
+
+  // Tahle
+  EditIcon,
+  DeleteIcon,
+  SaveIcon,
+  CancelIcon,
 };

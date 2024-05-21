@@ -14,7 +14,6 @@ const PaymentDataContextProvider = ({ children }) => {
           const transformedData = paymentData.map((item) => ({
             ...item,
             date: new Date(item.date),
-            amount: `${item.amount}€`,
           }));
           setPaymentData(transformedData);
         }
