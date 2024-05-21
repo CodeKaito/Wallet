@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
+  Button,
+  Container,
   Paper,
   Table,
   TableBody,
@@ -12,14 +14,48 @@ import {
 } from "@mui/material";
 import { LineChart, BarChart, ProgressCircle, StatBox } from "../../components";
 import { usePaymentData } from "../../context/DashboardPaymentDataContext";
-import { useBarChartData } from "../../context/BarChartDataContext";
-import { useLineChartData } from "../../context/LineChartDataContext";
+import { useBarChartData as useBarChartDataMonth } from "../../context/BarChartDataContext";
+import { useBarChartData as useBarChartDataDays } from "../../context/BarChartDataDaysContext";
+import { useLineChartData as useLineChartDataMonth } from "../../context/LineChartDataContext";
+import { useLineChartData as useLineChartDataDays } from "../../context/LineChartDataDaysContext";
 import { Header } from "../../components";
 
 const Dashboard = () => {
   const { paymentData } = usePaymentData();
-  const dataLineChart = useLineChartData();
-  const dataBarChart = useBarChartData();
+  const dataLineChartMonth = useLineChartDataMonth();
+  const dataLineChartDays = useLineChartDataDays();
+  const dataBarChartMonth = useBarChartDataMonth();
+  const dataBarChartDays = useBarChartDataDays();
+
+  const [filteredData, setFilteredData] = useState(dataLineChartMonth);
+  const [filteredBarChartData, setFilteredBarChartData] =
+    useState(dataBarChartMonth);
+  const [filterType, setFilterType] = useState("Year");
+  const [legendText, setLegendText] = useState("Month");
+
+  useEffect(() => {
+    filterByYear();
+  }, [dataLineChartMonth]);
+
+  const filterByYear = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    setFilteredData(dataLineChartMonth);
+    setFilteredBarChartData(dataBarChartMonth);
+    setFilterType("Year");
+    setLegendText(currentYear.toString());
+  };
+
+  const filterByMonth = () => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.toLocaleString("default", {
+      month: "long",
+    });
+    setFilteredData(dataLineChartDays);
+    setFilteredBarChartData(dataBarChartDays);
+    setFilterType("Month");
+    setLegendText(currentMonth);
+  };
 
   const sortedPaymentData = [...paymentData].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
@@ -30,6 +66,40 @@ const Dashboard = () => {
     <Box mx="20px">
       <Box className="flex justify-between align-center">
         <Header title="Dashboard" />
+        <Container>
+          <Box display="flex" gap="5px">
+            <Button
+              variant={filterType === "Month" ? "contained" : "outlined"}
+              color="primary"
+              onClick={filterByMonth}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "primary.main",
+                  borderColor: "primary.main",
+                  color: "white",
+                  variant: "contained",
+                },
+              }}
+            >
+              Month
+            </Button>
+            <Button
+              variant={filterType === "Year" ? "contained" : "outlined"} // Rimasto outlined
+              color="primary"
+              onClick={filterByYear}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "primary.main",
+                  borderColor: "primary.main",
+                  color: "white",
+                  variant: "contained",
+                },
+              }}
+            >
+              Year
+            </Button>
+          </Box>
+        </Container>
       </Box>
 
       <Box gap="16px">
@@ -145,7 +215,11 @@ const Dashboard = () => {
               </Box>
             </Box>
             <Box height="250px" m="-20px 0 0 0">
-              <LineChart isDashboard={true} data={dataLineChart} />
+              <LineChart
+                isDashboard={true}
+                data={filteredData}
+                legendText={legendText}
+              />
             </Box>
           </Box>
 
@@ -271,7 +345,7 @@ const Dashboard = () => {
               Bar Chart
             </Typography>
             <Box height="250px" mt="-20px">
-              <BarChart data={dataBarChart} />
+              <BarChart data={filteredBarChartData} legendText={legendText} />
             </Box>
           </Box>
         </Box>
