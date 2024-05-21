@@ -1,32 +1,19 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 
-const DataContext = createContext({});
+const DataContext = createContext([]);
 
-const BarChartDataContextProvider = ({ children }) => {
+const BarChartDataDaysContextProvider = ({ children }) => {
   const [dataBarChart, setDataBarChart] = useState([]);
 
   const generateMonthlyData = () => {
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-
     const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate(); // Ottieni il numero di giorni nel mese corrente
 
-    const monthlyData = months.map((month, index) => ({
-      id: index + 1, // Modifica l'indice per iniziare da 1 anziché da 0
+    const monthlyData = Array.from({ length: daysInMonth }, (_, index) => ({
+      id: index + 1,
       year: currentYear,
-      month: month,
+      month: currentMonth,
       House: 0,
       Food: 0,
       Transportation: 0,
@@ -42,11 +29,16 @@ const BarChartDataContextProvider = ({ children }) => {
         const response = await fetch("http://localhost:5000/api/payments");
         if (response.ok) {
           const barchartData = await response.json();
-          const updatedDataBarChart = generateMonthlyData().map((monthData) => {
+          const updatedDataBarChart = generateMonthlyData().map((dayData) => {
             const filteredData = barchartData.filter((item) => {
-              const itemMonth = new Date(item.date).getMonth() + 1; // Aggiorna l'indicizzazione del mese
+              const itemDay = new Date(item.date).getDate();
+              const itemMonth = new Date(item.date).getMonth();
               const itemYear = new Date(item.date).getFullYear();
-              return itemMonth === monthData.id && itemYear === monthData.year;
+              return (
+                itemDay === dayData.id &&
+                itemMonth === dayData.month &&
+                itemYear === dayData.year
+              );
             });
 
             const houseTotal = filteredData.reduce((acc, curr) => {
@@ -82,9 +74,7 @@ const BarChartDataContextProvider = ({ children }) => {
             }, 0);
 
             return {
-              id: monthData.id,
-              year: monthData.year,
-              month: monthData.month,
+              ...dayData,
               House: houseTotal,
               Food: foodTotal,
               Transportation: transportationTotal,
@@ -111,4 +101,4 @@ const BarChartDataContextProvider = ({ children }) => {
 
 export const useBarChartData = () => useContext(DataContext);
 
-export { BarChartDataContextProvider };
+export { BarChartDataDaysContextProvider };

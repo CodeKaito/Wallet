@@ -1,12 +1,15 @@
+import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
-// import { DataBarChart } from "../../data";
 
-const Barchart = ({ isDashboard = false, data }) => {
+const Barchart = ({ isDashboard = false, data, legendText }) => {
+  // Funzione per formattare i valori aggiungendo il simbolo dell'euro
+  const formatValue = (value) => `${value} €`;
+
   return (
     <ResponsiveBar
       data={data}
       keys={["House", "Food", "Transportation", "Personal"]}
-      indexBy="month"
+      indexBy="id"
       margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
       padding={0.3}
       valueScale={{ type: "linear" }}
@@ -42,7 +45,7 @@ const Barchart = ({ isDashboard = false, data }) => {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: isDashboard ? undefined : "Month",
+        legend: isDashboard ? undefined : legendText,
         legendPosition: "middle",
         legendOffset: 32,
       }}
@@ -61,6 +64,7 @@ const Barchart = ({ isDashboard = false, data }) => {
         from: "color",
         modifiers: [["darker", 1.6]],
       }}
+      valueFormat={formatValue}
       legends={[
         {
           dataFrom: "keys",
@@ -87,7 +91,7 @@ const Barchart = ({ isDashboard = false, data }) => {
       ]}
       role="application"
       barAriaLabel={function (e) {
-        return e.id + ": " + e.formattedValue + " in country: " + e.indexValue;
+        e.id + ": " + e.formattedValue + " in month: " + e.indexValue;
       }}
     />
   );

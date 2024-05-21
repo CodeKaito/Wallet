@@ -20,6 +20,12 @@ const Dashboard = () => {
   const { paymentData } = usePaymentData();
   const dataLineChart = useLineChartData();
   const dataBarChart = useBarChartData();
+
+  const sortedPaymentData = [...paymentData].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+  const recentTransactions = sortedPaymentData.slice(0, 5);
+
   return (
     <Box mx="20px">
       <Box className="flex justify-between align-center">
@@ -176,7 +182,7 @@ const Dashboard = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {paymentData.slice(0, 5).map((transaction) => (
+                    {recentTransactions.slice(0, 5).map((transaction) => (
                       <TableRow
                         key={transaction._id}
                         sx={{

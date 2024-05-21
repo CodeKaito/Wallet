@@ -4,7 +4,9 @@ import { PaymentDataContextProvider } from "./context/PaymentDataContext";
 import { DashboardPaymentDataContextProvider } from "./context/DashboardPaymentDataContext";
 import { PieChartDataContextProvider } from "./context/PieChartDataContext";
 import { BarChartDataContextProvider } from "./context/BarChartDataContext";
+import { BarChartDataDaysContextProvider } from "./context/BarChartDataDaysContext";
 import { LineChartDataContextProvider } from "./context/LineChartDataContext";
+import { LineChartDataDaysContextProvider } from "./context/LineChartDataDaysContext";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { ProSidebarProvider } from "react-pro-sidebar";
@@ -23,9 +25,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <DashboardPaymentDataContextProvider>
               <PieChartDataContextProvider>
                 <BarChartDataContextProvider>
-                  <LineChartDataContextProvider>
-                    <App />
-                  </LineChartDataContextProvider>
+                  <BarChartDataDaysContextProvider>
+                    <LineChartDataContextProvider>
+                      <LineChartDataDaysContextProvider>
+                        <App />
+                      </LineChartDataDaysContextProvider>
+                    </LineChartDataContextProvider>
+                  </BarChartDataDaysContextProvider>
                 </BarChartDataContextProvider>
               </PieChartDataContextProvider>
             </DashboardPaymentDataContextProvider>

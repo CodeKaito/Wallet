@@ -1,6 +1,8 @@
 import { ResponsiveLine } from "@nivo/line";
 
-const LineChart = ({ isDashboard = false, data }) => {
+const LineChart = ({ isDashboard = false, data, legendText }) => {
+  const formatValue = (value) => `${value} €`;
+
   return (
     <ResponsiveLine
       data={data}
@@ -12,7 +14,7 @@ const LineChart = ({ isDashboard = false, data }) => {
         min: "auto",
         max: "auto",
       }}
-      yFormat=" >-.2f"
+      yFormat={formatValue}
       curve="catmullRom"
       axisTop={null}
       axisRight={null}
@@ -21,7 +23,7 @@ const LineChart = ({ isDashboard = false, data }) => {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: isDashboard ? undefined : "Month",
+        legend: isDashboard ? undefined : legendText,
         legendOffset: 36,
         legendPosition: "middle",
       }}

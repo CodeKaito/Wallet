@@ -154,32 +154,29 @@ const Calendar = () => {
                   margin: "10px 0",
                 }}
               >
-                <ListItemText
-                  className="flex"
-                  primary={
-                    <Box>{/* <Typography>{event.subtitle}</Typography> */}</Box>
-                  }
-                  secondary={
-                    <Box color="white" marginLeft="">
-                      <Typography>
-                        {event.type === "Expenses" || event.type === "Income"
-                          ? `${event.title}€`
-                          : event.title}
-                      </Typography>
-                      <Typography
-                        color="rgb(209, 209, 209)"
-                        variant="body2"
-                        sx={{ fontSize: "0.8rem" }}
-                      >
-                        {formatDate(event.start, {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </Typography>
-                    </Box>
-                  }
-                />
+                <Box width="100%">
+                  <Box>
+                    <Typography>{event.subtitle}</Typography>
+                  </Box>
+                  <Box color="white">
+                    <Typography>
+                      {event.type === "Expenses" || event.type === "Income"
+                        ? `${event.title}€`
+                        : event.title}
+                    </Typography>
+                    <Typography
+                      color="rgb(209, 209, 209)"
+                      variant="body2"
+                      sx={{ fontSize: "0.8rem" }}
+                    >
+                      {formatDate(event.start, {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </Typography>
+                  </Box>
+                </Box>
               </ListItem>
             ))}
           </List>

@@ -49,7 +49,7 @@ const Transaction = () => {
     },
     {
       field: "amount",
-      headerName: "Payment Amount",
+      headerName: "Amount",
       type: "number",
       editable: true,
       align: "left",
@@ -96,15 +96,15 @@ const Transaction = () => {
             }
             sx={{
               "& .expensesRow": {
-                bgcolor: "rgb(255, 150, 150)",
+                bgcolor: "#f09e94",
                 "&:hover": {
-                  bgcolor: "rgb(255, 196, 196)",
+                  bgcolor: "#e67d72",
                 },
               },
               "& .incomeRow": {
-                bgcolor: "rgb(150, 255, 157)",
+                bgcolor: "#bfffb5",
                 "&:hover": {
-                  bgcolor: "rgb(196, 255, 218)",
+                  bgcolor: "#a6ff9c",
                 },
               },
             }}
