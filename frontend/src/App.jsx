@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import { Dashboard, Transaction, Calendar, Bar, Pie, Line } from "./pages";
+import {
+  Dashboard,
+  Income,
+  Transaction,
+  Calendar,
+  Bar,
+  Pie,
+  Line,
+} from "./pages";
 import { SideBar, TopBar, BottomBar } from "./navigationbar";
 import AddPaymentModal from "./utils/AddPaymentModal";
 import Savings from "./pages/savings/Savings";
@@ -24,6 +32,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="transaction" element={<Transaction />} />
+            <Route path="income" element={<Income />} />
             <Route path="savings" element={<Savings />} />
             <Route path="calendar" element={<Calendar />} />
             <Route path="bar" element={<Bar />} />

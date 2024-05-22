@@ -70,13 +70,13 @@ const MySideBar = () => {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h5" color="gray-200">
-                  Wallet
+                <Typography variant="h5" color="gray-200" className="uppercase">
+                  Hades
                 </Typography>
               </Box>
             </MenuItem>
 
-            <MenuItem className="menu1 md:hidden mt-10 flex justify-center">
+            <MenuItem className="menu1 md:hidden mt-20 flex justify-center">
               <img
                 alt="profile-user"
                 src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=600"
@@ -86,7 +86,7 @@ const MySideBar = () => {
             </MenuItem>
 
             {!collapsed && (
-              <Box className="hidden md:block">
+              <Box className="hidden md:block my-10">
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <img
                     alt="profile-user"
@@ -125,42 +125,30 @@ const MySideBar = () => {
                 Dashboard
               </MenuItem>
               <MenuItem
-                component={<Link to="savings" className="link" />}
-                icon={<WalletRoundedIcon />}
-              >
-                Wallet
-              </MenuItem>
-              <MenuItem
                 component={<Link to="transaction" className="link" />}
                 icon={<ReceiptRoundedIcon />}
               >
                 Expenses
               </MenuItem>
               <MenuItem
-                component={<Link to="/" className="link" />}
+                component={<Link to="income" className="link" />}
                 icon={<MonetizationOnRoundedIcon />}
               >
                 Income
               </MenuItem>
 
               <MenuItem
-                component={<Link to="savings" className="link" />}
-                icon={<AccountBalanceRoundedIcon />}
-              >
-                Balance
-              </MenuItem>
-              <MenuItem
                 component={<Link to="calendar" className="link" />}
                 icon={<TodayIcon />}
               >
                 Calendar
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 component={<Link to="savings" className="link" />}
                 icon={<SavingsRoundedIcon />}
               >
                 Savings
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem
                 component={<Link to="bar" className="link" />}
                 icon={<BarChartRoundedIcon />}

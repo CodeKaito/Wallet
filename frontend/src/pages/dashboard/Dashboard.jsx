@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import { LineChart, BarChart, ProgressCircle, StatBox } from "../../components";
 import { usePaymentData } from "../../context/DashboardPaymentDataContext";
+import { useExpensesData } from "../../context/ExpensesDataContext";
+import { useIncomeData } from "../../context/IncomeDataContext";
 import { useBarChartData as useBarChartDataMonth } from "../../context/BarChartDataContext";
 import { useBarChartData as useBarChartDataDays } from "../../context/BarChartDataDaysContext";
 import { useLineChartData as useLineChartDataMonth } from "../../context/LineChartDataContext";
@@ -22,10 +24,12 @@ import { Header } from "../../components";
 
 const Dashboard = () => {
   const { paymentData } = usePaymentData();
+  const { currentMonthExpenses, yearExpenses } = useExpensesData();
   const dataLineChartMonth = useLineChartDataMonth();
   const dataLineChartDays = useLineChartDataDays();
   const dataBarChartMonth = useBarChartDataMonth();
   const dataBarChartDays = useBarChartDataDays();
+  const { monthlyTotals, yearlyTotals } = useIncomeData();
 
   const [filteredData, setFilteredData] = useState(dataLineChartMonth);
   const [filteredBarChartData, setFilteredBarChartData] =
@@ -84,7 +88,7 @@ const Dashboard = () => {
               Month
             </Button>
             <Button
-              variant={filterType === "Year" ? "contained" : "outlined"} // Rimasto outlined
+              variant={filterType === "Year" ? "contained" : "outlined"}
               color="primary"
               onClick={filterByYear}
               sx={{
@@ -126,10 +130,12 @@ const Dashboard = () => {
             borderRadius="10px"
           >
             <StatBox
-              title="€4450"
+              title={`€${
+                filterType === "Month" ? monthlyTotals : yearlyTotals
+              }`}
               subtitle="Earn"
-              progress="0.75"
-              increase="+14%"
+              progress="0.20"
+              stats="14%"
             />
           </Box>
           <Box
@@ -142,10 +148,12 @@ const Dashboard = () => {
             borderRadius="10px"
           >
             <StatBox
-              title="€1121"
+              title={`€${
+                filterType === "Month" ? currentMonthExpenses : yearExpenses
+              }`}
               subtitle="Expenses"
               progress="0.50"
-              increase="-21%"
+              stats="21%"
             />
           </Box>
           <Box
@@ -161,7 +169,7 @@ const Dashboard = () => {
               title="€32,41"
               subtitle="Saved"
               progress="0.30"
-              increase="+5%"
+              stats="5%"
             />
           </Box>
           <Box
@@ -177,7 +185,7 @@ const Dashboard = () => {
               title="€732"
               subtitle="Others"
               progress="0.80"
-              increase="+43%"
+              stats="43%"
             />
           </Box>
         </Box>
@@ -345,7 +353,12 @@ const Dashboard = () => {
               Bar Chart
             </Typography>
             <Box height="250px" mt="-20px">
-              <BarChart data={filteredBarChartData} legendText={legendText} />
+              <BarChart
+                isDashboard={true}
+                data={filteredBarChartData}
+                legendText={legendText}
+                dataKeys={["House", "Food", "Transportation", "Personal"]}
+              />
             </Box>
           </Box>
         </Box>

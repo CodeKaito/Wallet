@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import ProgressCircle from "../progressCircle/ProgressCircle";
 
-const StatBox = ({ title, subtitle, icon, progress, increase }) => {
+const StatBox = ({ title, subtitle, icon, progress, stats }) => {
   return (
     <Box width="100%" m="0 30px">
       <Box display="flex" justifyContent="space-between">
@@ -26,7 +26,7 @@ const StatBox = ({ title, subtitle, icon, progress, increase }) => {
           sx={{ fontSize: { xs: "0.8rem", md: "1rem" } }}
           fontStyle="italic"
         >
-          {increase}
+          {stats}
         </Typography>
       </Box>
     </Box>

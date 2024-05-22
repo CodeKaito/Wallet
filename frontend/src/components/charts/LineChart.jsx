@@ -29,10 +29,11 @@ const LineChart = ({ isDashboard = false, data, legendText }) => {
       }}
       axisLeft={{
         orient: "left",
-        tickValues: 5,
+        tickValues: isDashboard ? 5 : 10,
+        tickValuesFormat: { formatValue },
         tickSize: 6,
         tickPadding: 5,
-        tickRotation: 0,
+        tickRotation: -49,
         legend: isDashboard ? undefined : "Amount",
         legendOffset: -40,
         legendPosition: "middle",

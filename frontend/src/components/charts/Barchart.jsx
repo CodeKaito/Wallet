@@ -1,20 +1,20 @@
 import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
 
-const Barchart = ({ isDashboard = false, data, legendText }) => {
+const Barchart = ({ isDashboard = false, data, legendText, dataKeys }) => {
   // Funzione per formattare i valori aggiungendo il simbolo dell'euro
   const formatValue = (value) => `${value} €`;
 
   return (
     <ResponsiveBar
       data={data}
-      keys={["House", "Food", "Transportation", "Personal"]}
+      keys={dataKeys}
       indexBy="id"
       margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
       padding={0.3}
       valueScale={{ type: "linear" }}
       indexScale={{ type: "band", round: true }}
-      colors={isDashboard ? { scheme: "blue_green" } : { scheme: "paired" }}
+      colors={{ scheme: "paired" }}
       defs={[
         {
           id: "dots",
@@ -51,8 +51,9 @@ const Barchart = ({ isDashboard = false, data, legendText }) => {
       }}
       axisLeft={{
         tickSize: 5,
+        tickValues: isDashboard ? 4 : 10,
         tickPadding: 5,
-        tickRotation: 0,
+        tickRotation: -29,
         legend: isDashboard ? undefined : "Expenses",
         legendPosition: "middle",
         legendOffset: -40,

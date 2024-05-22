@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 
 const DataContext = createContext({});
 
-const BarChartDataContextProvider = ({ children }) => {
+const BarChartDataIncomeContextProvider = ({ children }) => {
   const [dataBarChart, setDataBarChart] = useState([]);
 
   const generateMonthlyData = () => {
@@ -42,53 +42,30 @@ const BarChartDataContextProvider = ({ children }) => {
         const response = await fetch("http://localhost:5000/api/payments");
         if (response.ok) {
           const barchartData = await response.json();
+          const incomeData = barchartData.filter(
+            (item) => item.type === "Income"
+          );
           const updatedDataBarChart = generateMonthlyData().map((monthData) => {
-            const filteredData = barchartData.filter((item) => {
+            const filteredData = incomeData.filter((item) => {
               const itemMonth = new Date(item.date).getMonth() + 1;
               const itemYear = new Date(item.date).getFullYear();
               return itemMonth === monthData.id && itemYear === monthData.year;
             });
 
-            const houseTotal = filteredData.reduce((acc, curr) => {
-              if (curr.category === "House") {
-                return acc + curr.amount;
-              } else {
-                return acc;
-              }
-            }, 0);
+            const categoryTotal = {};
 
-            const foodTotal = filteredData.reduce((acc, curr) => {
-              if (curr.category === "Food") {
-                return acc + curr.amount;
-              } else {
-                return acc;
+            filteredData.forEach((item) => {
+              if (!categoryTotal[item.category]) {
+                categoryTotal[item.category] = 0;
               }
-            }, 0);
-
-            const transportationTotal = filteredData.reduce((acc, curr) => {
-              if (curr.category === "Transportation") {
-                return acc + curr.amount;
-              } else {
-                return acc;
-              }
-            }, 0);
-
-            const personalTotal = filteredData.reduce((acc, curr) => {
-              if (curr.category === "Personal") {
-                return acc + curr.amount;
-              } else {
-                return acc;
-              }
-            }, 0);
+              categoryTotal[item.category] += item.amount;
+            });
 
             return {
               id: monthData.id,
               year: monthData.year,
               month: monthData.month,
-              House: houseTotal,
-              Food: foodTotal,
-              Transportation: transportationTotal,
-              Personal: personalTotal,
+              ...categoryTotal,
             };
           });
 
@@ -111,4 +88,4 @@ const BarChartDataContextProvider = ({ children }) => {
 
 export const useBarChartData = () => useContext(DataContext);
 
-export { BarChartDataContextProvider };
+export { BarChartDataIncomeContextProvider };

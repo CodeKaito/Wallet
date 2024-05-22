@@ -55,7 +55,11 @@ const Bar = () => {
           </Button>
         </Box>
         <Box height="75vh">
-          <BarChart data={filteredData} legendText={legendText} />
+          <BarChart
+            data={filteredData}
+            legendText={legendText}
+            dataKeys={["House", "Food", "Transportation", "Personal"]}
+          />
         </Box>
       </Box>
     </Container>

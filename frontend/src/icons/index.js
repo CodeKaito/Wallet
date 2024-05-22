@@ -27,6 +27,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
+import TableChartIcon from "@mui/icons-material/TableChart";
+import InsertChartIcon from "@mui/icons-material/InsertChart";
+import StackedLineChartIcon from "@mui/icons-material/StackedLineChart";
 
 export {
   // TopBar icons
@@ -67,4 +70,7 @@ export {
   DeleteIcon,
   SaveIcon,
   CancelIcon,
+  TableChartIcon,
+  InsertChartIcon,
+  StackedLineChartIcon,
 };
