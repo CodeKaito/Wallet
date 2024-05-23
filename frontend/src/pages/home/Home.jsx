@@ -208,17 +208,20 @@ const Home = () => {
               ></path>
             </svg>
           </div>
-          <div className="flex justify-center mt-10">
-            <Box width={500}>
+          <div className="justify-center mt-10 mx-auto" width={700}>
+            <Box>
               <Typography
                 color="#D2DAE4"
-                variant="h4"
+                variant="h3"
                 display="flex"
                 justifyContent="center"
                 textAlign="center"
+                fontWeight="bold"
               >
                 The best money tracker app
               </Typography>
+            </Box>
+            <Box width={500} className="mx-auto mt-15">
               <Typography
                 color="#6AA7F8"
                 variant="h5"
@@ -245,11 +248,12 @@ const Home = () => {
         </Box>
         <Box marginTop="200px" minHeight="400px">
           <Typography
-            variant="h4"
+            variant="h3"
             color="#D2DAE4"
             display="flex"
             justifyContent="center"
             textAlign="center"
+            fontWeight="bold"
           >
             Track your spending and boost your savings
           </Typography>
