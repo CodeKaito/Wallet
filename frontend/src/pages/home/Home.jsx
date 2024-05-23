@@ -1,9 +1,10 @@
 import { Container, Box, Grid, Typography } from "@mui/material";
 import React from "react";
+import { TableChartIcon } from "../../icons";
 
 const Home = () => {
   return (
-    <div className="bg-black homepage">
+    <div className="homepage">
       <Container className="mx-auto flex justify-center homepage-background">
         <div className="flex gap-20">
           <Grid item xs={2}>
@@ -227,7 +228,7 @@ const Home = () => {
           </Box>
         </div>
       </Container>
-      <Box height={700}>
+      <Box>
         <div className="example-background mt-20 flex justify-center">
           <Box>
             <img src="https://github.com/CodeKaito/Wallet/blob/main/frontend/src/assets/example.png?raw=true" />
@@ -237,7 +238,7 @@ const Home = () => {
           </Box>
         </div>
       </Box>
-      <Box height={700} marginTop="200px">
+      <Box marginTop="200px" minHeight="400px">
         <Typography
           variant="h4"
           color="#D2DAE4"
@@ -247,23 +248,190 @@ const Home = () => {
         >
           Track your spending and boost your savings
         </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Box
-              borderRadius="10px"
-              paddingBottom="70px"
-              bg="radial-gradient(94.91% 94.91% at 50% 50%, rgba(1, 69, 137, 0.22) 0%, rgba(0, 0, 0, 0) 100%), rgba(5, 24, 48, 0.2);"
-            >
-              <Box height="280px">
-                <img />
+        <Container>
+          <Grid container spacing={2} marginY="20px">
+            <Grid item xs={6}>
+              <Box
+                borderRadius="10px"
+                paddingBottom="70px"
+                className="card-background"
+              >
+                <Box
+                  height="280px"
+                  className="flex justify-center align-center"
+                >
+                  <img
+                    src="https://raw.githubusercontent.com/CodeKaito/Wallet/main/frontend/src/assets/image1.webp"
+                    className="mt-10"
+                  />
+                </Box>
+                <Box>
+                  <Typography
+                    variant="h7"
+                    color="#D2DAE4"
+                    display="flex"
+                    justifyContent="center"
+                    textAlign="center"
+                  >
+                    Daily snapshots
+                  </Typography>
+                  <Typography
+                    variant="h7"
+                    color="#5C7494"
+                    display="flex"
+                    justifyContent="center"
+                    textAlign="center"
+                    width="300px"
+                    marginX="auto"
+                    marginTop="10px"
+                  >
+                    Review your recent spending, check on that refund, and see
+                    what bills are coming up
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                borderRadius="10px"
+                paddingBottom="70px"
+                className="card-background"
+              >
+                <Box
+                  height="280px"
+                  className="flex justify-center align-center"
+                >
+                  <img
+                    src="https://raw.githubusercontent.com/CodeKaito/Wallet/main/frontend/src/assets/image2.webp"
+                    className="mt-10"
+                  />
+                </Box>
+                <Box>
+                  <Typography
+                    variant="h7"
+                    color="#D2DAE4"
+                    display="flex"
+                    justifyContent="center"
+                    textAlign="center"
+                  >
+                    Smart categorization
+                  </Typography>
+                  <Typography
+                    variant="h7"
+                    color="#5C7494"
+                    display="flex"
+                    justifyContent="center"
+                    textAlign="center"
+                    width="300px"
+                    marginX="auto"
+                    marginTop="10px"
+                  >
+                    Our data-driven categorization engine creates custom rules
+                    to fit your spending
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                borderRadius="10px"
+                paddingBottom="70px"
+                className="card-background"
+              >
+                <Box
+                  height="280px"
+                  className="flex justify-center align-center"
+                  minHeight="350px"
+                >
+                  <img
+                    src="https://raw.githubusercontent.com/CodeKaito/Wallet/main/frontend/src/assets/image3.webp"
+                    className="mt-10"
+                  />
+                </Box>
+                <Box>
+                  <Typography
+                    variant="h7"
+                    color="#D2DAE4"
+                    display="flex"
+                    justifyContent="center"
+                    textAlign="center"
+                  >
+                    Rollovers
+                  </Typography>
+                  <Typography
+                    variant="h7"
+                    color="#5C7494"
+                    display="flex"
+                    justifyContent="center"
+                    textAlign="center"
+                    width="300px"
+                    marginX="auto"
+                    marginTop="10px"
+                  >
+                    Set budgets to carry your remaining balance from one month
+                    to the next
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                borderRadius="10px"
+                paddingBottom="70px"
+                className="card-background"
+              >
+                <Box
+                  height="280px"
+                  className="flex justify-center align-center"
+                  minHeight="330px"
+                >
+                  <img
+                    src="https://raw.githubusercontent.com/CodeKaito/Wallet/main/frontend/src/assets/image4.webp"
+                    className="mt-10"
+                  />
+                </Box>
+                <Box>
+                  <Typography
+                    variant="h7"
+                    color="#D2DAE4"
+                    display="flex"
+                    justifyContent="center"
+                    textAlign="center"
+                  >
+                    Cash flow
+                  </Typography>
+                  <Typography
+                    variant="h7"
+                    color="#5C7494"
+                    display="flex"
+                    justifyContent="center"
+                    textAlign="center"
+                    width="300px"
+                    marginX="auto"
+                    marginTop="10px"
+                  >
+                    Get a high-level overview with monthly summaries of your
+                    income and expenses
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
           </Grid>
-          <Grid item xs={6}></Grid>
-          <Grid item xs={6}></Grid>
-          <Grid item xs={6}></Grid>
-        </Grid>
+        </Container>
       </Box>
+      <Container marginTop="20px" height="600px">
+        <Box>
+          <Typography variant="h4" color="#D2DAE4" marginTop="100px">
+            We're on a mission to help you reclaim your data from the banks
+          </Typography>
+        </Box>
+        <Box>
+          <Typography variant="h5" color="#5D7696" marginTop="10px">
+            We believe providing access to better financial tools improves
+            people’s lives, so we’re taking money matters into our own hands.
+          </Typography>
+        </Box>
+      </Container>
     </div>
   );
 };
