@@ -19,7 +19,12 @@ const Navbar = () => {
           boxShadow: "none",
         }}
       >
-        <Box className="mx-20"></Box>
+        <Box className="mx-20">
+          <img
+            src="https://github.com/CodeKaito/Wallet/blob/main/frontend/src/assets/logo.jpg?raw=true"
+            width={50}
+          />
+        </Box>
         {/* Icons */}
         <Box className="flex justify-end gap-2 mx-20">
           <Button size="small" variant="contained">
