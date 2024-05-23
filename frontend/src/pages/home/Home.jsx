@@ -227,11 +227,10 @@ const Home = () => {
           </Box>
         </div>
       </Container>
-      <div className="example-background mt-20 flex jsutify">
-        <img
-          src="https://github.com/CodeKaito/Wallet/blob/main/frontend/src/assets/example.png?raw=true"
-          height="10px"
-        />
+      <div className="example-background mt-20 flex justify-center">
+        <div>
+          <img src="https://github.com/CodeKaito/Wallet/blob/main/frontend/src/assets/example.png?raw=true" />
+        </div>
       </div>
     </div>
   );
