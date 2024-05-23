@@ -23,7 +23,7 @@ const App = () => {
     query: "(min-width: 398px)",
   });
 
-  const isLogged = false;
+  const isLogged = true;
 
   return (
     <>
@@ -49,7 +49,7 @@ const App = () => {
               </>
             )}
           </Routes>
-          {isDesktopOrLaptop && isLogged && <BottomBar />}
+          {isDesktopOrLaptop || (isLogged && <BottomBar />)}
         </main>
       </div>
     </>
