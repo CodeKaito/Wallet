@@ -222,7 +222,7 @@ const Home = () => {
               textAlign="center"
             >
               Navigate your finances with confidence. Track spending, budgets,
-              investments, net worth.
+              investments, net worth..
             </Typography>
           </Box>
         </div>
