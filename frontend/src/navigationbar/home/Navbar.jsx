@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
 
-const Navbar = () => {
+const Navbar = ({ showLoginModal, showSignupModal }) => {
   return (
     <>
       <Box
@@ -21,10 +21,15 @@ const Navbar = () => {
       >
         {/* Icons */}
         <Box className="flex justify-end gap-2 mx-20">
-          <Button size="small" variant="contained">
+          <Button size="small" variant="contained" onClick={showLoginModal}>
             Login
           </Button>
-          <Button size="small" variant="outlined" className="mx-10">
+          <Button
+            size="small"
+            variant="outlined"
+            className="mx-10"
+            onClick={showSignupModal}
+          >
             Sign Up
           </Button>
         </Box>

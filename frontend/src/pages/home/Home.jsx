@@ -1,15 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Grid, Typography, Button, Box, Link } from "@mui/material";
 import AppleIcon from "@mui/icons-material/Apple";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import Navbar from "../../navigationbar/home/Navbar";
+import { Login, Signup } from "../../auth";
 
 const Home = () => {
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const handleSignupModalToggle = () => {
+    setShowSignupModal(!showSignupModal);
+    setShowLoginModal(false);
+  };
+
+  const handleLoginModalToggle = () => {
+    setShowLoginModal(!showLoginModal);
+    setShowSignupModal(false);
+  };
   return (
     <>
       <div className="homepage">
-        <Navbar />
+        <Navbar
+          showSignupModal={handleSignupModalToggle}
+          showLoginModal={handleLoginModalToggle}
+        />
         <Container className="mx-auto flex justify-center homepage-background mt-20">
           <div className="flex justify-center gap-20">
             <Grid item md={2} className="hidden lg:block">
@@ -563,6 +579,8 @@ const Home = () => {
           </Container>
         </Box>
       </div>
+      <Signup open={showSignupModal} onClose={handleSignupModalToggle} />
+      <Login open={showLoginModal} onClose={handleLoginModalToggle} />
     </>
   );
 };
