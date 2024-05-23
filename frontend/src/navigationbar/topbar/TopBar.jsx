@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, IconButton } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import {
@@ -11,7 +11,12 @@ import {
 const TopBar = ({ openModal }) => {
   return (
     <>
-      <Box display="flex" justifyContent={{ xs: "space-between" }} p={2}>
+      <Box
+        display="flex"
+        justifyContent={{ xs: "space-between" }}
+        p={2}
+        className="sticky top-0 bg-white"
+      >
         <Box className="hidden sm:flex bg-gray-100 p-1 rounded-lg">
           <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search..." />
           <IconButton type="button" sx={{ p: 1 }}>

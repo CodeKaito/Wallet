@@ -67,8 +67,6 @@ const ExpensesDataContextProvider = ({ children }) => {
     return currentYearExpenses.reduce((total, item) => total + item.amount, 0);
   };
 
-  console.log(currentMonthExpenses, yearExpenses);
-
   return (
     <DataContext.Provider
       value={{

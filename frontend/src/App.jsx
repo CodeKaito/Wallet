@@ -23,25 +23,33 @@ const App = () => {
     query: "(min-width: 398px)",
   });
 
+  const isLogged = false;
+
   return (
     <>
       <AddPaymentModal open={open} onClose={handleClose} />
       <div className="app">
-        {isDesktopOrLaptop ? <SideBar /> : null}
+        {isDesktopOrLaptop && isLogged && <SideBar />}
         <main className="content">
-          <TopBar openModal={handleOpen} />
+          {isLogged && <TopBar openModal={handleOpen} />}
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="transaction" element={<Transaction />} />
-            <Route path="income" element={<Income />} />
-            <Route path="savings" element={<Savings />} />
-            <Route path="calendar" element={<Calendar />} />
-            <Route path="bar" element={<Bar />} />
-            <Route path="pie" element={<Pie />} />
-            <Route path="line" element={<Line />} />
+            {!isLogged ? (
+              <Route path="/" element={<Home />} />
+            ) : (
+              <>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="transaction" element={<Transaction />} />
+                <Route path="income" element={<Income />} />
+                <Route path="savings" element={<Savings />} />
+                <Route path="calendar" element={<Calendar />} />
+                <Route path="bar" element={<Bar />} />
+                <Route path="pie" element={<Pie />} />
+                <Route path="line" element={<Line />} />
+              </>
+            )}
           </Routes>
-          {isDesktopOrLaptop ? null : <BottomBar />}
+          {isDesktopOrLaptop && isLogged && <BottomBar />}
         </main>
       </div>
     </>
