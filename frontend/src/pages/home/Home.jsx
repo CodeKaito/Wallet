@@ -227,11 +227,43 @@ const Home = () => {
           </Box>
         </div>
       </Container>
-      <div className="example-background mt-20 flex justify-center">
-        <div>
-          <img src="https://github.com/CodeKaito/Wallet/blob/main/frontend/src/assets/example.png?raw=true" />
+      <Box height={700}>
+        <div className="example-background mt-20 flex justify-center">
+          <Box>
+            <img src="https://github.com/CodeKaito/Wallet/blob/main/frontend/src/assets/example.png?raw=true" />
+          </Box>
+          <Box>
+            <img src="https://github.com/CodeKaito/Wallet/blob/main/frontend/src/assets/example-ip.png?raw=true" />
+          </Box>
         </div>
-      </div>
+      </Box>
+      <Box height={700} marginTop="200px">
+        <Typography
+          variant="h4"
+          color="#D2DAE4"
+          display="flex"
+          justifyContent="center"
+          textAlign="center"
+        >
+          Track your spending and boost your savings
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Box
+              borderRadius="10px"
+              paddingBottom="70px"
+              bg="radial-gradient(94.91% 94.91% at 50% 50%, rgba(1, 69, 137, 0.22) 0%, rgba(0, 0, 0, 0) 100%), rgba(5, 24, 48, 0.2);"
+            >
+              <Box height="280px">
+                <img />
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={6}></Grid>
+          <Grid item xs={6}></Grid>
+          <Grid item xs={6}></Grid>
+        </Grid>
+      </Box>
     </div>
   );
 };

@@ -28,7 +28,7 @@ body,
 
 .example-background {
   background-image: url("https://copilot.money/static/city-photo-a518b54f1dd8afcd009f92a3abc97fac.webp");
-  height: 1200px;
+  height: 800px;
   z-index: -2;
 }
 
