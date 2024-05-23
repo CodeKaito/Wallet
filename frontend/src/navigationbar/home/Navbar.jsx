@@ -19,6 +19,7 @@ const Navbar = () => {
           boxShadow: "none",
         }}
       >
+        <Box className="mx-20"></Box>
         {/* Icons */}
         <Box className="flex justify-end gap-2 mx-20">
           <Button size="small" variant="contained">
