@@ -21,7 +21,7 @@ const Navbar = () => {
       >
         <Box className="mx-20">
           <img
-            src="https://github.com/CodeKaito/Wallet/blob/main/frontend/src/assets/logo.jpg?raw=true"
+            src="https://raw.githubusercontent.com/CodeKaito/Wallet/main/frontend/src/assets/logo.png"
             width={50}
           />
         </Box>
