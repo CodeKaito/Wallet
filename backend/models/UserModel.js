@@ -14,11 +14,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     email: {
       type: String,
       required: false,
@@ -33,15 +28,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
       unique: true,
-    },
-    birth: {
-      type: String,
-    },
-    avatar: {
-      type: String,
-    },
-    bio: {
-      type: String,
     },
     role: {
       type: String,
