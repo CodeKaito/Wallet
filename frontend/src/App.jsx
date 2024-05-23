@@ -9,6 +9,7 @@ import {
   Bar,
   Pie,
   Line,
+  Home,
 } from "./pages";
 import { SideBar, TopBar, BottomBar } from "./navigationbar";
 import AddPaymentModal from "./utils/AddPaymentModal";
@@ -31,6 +32,7 @@ const App = () => {
           <TopBar openModal={handleOpen} />
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/home" element={<Home />} />
             <Route path="transaction" element={<Transaction />} />
             <Route path="income" element={<Income />} />
             <Route path="savings" element={<Savings />} />

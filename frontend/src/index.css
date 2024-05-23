@@ -22,6 +22,16 @@ body,
   position: relative;
 }
 
+.homepage {
+  overflow: hidden;
+}
+
+.example-background {
+  background-image: url("https://copilot.money/static/city-photo-a518b54f1dd8afcd009f92a3abc97fac.webp");
+  height: 1200px;
+  z-index: -2;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
