@@ -13,6 +13,7 @@ import {
   Modal,
   Button,
 } from "@mui/material";
+import { useUser } from "../../context/UserContext";
 import { Header } from "../../components";
 import CalendarModal from "./CalendarModal";
 import { CloseIcon } from "../../icons";
@@ -24,6 +25,7 @@ const Calendar = () => {
   const [eventTitle, setEventTitle] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const { userData } = useUser();
 
   useEffect(() => {
     fetchAllData();
@@ -77,6 +79,7 @@ const Calendar = () => {
   const handleSaveEvent = async () => {
     if (selectedDate && eventTitle) {
       const event = {
+        user: userData._id,
         title: eventTitle,
         start: selectedDate.startStr,
       };
