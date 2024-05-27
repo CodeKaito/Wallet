@@ -35,7 +35,7 @@ router
     (req, res) => {
       try {
         res.redirect(
-          `https://localhost:5173/?accessToken=${req.user.accessToken}`
+          `http://localhost:5173/?accessToken=${req.user.accessToken}`
         );
         console.log("login success");
       } catch (error) {

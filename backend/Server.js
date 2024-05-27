@@ -2,6 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const fs = require("fs");
+const passport = require("passport");
+const GoogleStrategy = require("./middlewares/GoogleAuth");
+
 require("dotenv").config();
 
 const UserRoutes = require("./routes/UserRoutes");
@@ -28,6 +31,8 @@ const startServer = async () => {
 };
 
 startServer();
+
+passport.use("google", GoogleStrategy);
 
 app.use("/api", UserRoutes);
 app.use("/api", PaymentRoutes);

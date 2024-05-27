@@ -94,15 +94,19 @@ module.exports.getMyProfile = async (req, res) => {
   }
 };
 
+const defaultAvatarUrl =
+  "https://res.cloudinary.com/dkj3atfao/image/upload/v1716812728/users/x2gbjdreqfspgokuevtd.jpg";
+
 module.exports.saveUser = async (req, res, next) => {
   try {
     cloudinaryUserMiddleware(req, res, async () => {
       const { password } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
+      const avatar = req.file ? req.file.path : defaultAvatarUrl;
       const newUser = await UserModel.create({
         ...req.body,
         password: hashedPassword,
-        avatar: req.file ? req.file.path : null,
+        avatar: avatar,
       });
 
       console.log("Saved successfully, author: " + newUser);

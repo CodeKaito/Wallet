@@ -32,18 +32,14 @@ const googleStrategy = new GoogleStrategy(
           surname: family_name,
           email: email,
           avatar: picture,
-          username: email,
           googleId: sub,
           password: sub,
         });
         await newUser.save();
 
         const accessToken = await generateJWT({
-          username: newUser.username,
+          email: newUser.email,
         });
-
-        console.log(token.accessToken);
-        console.log(accessToken);
 
         passportNext(null, { accessToken });
       }

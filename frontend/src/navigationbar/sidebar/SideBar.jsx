@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useUser } from "../../context/UserContext";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
@@ -19,6 +20,10 @@ const MySideBar = () => {
   const [collapsed, setCollapsed] = useState(true);
   const { collapseSidebar } = useProSidebar();
   const { logout } = useAuth();
+  const { userData } = useUser();
+
+  const defaultAvatarUrl =
+    "https://res.cloudinary.com/dkj3atfao/image/upload/v1716812728/users/x2gbjdreqfspgokuevtd.jpg";
 
   useEffect(() => {
     collapseSidebar();
@@ -78,7 +83,7 @@ const MySideBar = () => {
             <MenuItem className="menu1 md:hidden mt-20 flex justify-center">
               <img
                 alt="profile-user"
-                src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=600"
+                src={userData.avatar || defaultAvatarUrl}
                 className="pointer rounded-full object-cover"
                 width={100}
               />
@@ -89,7 +94,7 @@ const MySideBar = () => {
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <img
                     alt="profile-user"
-                    src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    src={userData.avatar || defaultAvatarUrl}
                     className="pointer rounded-full object-cover"
                     width={100}
                     height={100}
@@ -103,15 +108,17 @@ const MySideBar = () => {
                     sx={{ m: "10px 0 0 0" }}
                     className=""
                   >
-                    Jerome Decinco
+                    {userData.name && userData.surname
+                      ? `${userData.name} ${userData.surname}`
+                      : "User"}
                   </Typography>
-                  <Typography
+                  {/* <Typography
                     variant="h7"
                     color="rgb(184, 184, 184)"
                     className=""
                   >
                     DevOps Engineer
-                  </Typography>
+                  </Typography> */}
                 </Box>
               </Box>
             )}
