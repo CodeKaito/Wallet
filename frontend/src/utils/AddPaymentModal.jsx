@@ -11,20 +11,33 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useUser } from "../context/UserContext";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { incomeData, expensesData } from "../data";
 import { CloseIcon } from "../icons";
 
 const AddPaymentModal = ({ open, onClose }) => {
+  const { userData } = useUser();
+  console.log(userData);
   const [formData, setFormData] = useState({
     date: new Date(),
+    user: "",
     amount: "",
     note: "",
     type: "",
     category: "",
     label: "",
   });
+
+  useEffect(() => {
+    if (userData && userData._id) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        user: userData._id,
+      }));
+    }
+  }, [userData]);
 
   const handleDateChange = (date) => {
     setFormData((prevData) => ({
@@ -38,10 +51,11 @@ const AddPaymentModal = ({ open, onClose }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     try {
       const requestBody = {
         date: formData.date,
+        user: formData.user,
         amount: formData.amount,
         type: formData.type,
         category: formData.category,
@@ -49,7 +63,7 @@ const AddPaymentModal = ({ open, onClose }) => {
         note: formData.note,
       };
 
-      const response = await fetch("http://localhost:5000/api/payments", {
+      const response = await fetch("http://localhost:5000/api/payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -104,7 +118,7 @@ const AddPaymentModal = ({ open, onClose }) => {
             inputFormat="DD/MM/YYYY"
             name="date"
             views={["day", "month", "year"]}
-            renderInput={(params) => <TextField {...params} />}
+            textField={(params) => <TextField {...params} />}
             slotProps={{ textField: { fullWidth: true } }}
             onChange={handleDateChange}
           />

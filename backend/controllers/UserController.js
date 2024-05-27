@@ -99,7 +99,7 @@ module.exports.saveUser = async (req, res, next) => {
     cloudinaryUserMiddleware(req, res, async () => {
       const { password } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = await AuthorModel.create({
+      const newUser = await UserModel.create({
         ...req.body,
         password: hashedPassword,
         avatar: req.file ? req.file.path : null,
@@ -184,7 +184,7 @@ module.exports.updateUser = async (req, res, next) => {
   }
 };
 
-module.exports.deleteAuthor = async (req, res, next) => {
+module.exports.deleteUser = async (req, res, next) => {
   const { id } = req.params;
   try {
     await UserModel.findByIdAndDelete(id);

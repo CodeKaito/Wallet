@@ -2,7 +2,7 @@ const PaymentModel = require("../models/PaymentModel");
 
 module.exports.getPayments = async (req, res, next) => {
   try {
-    const payments = await PaymentModel.find();
+    const payments = await PaymentModel.find().populate("user");
     res.status(200).send(payments);
   } catch (error) {
     console.error(error.message);
@@ -20,7 +20,7 @@ module.exports.getPayments = async (req, res, next) => {
 module.exports.getPaymentDetails = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const payment = await PaymentModel.findById(id);
+    const payment = await PaymentModel.findById(id).populate("user");
     res.status(200).send(payment);
   } catch (error) {
     console.error(error.message);
@@ -39,8 +39,6 @@ module.exports.getPaymentDetails = async (req, res, next) => {
 
 module.exports.createPayment = async (req, res, next) => {
   try {
-    const body = req.body;
-    console.log(body);
     const paymentData = req.body;
     const payment = await PaymentModel.create(paymentData);
     res.status(200).send({

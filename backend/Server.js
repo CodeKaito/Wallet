@@ -29,7 +29,7 @@ const startServer = async () => {
 
 startServer();
 
-// app.use("/api", UserRoutes);
+app.use("/api", UserRoutes);
 app.use("/api", PaymentRoutes);
 app.use("/api", EventRoutes);
 

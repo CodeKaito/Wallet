@@ -3,7 +3,7 @@ const EventModel = require("../models/EventModel");
 
 module.exports.getEvents = async (req, res, next) => {
   try {
-    const events = await EventModel.find();
+    const events = await EventModel.find().populate("user");
     res.status(200).send(events);
   } catch (error) {
     console.error(error.message);
@@ -21,7 +21,7 @@ module.exports.getEvents = async (req, res, next) => {
 module.exports.getEventDetails = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const event = await EventModel.findById(id);
+    const event = await EventModel.findById(id).populate("user");
     res.status(200).send(event);
   } catch (error) {
     console.error(error.message);

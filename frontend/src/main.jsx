@@ -20,37 +20,43 @@ import "./index.css";
 
 import "dayjs/locale/en-gb";
 import { ExpensesDataContextProvider } from "./context/ExpensesDataContext";
+import { AuthContextProvider } from "./context/AuthContext";
+import { UserProvider } from "./context/UserContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ProSidebarProvider>
       <BrowserRouter>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-          <PaymentDataContextProvider>
-            <ExpensesDataContextProvider>
-              <IncomeDataContextProvider>
-                <DashboardPaymentDataContextProvider>
-                  <PieChartDataContextProvider>
-                    <BarChartDataContextProvider>
-                      <BarChartDataDaysIncomeContextProvider>
-                        <BarChartDataIncomeContextProvider>
-                          <BarChartDataDaysContextProvider>
-                            <LineChartDataContextProvider>
-                              <LineChartDataIncomeContextProvider>
-                                <LineChartDataDaysContextProvider>
-                                  <App />
-                                </LineChartDataDaysContextProvider>
-                              </LineChartDataIncomeContextProvider>
-                            </LineChartDataContextProvider>
-                          </BarChartDataDaysContextProvider>
-                        </BarChartDataIncomeContextProvider>
-                      </BarChartDataDaysIncomeContextProvider>
-                    </BarChartDataContextProvider>
-                  </PieChartDataContextProvider>
-                </DashboardPaymentDataContextProvider>
-              </IncomeDataContextProvider>
-            </ExpensesDataContextProvider>
-          </PaymentDataContextProvider>
+          <AuthContextProvider>
+            <PaymentDataContextProvider>
+              <UserProvider>
+                <ExpensesDataContextProvider>
+                  <IncomeDataContextProvider>
+                    <DashboardPaymentDataContextProvider>
+                      <PieChartDataContextProvider>
+                        <BarChartDataContextProvider>
+                          <BarChartDataDaysIncomeContextProvider>
+                            <BarChartDataIncomeContextProvider>
+                              <BarChartDataDaysContextProvider>
+                                <LineChartDataContextProvider>
+                                  <LineChartDataIncomeContextProvider>
+                                    <LineChartDataDaysContextProvider>
+                                      <App />
+                                    </LineChartDataDaysContextProvider>
+                                  </LineChartDataIncomeContextProvider>
+                                </LineChartDataContextProvider>
+                              </BarChartDataDaysContextProvider>
+                            </BarChartDataIncomeContextProvider>
+                          </BarChartDataDaysIncomeContextProvider>
+                        </BarChartDataContextProvider>
+                      </PieChartDataContextProvider>
+                    </DashboardPaymentDataContextProvider>
+                  </IncomeDataContextProvider>
+                </ExpensesDataContextProvider>
+              </UserProvider>
+            </PaymentDataContextProvider>
+          </AuthContextProvider>
         </LocalizationProvider>
       </BrowserRouter>
     </ProSidebarProvider>

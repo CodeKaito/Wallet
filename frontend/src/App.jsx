@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
 import { useMediaQuery } from "react-responsive";
 import {
   Dashboard,
@@ -23,7 +24,7 @@ const App = () => {
     query: "(min-width: 398px)",
   });
 
-  const isLogged = true;
+  const { isLogged } = useAuth();
 
   return (
     <>

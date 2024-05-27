@@ -28,7 +28,6 @@ const Signup = ({ open, onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
-    username: "",
     email: "",
     password: "",
     avatar: "",

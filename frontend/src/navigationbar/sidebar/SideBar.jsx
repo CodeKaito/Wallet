@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
+import { useAuth } from "../../context/AuthContext";
 import {
   MenuRoundedIcon,
   GridViewRoundedIcon,
@@ -9,9 +10,6 @@ import {
   BarChartRoundedIcon,
   TimelineRoundedIcon,
   PieChartIcon,
-  WalletRoundedIcon,
-  AccountBalanceRoundedIcon,
-  SavingsRoundedIcon,
   MonetizationOnRoundedIcon,
   LogoutRoundedIcon,
   TodayIcon,
@@ -20,6 +18,7 @@ import {
 const MySideBar = () => {
   const [collapsed, setCollapsed] = useState(true);
   const { collapseSidebar } = useProSidebar();
+  const { logout } = useAuth();
 
   useEffect(() => {
     collapseSidebar();
@@ -171,6 +170,7 @@ const MySideBar = () => {
           </section>
           <div className="mt-auto">
             <MenuItem
+              onClick={logout}
               className="d-flex justify-end"
               icon={<LogoutRoundedIcon />}
             >
