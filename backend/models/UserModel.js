@@ -27,7 +27,6 @@ const userSchema = new mongoose.Schema(
     googleId: {
       type: String,
       required: false,
-      unique: true,
     },
     role: {
       type: String,

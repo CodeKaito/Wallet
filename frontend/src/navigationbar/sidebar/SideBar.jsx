@@ -22,6 +22,8 @@ const MySideBar = () => {
   const { logout } = useAuth();
   const { userData } = useUser();
 
+  console.log(userData);
+
   const defaultAvatarUrl =
     "https://res.cloudinary.com/dkj3atfao/image/upload/v1716812728/users/x2gbjdreqfspgokuevtd.jpg";
 
@@ -83,7 +85,7 @@ const MySideBar = () => {
             <MenuItem className="menu1 md:hidden mt-20 flex justify-center">
               <img
                 alt="profile-user"
-                src={userData.avatar || defaultAvatarUrl}
+                src={defaultAvatarUrl}
                 className="pointer rounded-full object-cover"
                 width={100}
               />
@@ -94,7 +96,7 @@ const MySideBar = () => {
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <img
                     alt="profile-user"
-                    src={userData.avatar || defaultAvatarUrl}
+                    src={defaultAvatarUrl}
                     className="pointer rounded-full object-cover"
                     width={100}
                     height={100}

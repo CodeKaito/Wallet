@@ -19,7 +19,6 @@ import { CloseIcon } from "../icons";
 
 const AddPaymentModal = ({ open, onClose }) => {
   const { userData } = useUser();
-  console.log(userData);
   const [formData, setFormData] = useState({
     date: new Date(),
     user: "",
