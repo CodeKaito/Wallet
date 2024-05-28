@@ -14,10 +14,10 @@ const BottomBar = () => {
   return (
     <Box display="flex" justifyContent="center">
       <BottomNavigation
-        sx={{ position: "fixed", bottom: 0 }}
+        className="fixed bottom-0 w-full"
         showLabels
         value={value}
-        onChange={(event, newValue) => {
+        onChange={(newValue) => {
           setValue(newValue);
         }}
       >
@@ -28,11 +28,15 @@ const BottomBar = () => {
         />
         <BottomNavigationAction
           component={Link}
-          to="/transaction"
+          to="/transactionMobile"
           icon={<MonetizationOnRoundedIcon />}
         />
         <BottomNavigationAction icon={<WalletRoundedIcon />} />
-        <BottomNavigationAction icon={<AnalyticsIcon />} />
+        <BottomNavigationAction
+          component={Link}
+          to="/charts"
+          icon={<AnalyticsIcon />}
+        />
       </BottomNavigation>
     </Box>
   );

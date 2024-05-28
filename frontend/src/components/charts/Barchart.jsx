@@ -1,7 +1,13 @@
 import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
 
-const Barchart = ({ isDashboard = false, data, legendText, dataKeys }) => {
+const Barchart = ({
+  isDashboard = false,
+  data,
+  legendText,
+  dataKeys,
+  isMobile = false,
+}) => {
   // Funzione per formattare i valori aggiungendo il simbolo dell'euro
   const formatValue = (value) => `${value} €`;
 
@@ -45,9 +51,9 @@ const Barchart = ({ isDashboard = false, data, legendText, dataKeys }) => {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: isDashboard ? undefined : legendText,
-        legendPosition: "middle",
-        legendOffset: 32,
+        legend: isDashboard ? undefined : isMobile ? undefined : legendText,
+        legendPosition: isMobile ? null : "middle",
+        legendOffset: isMobile ? null : 32,
       }}
       axisLeft={{
         tickSize: 5,
@@ -66,30 +72,34 @@ const Barchart = ({ isDashboard = false, data, legendText, dataKeys }) => {
         modifiers: [["darker", 1.6]],
       }}
       valueFormat={formatValue}
-      legends={[
-        {
-          dataFrom: "keys",
-          anchor: "bottom-right",
-          direction: "column",
-          justify: false,
-          translateX: 120,
-          translateY: 0,
-          itemsSpacing: 2,
-          itemWidth: 100,
-          itemHeight: 20,
-          itemDirection: "left-to-right",
-          itemOpacity: 0.85,
-          symbolSize: 20,
-          effects: [
-            {
-              on: "hover",
-              style: {
-                itemOpacity: 1,
+      legends={
+        !isMobile
+          ? [
+              {
+                dataFrom: "keys",
+                anchor: "bottom-right",
+                direction: "column",
+                justify: false,
+                translateX: 120,
+                translateY: 0,
+                itemsSpacing: 2,
+                itemWidth: 100,
+                itemHeight: 20,
+                itemDirection: "left-to-right",
+                itemOpacity: 0.85,
+                symbolSize: 20,
+                effects: [
+                  {
+                    on: "hover",
+                    style: {
+                      itemOpacity: 1,
+                    },
+                  },
+                ],
               },
-            },
-          ],
-        },
-      ]}
+            ]
+          : []
+      }
       role="application"
       barAriaLabel={function (e) {
         e.id + ": " + e.formattedValue + " in month: " + e.indexValue;

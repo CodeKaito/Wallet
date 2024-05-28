@@ -16,7 +16,7 @@ const DashboardPaymentDataContextProvider = ({ children }) => {
             return {
               ...item,
               date: item.date.split("T")[0],
-              amount: `${symbol}€${item.amount}`,
+              amount: `${symbol}${item.amount}€`,
             };
           });
           setPaymentData(transformedData);

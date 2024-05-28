@@ -1,23 +1,22 @@
 import React from "react";
+import { useAuth } from "../../context/AuthContext";
 import { Box, IconButton } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
-import {
-  NotificationsOutlinedIcon,
-  SettingsOutlinedIcon,
-  SearchIcon,
-  AddIcon,
-} from "../../icons";
+import { LogoutRoundedIcon, SearchIcon, AddIcon } from "../../icons";
 
 const TopBar = ({ openModal }) => {
+  const { logout } = useAuth();
+  const defaultAvatarUrl =
+    "https://res.cloudinary.com/dkj3atfao/image/upload/v1716812728/users/x2gbjdreqfspgokuevtd.jpg";
   return (
     <>
       <Box
         display="flex"
         justifyContent={{ xs: "space-between" }}
         p={2}
-        className="sticky top-0 bg-white"
+        className="lg:sticky lg:top-0 bg-white"
       >
-        <Box className="hidden sm:flex bg-gray-100 p-1 rounded-lg">
+        <Box className="hidden sm:flex bg-gray-100 rounded-lg z-999">
           <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search..." />
           <IconButton type="button" sx={{ p: 1 }}>
             <SearchIcon />
@@ -28,7 +27,7 @@ const TopBar = ({ openModal }) => {
           <IconButton>
             <img
               alt="profile-user"
-              src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src={defaultAvatarUrl}
               className="pointer rounded-full"
               width={50}
               height={50}
@@ -37,15 +36,20 @@ const TopBar = ({ openModal }) => {
         </Box>
 
         {/* Icons */}
-        <Box className="flex">
+        <Box className="hidden md:flex">
           <IconButton onClick={openModal}>
             <AddIcon />
           </IconButton>
-          <IconButton>
+          {/* <IconButton>
             <NotificationsOutlinedIcon />
           </IconButton>
           <IconButton>
             <SettingsOutlinedIcon />
+          </IconButton> */}
+        </Box>
+        <Box className="md:hidden">
+          <IconButton>
+            <LogoutRoundedIcon onClick={logout} />
           </IconButton>
         </Box>
       </Box>

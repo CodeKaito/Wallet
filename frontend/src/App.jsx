@@ -11,7 +11,9 @@ import {
   Pie,
   Line,
   Home,
+  TransactionMobile,
 } from "./pages";
+import Charts from "./mobile/charts/Charts";
 import { SideBar, TopBar, BottomBar } from "./navigationbar";
 import AddPaymentModal from "./utils/AddPaymentModal";
 import Savings from "./pages/savings/Savings";
@@ -38,12 +40,20 @@ const App = () => {
               <Route path="/" element={<Home />} />
             ) : (
               <>
-                <Route path="/" element={<Dashboard />} />
+                <Route
+                  path="/"
+                  element={<Dashboard openModal={handleOpen} />}
+                />
                 <Route path="/home" element={<Home />} />
                 <Route path="transaction" element={<Transaction />} />
+                <Route
+                  path="transactionMobile"
+                  element={<TransactionMobile />}
+                />
                 <Route path="income" element={<Income />} />
                 <Route path="savings" element={<Savings />} />
                 <Route path="calendar" element={<Calendar />} />
+                <Route path="charts" element={<Charts />} />
                 <Route path="bar" element={<Bar />} />
                 <Route path="pie" element={<Pie />} />
                 <Route path="line" element={<Line />} />

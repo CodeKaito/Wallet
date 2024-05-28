@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Modal,
   Box,
@@ -8,7 +8,6 @@ import {
   IconButton,
   Input,
 } from "@mui/material";
-import { MuiFileInput } from "mui-file-input";
 import CloseIcon from "@mui/icons-material/Close";
 import GoogleLogin from "../googleLogin/GoogleLogin";
 
@@ -26,6 +25,8 @@ const style = {
 };
 
 const Signup = ({ open, onClose }) => {
+  const inputFileRef = useRef(null);
+
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -43,7 +44,6 @@ const Signup = ({ open, onClose }) => {
     } else {
       setFormData({ ...formData, [name]: value });
     }
-    console.log(e.target);
   };
 
   const handleSubmit = async (e) => {
@@ -55,8 +55,6 @@ const Signup = ({ open, onClose }) => {
     form.append("email", formData.email);
     form.append("password", formData.password);
     form.append("avatar", formData.avatar);
-
-    console.log(form);
 
     try {
       const response = await fetch("http://localhost:5000/api/users", {
@@ -73,6 +71,10 @@ const Signup = ({ open, onClose }) => {
     } catch (error) {
       console.error("An error occurred:", error);
     }
+  };
+
+  const handleClick = () => {
+    inputFileRef.current.click();
   };
 
   return (
@@ -105,13 +107,67 @@ const Signup = ({ open, onClose }) => {
           Signup
         </Typography>
         <form className="mt-5" onSubmit={handleSubmit}>
-          <Input
+          {formData.avatar ? (
+            <Box display="flex" justifyContent="center">
+              <Box
+                width="100px"
+                height="100px"
+                className="group"
+                position="relative"
+              >
+                <Button
+                  variant="contained"
+                  color="error"
+                  className="bg-black bg-opacity-50 flex justify-center items-center opacity-0 group-hover:opacity-100"
+                  onClick={() => setFormData({ ...formData, avatar: "" })}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  Remove
+                </Button>
+                <img
+                  src={URL.createObjectURL(formData.avatar)}
+                  alt="avatar"
+                  className="rounded-full w-full h-full object-cover"
+                />
+              </Box>
+            </Box>
+          ) : (
+            <>
+              <Input
+                style={{ display: "none" }}
+                type="file"
+                accept="image/*"
+                name="avatar"
+                onChange={handleChange}
+                inputRef={inputFileRef}
+                variant="filled"
+                required
+              />
+
+              <Button
+                color="primary"
+                variant="contained"
+                component="span"
+                onClick={handleClick}
+              >
+                Upload avatar
+              </Button>
+            </>
+          )}
+
+          {/* <Input
             type="file"
             accept="image/*"
             name="avatar"
             onChange={handleChange}
             variant="filled"
-          />
+            required
+          /> */}
           <Box display="flex" justifyContent="center" gap={1}>
             <TextField
               margin="normal"
@@ -136,7 +192,6 @@ const Signup = ({ open, onClose }) => {
               onChange={handleChange}
             />
           </Box>
-
           <TextField
             margin="normal"
             required

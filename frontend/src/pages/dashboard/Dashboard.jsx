@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 import {
   Box,
   Button,
   Container,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -21,8 +23,9 @@ import { useBarChartData as useBarChartDataDays } from "../../context/BarChartDa
 import { useLineChartData as useLineChartDataMonth } from "../../context/LineChartDataContext";
 import { useLineChartData as useLineChartDataDays } from "../../context/LineChartDataDaysContext";
 import { Header } from "../../components";
+import { AddIcon } from "../../icons";
 
-const Dashboard = () => {
+const Dashboard = ({ openModal }) => {
   const { paymentData } = usePaymentData();
   const { currentMonthExpenses, yearExpenses } = useExpensesData();
   const dataLineChartMonth = useLineChartDataMonth();
@@ -66,43 +69,93 @@ const Dashboard = () => {
   );
   const recentTransactions = sortedPaymentData.slice(0, 5);
 
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 398px)",
+  });
+
   return (
     <Box mx="20px">
       <Box className="flex justify-between align-center">
-        <Header title="Dashboard" />
+        {isDesktopOrLaptop && <Header title="Dashboard" />}
+
         <Container>
-          <Box display="flex" gap="5px">
-            <Button
-              variant={filterType === "Month" ? "contained" : "outlined"}
-              color="primary"
-              onClick={filterByMonth}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "primary.main",
-                  borderColor: "primary.main",
+          {!isDesktopOrLaptop && (
+            <>
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                height="150px"
+              >
+                <Box>
+                  <Typography sx={{ fontSize: "12px" }}>
+                    Primary · EUR
+                  </Typography>
+                  <Box display="flex" alignItems="end" justifyContent="center">
+                    <Typography sx={{ fontSize: "20px", marginRight: "3px" }}>
+                      4400
+                    </Typography>
+                    <Typography sx={{ fontSize: "12px" }}>€</Typography>
+                  </Box>
+                </Box>
+              </Box>
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                  borderRadius: "12px",
+                  bgcolor: "#141B2D",
+                  padding: "10px",
+                  marginBottom: "10px",
                   color: "white",
-                  variant: "contained",
-                },
-              }}
-            >
-              Month
-            </Button>
-            <Button
-              variant={filterType === "Year" ? "contained" : "outlined"}
-              color="primary"
-              onClick={filterByYear}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "primary.main",
-                  borderColor: "primary.main",
-                  color: "white",
-                  variant: "contained",
-                },
-              }}
-            >
-              Year
-            </Button>
-          </Box>
+                }}
+                onClick={openModal}
+              >
+                <IconButton borderRadius="50%">
+                  <AddIcon sx={{ color: "white" }} />
+                </IconButton>
+                <Typography sx={{ fontSize: "15px", marginLeft: "2px" }}>
+                  Add transaction
+                </Typography>
+              </Box>
+            </>
+          )}
+          {isDesktopOrLaptop && (
+            <Box display="flex" gap="5px">
+              <Button
+                size="small"
+                variant={filterType === "Month" ? "contained" : "outlined"}
+                color="primary"
+                onClick={filterByMonth}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "primary.main",
+                    borderColor: "primary.main",
+                    color: "white",
+                    variant: "contained",
+                  },
+                }}
+              >
+                Month
+              </Button>
+              <Button
+                variant={filterType === "Year" ? "contained" : "outlined"}
+                color="primary"
+                onClick={filterByYear}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "primary.main",
+                    borderColor: "primary.main",
+                    color: "white",
+                    variant: "contained",
+                  },
+                }}
+              >
+                Year
+              </Button>
+            </Box>
+          )}
         </Container>
       </Box>
 
@@ -203,11 +256,11 @@ const Dashboard = () => {
         >
           {/* Line Chart */}
           <Box
-            gridColumn={{ lg: "span 12", xl: "span 8" }}
+            gridColumn={{ md: "span 12", lg: "span 8" }}
             gridRow="span 2"
             color="#EDEDED"
             borderRadius="10px"
-            className="hidden xl:block"
+            className="hidden lg:block"
           >
             <Box
               mt="25px"
@@ -233,7 +286,7 @@ const Dashboard = () => {
 
           {/* Transactions */}
           <Box
-            gridColumn={{ lg: "span 12", xl: "span 4" }}
+            gridColumn={{ md: "span 12", lg: "span 4" }}
             gridRow="span 2"
             overflow="auto"
           >
@@ -245,14 +298,17 @@ const Dashboard = () => {
               p="15px"
               borderRadius="10px"
             >
-              <Typography
-                color="#141B2D"
-                fontWeight="600"
-                m={1}
-                sx={{ fontSize: { xs: "1.2rem", md: "1,5rem" } }}
-              >
-                Recent Transactions
-              </Typography>
+              {isDesktopOrLaptop && (
+                <Typography
+                  color="#141B2D"
+                  fontWeight="600"
+                  m={1}
+                  sx={{ fontSize: { xs: "1.2rem", md: "1,5rem" } }}
+                >
+                  Recent Transactions
+                </Typography>
+              )}
+
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 350 }} aria-label="simple table">
                   <TableHead>
@@ -305,7 +361,7 @@ const Dashboard = () => {
           display="grid"
           gridTemplateColumns={{
             xs: "1fr",
-            sm: "repeat(3, 1fr)",
+            sm: "1fr",
             md: "repeat(6, 1fr)",
             lg: "repeat(12, 1fr)",
           }}
@@ -319,7 +375,7 @@ const Dashboard = () => {
             backgroundColor="#141B2D"
             p="30px"
             borderRadius="10px"
-            className="hidden 2xl:block"
+            className="hidden lg:block"
           >
             <Typography variant="h5" fontWeight="600" color="#EDEDED">
               Profit
@@ -342,7 +398,7 @@ const Dashboard = () => {
             gridColumn="span 8"
             gridRow="span 2"
             borderRadius="10px"
-            className="hidden 2xl:block"
+            className="hidden lg:block"
           >
             <Typography
               variant="h5"
@@ -363,6 +419,41 @@ const Dashboard = () => {
           </Box>
         </Box>
       </Box>
+      {!isDesktopOrLaptop && (
+        <Box display="flex" gap="5px" marginY="20px">
+          <Button
+            size="small"
+            variant={filterType === "Month" ? "contained" : "outlined"}
+            color="primary"
+            onClick={filterByMonth}
+            sx={{
+              "&:hover": {
+                backgroundColor: "primary.main",
+                borderColor: "primary.main",
+                color: "white",
+                variant: "contained",
+              },
+            }}
+          >
+            Month
+          </Button>
+          <Button
+            variant={filterType === "Year" ? "contained" : "outlined"}
+            color="primary"
+            onClick={filterByYear}
+            sx={{
+              "&:hover": {
+                backgroundColor: "primary.main",
+                borderColor: "primary.main",
+                color: "white",
+                variant: "contained",
+              },
+            }}
+          >
+            Year
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };

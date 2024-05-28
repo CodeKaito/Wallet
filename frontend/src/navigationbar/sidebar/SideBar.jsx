@@ -96,7 +96,7 @@ const MySideBar = () => {
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <img
                     alt="profile-user"
-                    src={defaultAvatarUrl}
+                    src={userData.avatar}
                     className="pointer rounded-full object-cover"
                     width={100}
                     height={100}
