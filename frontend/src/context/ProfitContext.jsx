@@ -6,6 +6,8 @@ const ProfitDataContextProvider = ({ children }) => {
   const [paymentData, setPaymentData] = useState([]);
   const [currentMonthProfit, setCurrentMonthProfit] = useState(0);
   const [currentYearProfit, setCurrentYearProfit] = useState(0);
+  const [previousMonthProfit, setPreviousMonthProfit] = useState(0);
+  const [previousYearProfit, setPreviousYearProfit] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +32,14 @@ const ProfitDataContextProvider = ({ children }) => {
   useEffect(() => {
     setCurrentMonthProfit(calculateCurrentMonthProfit());
     setCurrentYearProfit(calculateCurrentYearProfit());
+  }, [paymentData]);
+
+  useEffect(() => {
+    setPreviousMonthProfit(calculatePreviousMonthProfit());
+  }, [paymentData]);
+
+  useEffect(() => {
+    setPreviousYearProfit(calculatePreviousYearProfit());
   }, [paymentData]);
 
   const updatePaymentData = async (newPaymentData) => {
@@ -81,12 +91,58 @@ const ProfitDataContextProvider = ({ children }) => {
     return currentYearIncome - currentYearExpenses;
   };
 
+  const calculatePreviousMonthProfit = () => {
+    const currentDate = new Date();
+    const previousMonthDate = new Date(currentDate);
+    previousMonthDate.setMonth(currentDate.getMonth() - 1);
+
+    const previousMonth = previousMonthDate.getMonth() + 1;
+    const previousYear = previousMonthDate.getFullYear();
+
+    const previousMonthData = paymentData.filter(
+      (item) =>
+        item.date.getMonth() + 1 === previousMonth &&
+        item.date.getFullYear() === previousYear
+    );
+
+    const previousMonthIncome = previousMonthData
+      .filter((item) => item.type === "Income")
+      .reduce((total, item) => total + item.amount, 0);
+
+    const previousMonthExpenses = previousMonthData
+      .filter((item) => item.type === "Expenses")
+      .reduce((total, item) => total + item.amount, 0);
+
+    return previousMonthIncome - previousMonthExpenses;
+  };
+
+  const calculatePreviousYearProfit = () => {
+    const currentDate = new Date();
+    const previousYear = currentDate.getFullYear() - 1;
+
+    const previousYearData = paymentData.filter(
+      (item) => item.date.getFullYear() === previousYear
+    );
+
+    const previousYearIncome = previousYearData
+      .filter((item) => item.type === "Income")
+      .reduce((total, item) => total + item.amount, 0);
+
+    const previousYearExpenses = previousYearData
+      .filter((item) => item.type === "Expenses")
+      .reduce((total, item) => total + item.amount, 0);
+
+    return previousYearIncome - previousYearExpenses;
+  };
+
   return (
     <DataContext.Provider
       value={{
         paymentData,
         updatePaymentData,
         currentMonthProfit,
+        previousMonthProfit,
+        previousYearProfit,
         currentYearProfit,
       }}
     >

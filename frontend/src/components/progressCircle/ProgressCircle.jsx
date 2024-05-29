@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-const ProgressCircle = ({ progress = "0.75", size = "30" }) => {
+const ProgressCircle = ({ progress, size = "30" }) => {
   const angle = progress * 360;
 
   return (

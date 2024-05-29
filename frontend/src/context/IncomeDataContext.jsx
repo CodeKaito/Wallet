@@ -6,8 +6,12 @@ const IncomeDataContextProvider = ({ children }) => {
   const [paymentData, setPaymentData] = useState([]);
   const [filteredByMonth, setFilteredByMonth] = useState([]);
   const [filteredByYear, setFilteredByYear] = useState([]);
-  const [monthlyTotals, setMonthlyTotals] = useState([]);
-  const [yearlyTotals, setYearlyTotals] = useState([]);
+  const [filteredByPreviousMonth, setFilteredByPreviousMonth] = useState([]);
+  const [filteredByPreviousYear, setFilteredByPreviousYear] = useState([]);
+  const [monthlyTotals, setMonthlyTotals] = useState(0);
+  const [yearlyTotals, setYearlyTotals] = useState(0);
+  const [monthlyPreviousTotals, setMonthlyPreviousTotals] = useState(0);
+  const [yearlyPreviousTotals, setYearlyPreviousTotals] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,25 +36,48 @@ const IncomeDataContextProvider = ({ children }) => {
   useEffect(() => {
     const monthlyData = filterIncomePaymentsByMonth();
     const yearlyData = filterIncomePaymentsByYear();
+    const previousMonthData = filterIncomePaymentsByPreviousMonth();
+    const previousYearData = filterIncomePaymentsByPreviousYear();
+
     setFilteredByMonth(monthlyData);
     setFilteredByYear(yearlyData);
+    setFilteredByPreviousMonth(previousMonthData);
+    setFilteredByPreviousYear(previousYearData);
+
     setMonthlyTotals(calculateMonthlyTotals(monthlyData));
     setYearlyTotals(calculateYearlyTotals(yearlyData));
+    setMonthlyPreviousTotals(calculateMonthlyTotals(previousMonthData));
+    setYearlyPreviousTotals(calculateYearlyTotals(previousYearData));
   }, [paymentData]);
 
   const filterIncomePaymentsByMonth = () => {
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
+
     const filteredData = paymentData.filter(
-      (payment) => payment.type === "Income"
+      (payment) =>
+        payment.type === "Income" &&
+        payment.date.getMonth() + 1 === currentMonth &&
+        payment.date.getFullYear() === currentYear
     );
-    const result = [];
 
-    filteredData.forEach((payment) => {
-      const month = payment.date.getMonth() + 1;
-      const year = payment.date.getFullYear();
-      result.push({ ...payment, month, year });
-    });
+    return filteredData;
+  };
 
-    return result;
+  const filterIncomePaymentsByPreviousMonth = () => {
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
+    const previousMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+    const previousYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+
+    const filteredData = paymentData.filter(
+      (payment) =>
+        payment.type === "Income" &&
+        payment.date.getMonth() + 1 === previousMonth &&
+        payment.date.getFullYear() === previousYear
+    );
+
+    return filteredData;
   };
 
   const filterIncomePaymentsByYear = () => {
@@ -67,6 +94,18 @@ const IncomeDataContextProvider = ({ children }) => {
     return result;
   };
 
+  const filterIncomePaymentsByPreviousYear = () => {
+    const currentYear = new Date().getFullYear();
+    const previousYear = currentYear - 1;
+
+    const filteredData = paymentData.filter(
+      (payment) =>
+        payment.type === "Income" && payment.date.getFullYear() === previousYear
+    );
+
+    return filteredData;
+  };
+
   const calculateMonthlyTotals = (data) => {
     const totals = {};
 
@@ -78,9 +117,9 @@ const IncomeDataContextProvider = ({ children }) => {
       totals[key] += payment.amount;
     });
 
-    const monthlyTotalsArray = Object.values(totals);
+    const totalSum = Object.values(totals).reduce((acc, curr) => acc + curr, 0);
 
-    return monthlyTotalsArray;
+    return totalSum;
   };
 
   const calculateYearlyTotals = (data) => {
@@ -94,9 +133,9 @@ const IncomeDataContextProvider = ({ children }) => {
       totals[key] += payment.amount;
     });
 
-    const yearlyTotalsArray = Object.values(totals);
+    const totalSum = Object.values(totals).reduce((acc, curr) => acc + curr, 0);
 
-    return yearlyTotalsArray;
+    return totalSum;
   };
 
   return (
@@ -105,8 +144,12 @@ const IncomeDataContextProvider = ({ children }) => {
         paymentData,
         filteredByMonth,
         filteredByYear,
+        filteredByPreviousMonth,
+        filteredByPreviousYear,
         monthlyTotals,
         yearlyTotals,
+        monthlyPreviousTotals,
+        yearlyPreviousTotals,
         filterIncomePaymentsByMonth,
         filterIncomePaymentsByYear,
       }}

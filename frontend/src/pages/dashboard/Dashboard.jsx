@@ -29,9 +29,24 @@ import { AddIcon } from "../../icons";
 
 const Dashboard = ({ openModal }) => {
   const { paymentData } = usePaymentData();
-  const { currentMonthExpenses, yearExpenses } = useExpensesData();
-  const { monthlyTotals, yearlyTotals } = useIncomeData();
-  const { currentMonthProfit, currentYearProfit } = useProfitData();
+  const {
+    currentMonthExpenses,
+    currentYearExpenses,
+    previousMonthExpenses,
+    previousYearExpenses,
+  } = useExpensesData();
+  const {
+    monthlyTotals,
+    monthlyPreviousTotals,
+    yearlyTotals,
+    yearlyPreviousTotals,
+  } = useIncomeData();
+  const {
+    currentMonthProfit,
+    currentYearProfit,
+    previousMonthProfit,
+    previousYearProfit,
+  } = useProfitData();
   const { savingData } = useSavingData();
   const dataLineChartMonth = useLineChartDataMonth();
   const dataLineChartDays = useLineChartDataDays();
@@ -45,6 +60,7 @@ const Dashboard = ({ openModal }) => {
     useState(currentMonthProfit);
   const [filterType, setFilterType] = useState("Year");
   const [legendText, setLegendText] = useState("Month");
+  const [savingAmount, setSavingAmount] = useState(0);
 
   useEffect(() => {
     filterByYear();
@@ -83,12 +99,66 @@ const Dashboard = ({ openModal }) => {
 
   const totalEarned =
     filterType === "Month"
-      ? monthlyTotals.length > 0
+      ? monthlyTotals > 0
         ? monthlyTotals
         : 0
-      : yearlyTotals.length > 0
+      : yearlyTotals > 0
       ? yearlyTotals
       : 0;
+
+  const filteredTotalEarned =
+    filterType === "Month"
+      ? monthlyPreviousTotals !== 0
+        ? ((monthlyTotals - monthlyPreviousTotals) / monthlyPreviousTotals) *
+          100
+        : 100
+      : yearlyPreviousTotals !== 0
+      ? ((yearlyTotals - yearlyPreviousTotals) / yearlyPreviousTotals) * 100
+      : 100;
+
+  const totalExpenses =
+    filterType === "Month"
+      ? currentMonthExpenses > 0
+        ? currentMonthExpenses
+        : 0
+      : currentYearExpenses > 0
+      ? currentYearExpenses
+      : 0;
+
+  const filteredTotalExpenses =
+    filterType === "Month"
+      ? previousMonthExpenses !== 0
+        ? ((currentMonthExpenses - previousMonthExpenses) /
+            previousMonthExpenses) *
+          100
+        : 100
+      : previousYearExpenses !== 0
+      ? ((currentYearExpenses - previousYearExpenses) / currentYearExpenses) *
+        100
+      : 100;
+
+  const filteredTotalProfit =
+    filterType === "Month"
+      ? previousMonthProfit !== 0
+        ? ((currentMonthProfit - previousMonthProfit) / previousMonthProfit) *
+          100
+        : 100
+      : previousYearProfit !== 0
+      ? ((currentYearProfit - previousYearProfit) / previousYearProfit) * 100
+      : 100;
+
+  const formatValue = (value) => {
+    if (value >= 1000) {
+      return (value / 1000).toFixed(1) + "k";
+    }
+    return value.toString();
+  };
+
+  useEffect(() => {
+    if (savingData.length > 0) {
+      setSavingAmount(savingData[0].amount);
+    }
+  }, [savingData]);
 
   return (
     <Box mx="20px">
@@ -110,7 +180,7 @@ const Dashboard = ({ openModal }) => {
                   </Typography>
                   <Box display="flex" alignItems="end" justifyContent="center">
                     <Typography sx={{ fontSize: "20px", marginRight: "3px" }}>
-                      4400
+                      {currentYearProfit}
                     </Typography>
                     <Typography sx={{ fontSize: "12px" }}>€</Typography>
                   </Box>
@@ -199,10 +269,10 @@ const Dashboard = ({ openModal }) => {
             borderRadius="10px"
           >
             <StatBox
-              title={`€${totalEarned}`}
-              subtitle="Earn"
-              progress="0.20"
-              stats="14%"
+              title={`€${formatValue(totalEarned)}`}
+              subtitle="Earned"
+              progress={`${filteredTotalEarned}`}
+              stats={`${filteredTotalEarned}%`}
             />
           </Box>
           <Box
@@ -215,12 +285,10 @@ const Dashboard = ({ openModal }) => {
             borderRadius="10px"
           >
             <StatBox
-              title={`€${
-                filterType === "Month" ? currentMonthExpenses : yearExpenses
-              }`}
+              title={`€${formatValue(totalExpenses)}`}
               subtitle="Expenses"
-              progress="0.50"
-              stats="21%"
+              progress={`${filteredTotalExpenses}`}
+              stats={`${filteredTotalExpenses}%`}
             />
           </Box>
           <Box
@@ -233,10 +301,12 @@ const Dashboard = ({ openModal }) => {
             borderRadius="10px"
           >
             <StatBox
-              title={`€32,41/€${savingData[0].amount}`}
+              title={`€${formatValue(filteredProfitData)}/€${formatValue(
+                savingAmount
+              )}`}
               subtitle="Saved"
-              progress="0.30"
-              stats="5%"
+              progress={`${filteredProfitData / savingAmount}`}
+              stats={`${(filteredProfitData * 100) / savingAmount}%`}
             />
           </Box>
           <Box
@@ -392,7 +462,7 @@ const Dashboard = ({ openModal }) => {
             className="hidden lg:block"
           >
             <Typography variant="h4" fontWeight="600" color="#EDEDED">
-              Profit: {filteredProfitData}€
+              Profit: €{formatValue(filteredProfitData)}
             </Typography>
             <Box
               display="flex"
@@ -400,7 +470,11 @@ const Dashboard = ({ openModal }) => {
               alignItems="center"
               mt="25px"
             >
-              <ProgressCircle size="125" />
+              <ProgressCircle
+                size="125"
+                progress={`${filteredTotalProfit}`}
+                stats="20%"
+              />
               <Typography color="#EDEDED" sx={{ mt: "15px" }}></Typography>
             </Box>
           </Box>
