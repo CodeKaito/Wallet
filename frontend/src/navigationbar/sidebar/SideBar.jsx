@@ -50,6 +50,7 @@ const MySideBar = () => {
   };
 
   return (
+    // TODO: Add fixed top-0
     <Box className="bg-gray-200">
       <Sidebar
         className="h-screen"
@@ -83,7 +84,7 @@ const MySideBar = () => {
             <MenuItem className="menu1 md:hidden mt-20 flex justify-center">
               <img
                 alt="profile-user"
-                src={defaultAvatarUrl}
+                src={userData ? userData?.avatar : defaultAvatarUrl}
                 className="pointer rounded-full object-cover"
                 width={100}
               />
@@ -94,7 +95,7 @@ const MySideBar = () => {
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <img
                     alt="profile-user"
-                    src={userData.avatar}
+                    src={userData ? userData?.avatar : defaultAvatarUrl}
                     className="pointer rounded-full object-cover"
                     width={100}
                     height={100}

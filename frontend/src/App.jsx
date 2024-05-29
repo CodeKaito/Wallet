@@ -44,7 +44,8 @@ const App = () => {
       <AddSavingModal open={openSavingModal} onClose={handleCloseSavingModal} />
       <div className="app">
         {isDesktopOrLaptop && isLogged && <SideBar />}
-        <main className="content">
+        // TODO: aggiungere sm:pl-32 lg:pl-64
+        <main className="content ">
           {isLogged && (
             <TopBar
               openPaymentModal={handleOpenPaymentModal}

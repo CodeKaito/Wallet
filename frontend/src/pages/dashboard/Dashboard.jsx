@@ -161,6 +161,7 @@ const Dashboard = ({ openModal }) => {
   }, [savingData]);
 
   return (
+    // TODO: Add className="h-full"
     <Box mx="20px">
       <Box className="flex justify-between align-center">
         {isDesktopOrLaptop && <Header title="Dashboard" />}
