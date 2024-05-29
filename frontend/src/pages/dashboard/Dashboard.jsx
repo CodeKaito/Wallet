@@ -19,6 +19,7 @@ import { usePaymentData } from "../../context/DashboardPaymentDataContext";
 import { useExpensesData } from "../../context/ExpensesDataContext";
 import { useIncomeData } from "../../context/IncomeDataContext";
 import { useProfitData } from "../../context/ProfitContext";
+import { useSavingData } from "../../context/SavingContext";
 import { useBarChartData as useBarChartDataMonth } from "../../context/BarChartDataContext";
 import { useBarChartData as useBarChartDataDays } from "../../context/BarChartDataDaysContext";
 import { useLineChartData as useLineChartDataMonth } from "../../context/LineChartDataContext";
@@ -31,6 +32,7 @@ const Dashboard = ({ openModal }) => {
   const { currentMonthExpenses, yearExpenses } = useExpensesData();
   const { monthlyTotals, yearlyTotals } = useIncomeData();
   const { currentMonthProfit, currentYearProfit } = useProfitData();
+  const { savingData } = useSavingData();
   const dataLineChartMonth = useLineChartDataMonth();
   const dataLineChartDays = useLineChartDataDays();
   const dataBarChartMonth = useBarChartDataMonth();
@@ -39,6 +41,8 @@ const Dashboard = ({ openModal }) => {
   const [filteredData, setFilteredData] = useState(dataLineChartMonth);
   const [filteredBarChartData, setFilteredBarChartData] =
     useState(dataBarChartMonth);
+  const [filteredProfitData, setFilteredProfitData] =
+    useState(currentMonthProfit);
   const [filterType, setFilterType] = useState("Year");
   const [legendText, setLegendText] = useState("Month");
 
@@ -51,6 +55,7 @@ const Dashboard = ({ openModal }) => {
     const currentYear = currentDate.getFullYear();
     setFilteredData(dataLineChartMonth);
     setFilteredBarChartData(dataBarChartMonth);
+    setFilteredProfitData(currentYearProfit);
     setFilterType("Year");
     setLegendText(currentYear.toString());
   };
@@ -62,6 +67,7 @@ const Dashboard = ({ openModal }) => {
     });
     setFilteredData(dataLineChartDays);
     setFilteredBarChartData(dataBarChartDays);
+    setFilteredProfitData(currentYearProfit);
     setFilterType("Month");
     setLegendText(currentMonth);
   };
@@ -227,7 +233,7 @@ const Dashboard = ({ openModal }) => {
             borderRadius="10px"
           >
             <StatBox
-              title="€32,41/€10k"
+              title={`€32,41/€${savingData[0].amount}`}
               subtitle="Saved"
               progress="0.30"
               stats="5%"
@@ -386,7 +392,7 @@ const Dashboard = ({ openModal }) => {
             className="hidden lg:block"
           >
             <Typography variant="h4" fontWeight="600" color="#EDEDED">
-              Profit: {currentMonthProfit}€
+              Profit: {filteredProfitData}€
             </Typography>
             <Box
               display="flex"
