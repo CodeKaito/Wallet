@@ -2,9 +2,14 @@ import React from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Box, IconButton } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
-import { LogoutRoundedIcon, SearchIcon, AddIcon } from "../../icons";
+import {
+  LogoutRoundedIcon,
+  SearchIcon,
+  AddIcon,
+  SavingsRoundedIcon,
+} from "../../icons";
 
-const TopBar = ({ openModal }) => {
+const TopBar = ({ openPaymentModal, openSavingsModal }) => {
   const { logout } = useAuth();
   const defaultAvatarUrl =
     "https://res.cloudinary.com/dkj3atfao/image/upload/v1716812728/users/x2gbjdreqfspgokuevtd.jpg";
@@ -37,15 +42,15 @@ const TopBar = ({ openModal }) => {
 
         {/* Icons */}
         <Box className="hidden md:flex">
-          <IconButton onClick={openModal}>
+          <IconButton onClick={openPaymentModal}>
             <AddIcon />
           </IconButton>
           {/* <IconButton>
             <NotificationsOutlinedIcon />
-          </IconButton>
+          </IconButton>*/}
           <IconButton>
-            <SettingsOutlinedIcon />
-          </IconButton> */}
+            <SavingsRoundedIcon onClick={openSavingsModal} />
+          </IconButton>
         </Box>
         <Box className="md:hidden">
           <IconButton>

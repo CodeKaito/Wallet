@@ -16,12 +16,19 @@ import {
 import Charts from "./mobile/charts/Charts";
 import { SideBar, TopBar, BottomBar } from "./navigationbar";
 import AddPaymentModal from "./utils/AddPaymentModal";
+import AddSavingModal from "./utils/AddSavingModal";
 import Savings from "./pages/savings/Savings";
 
 const App = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openPaymentModal, setOpenPaymentModal] = useState(false);
+  const [openSavingModal, setOpenSavingModal] = useState(false);
+
+  const handleOpenPaymentModal = () => setOpenPaymentModal(true);
+  const handleClosePaymentModal = () => setOpenPaymentModal(false);
+
+  const handleOpenSavingModal = () => setOpenSavingModal(true);
+  const handleCloseSavingModal = () => setOpenSavingModal(false);
+
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 398px)",
   });
@@ -30,11 +37,20 @@ const App = () => {
 
   return (
     <>
-      <AddPaymentModal open={open} onClose={handleClose} />
+      <AddPaymentModal
+        open={openPaymentModal}
+        onClose={handleClosePaymentModal}
+      />
+      <AddSavingModal open={openSavingModal} onClose={handleCloseSavingModal} />
       <div className="app">
         {isDesktopOrLaptop && isLogged && <SideBar />}
         <main className="content">
-          {isLogged && <TopBar openModal={handleOpen} />}
+          {isLogged && (
+            <TopBar
+              openPaymentModal={handleOpenPaymentModal}
+              openSavingsModal={handleOpenSavingModal}
+            />
+          )}
           <Routes>
             {!isLogged ? (
               <Route path="/" element={<Home />} />
@@ -42,7 +58,12 @@ const App = () => {
               <>
                 <Route
                   path="/"
-                  element={<Dashboard openModal={handleOpen} />}
+                  element={
+                    <Dashboard
+                      openPaymentModal={handleOpenPaymentModal}
+                      openSavingsModal={handleOpenSavingModal}
+                    />
+                  }
                 />
                 <Route path="/home" element={<Home />} />
                 <Route path="transaction" element={<Transaction />} />
@@ -66,4 +87,5 @@ const App = () => {
     </>
   );
 };
+
 export default App;

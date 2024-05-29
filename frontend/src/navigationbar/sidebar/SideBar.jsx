@@ -22,8 +22,6 @@ const MySideBar = () => {
   const { logout } = useAuth();
   const { userData } = useUser();
 
-  console.log(userData);
-
   const defaultAvatarUrl =
     "https://res.cloudinary.com/dkj3atfao/image/upload/v1716812728/users/x2gbjdreqfspgokuevtd.jpg";
 
@@ -110,7 +108,9 @@ const MySideBar = () => {
                     sx={{ m: "10px 0 0 0" }}
                     className=""
                   >
-                    {userData.name && userData.surname
+                    {userData.name || userData.surname
+                      ? `${userData.name}`
+                      : userData.name && userData.surname
                       ? `${userData.name} ${userData.surname}`
                       : "User"}
                   </Typography>

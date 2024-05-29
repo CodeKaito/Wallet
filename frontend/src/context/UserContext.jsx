@@ -46,8 +46,6 @@ export const UserProvider = ({ children }) => {
     setUserData(newUserData);
   };
 
-  console.log(userData);
-
   return (
     <UserContext.Provider value={{ userData, isLoading, error, updateUser }}>
       {children}

@@ -10,6 +10,7 @@ require("dotenv").config();
 const UserRoutes = require("./routes/UserRoutes");
 const PaymentRoutes = require("./routes/PaymentRoutes");
 const EventRoutes = require("./routes/EventRoutes");
+const SavingRoutes = require("./routes/SavingRoutes");
 
 const PORT = process.env.PORT || 5001;
 const db = process.env.MONGO_URI;
@@ -37,15 +38,15 @@ passport.use("google", GoogleStrategy);
 app.use("/api", UserRoutes);
 app.use("/api", PaymentRoutes);
 app.use("/api", EventRoutes);
+app.use("/api", SavingRoutes);
 
 app.get("/", (req, res) => {
-  // Leggi il file HTML e invialo come risposta
   fs.readFile("./pages/Server.html", "utf8", (err, data) => {
     if (err) {
       console.error("Error reading file:", err);
       res.status(500).send("Internal Server Error");
     } else {
-      res.send(data); // Invia il contenuto del file HTML come risposta
+      res.send(data);
     }
   });
 });

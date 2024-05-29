@@ -39,6 +39,8 @@ exports.authMiddleware = async (req, res, next) => {
       const token = req.headers.authorization.replace("Bearer ", "");
       const decoded = await exports.verifyJWT(token);
 
+      console.log(decoded);
+
       if (decoded.exp) {
         delete decoded.iat;
         delete decoded.exp;

@@ -129,7 +129,7 @@ const AddPaymentModal = ({ open, onClose }) => {
               <OutlinedInput
                 id="outlined-adornment-amount"
                 startAdornment={
-                  <InputAdornment position="start">$</InputAdornment>
+                  <InputAdornment position="start">€</InputAdornment>
                 }
                 label="Amount"
                 type="number"

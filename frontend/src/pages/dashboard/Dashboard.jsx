@@ -18,6 +18,7 @@ import { LineChart, BarChart, ProgressCircle, StatBox } from "../../components";
 import { usePaymentData } from "../../context/DashboardPaymentDataContext";
 import { useExpensesData } from "../../context/ExpensesDataContext";
 import { useIncomeData } from "../../context/IncomeDataContext";
+import { useProfitData } from "../../context/ProfitContext";
 import { useBarChartData as useBarChartDataMonth } from "../../context/BarChartDataContext";
 import { useBarChartData as useBarChartDataDays } from "../../context/BarChartDataDaysContext";
 import { useLineChartData as useLineChartDataMonth } from "../../context/LineChartDataContext";
@@ -28,11 +29,12 @@ import { AddIcon } from "../../icons";
 const Dashboard = ({ openModal }) => {
   const { paymentData } = usePaymentData();
   const { currentMonthExpenses, yearExpenses } = useExpensesData();
+  const { monthlyTotals, yearlyTotals } = useIncomeData();
+  const { currentMonthProfit, currentYearProfit } = useProfitData();
   const dataLineChartMonth = useLineChartDataMonth();
   const dataLineChartDays = useLineChartDataDays();
   const dataBarChartMonth = useBarChartDataMonth();
   const dataBarChartDays = useBarChartDataDays();
-  const { monthlyTotals, yearlyTotals } = useIncomeData();
 
   const [filteredData, setFilteredData] = useState(dataLineChartMonth);
   const [filteredBarChartData, setFilteredBarChartData] =
@@ -72,6 +74,15 @@ const Dashboard = ({ openModal }) => {
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 398px)",
   });
+
+  const totalEarned =
+    filterType === "Month"
+      ? monthlyTotals.length > 0
+        ? monthlyTotals
+        : 0
+      : yearlyTotals.length > 0
+      ? yearlyTotals
+      : 0;
 
   return (
     <Box mx="20px">
@@ -158,7 +169,6 @@ const Dashboard = ({ openModal }) => {
           )}
         </Container>
       </Box>
-
       <Box gap="16px">
         {/* ROW 1 */}
         <Box
@@ -183,9 +193,7 @@ const Dashboard = ({ openModal }) => {
             borderRadius="10px"
           >
             <StatBox
-              title={`€${
-                filterType === "Month" ? monthlyTotals : yearlyTotals
-              }`}
+              title={`€${totalEarned}`}
               subtitle="Earn"
               progress="0.20"
               stats="14%"
@@ -219,7 +227,7 @@ const Dashboard = ({ openModal }) => {
             borderRadius="10px"
           >
             <StatBox
-              title="€32,41"
+              title="€32,41/€10k"
               subtitle="Saved"
               progress="0.30"
               stats="5%"
@@ -377,8 +385,8 @@ const Dashboard = ({ openModal }) => {
             borderRadius="10px"
             className="hidden lg:block"
           >
-            <Typography variant="h5" fontWeight="600" color="#EDEDED">
-              Profit
+            <Typography variant="h4" fontWeight="600" color="#EDEDED">
+              Profit: {currentMonthProfit}€
             </Typography>
             <Box
               display="flex"
@@ -387,9 +395,7 @@ const Dashboard = ({ openModal }) => {
               mt="25px"
             >
               <ProgressCircle size="125" />
-              <Typography color="#EDEDED" sx={{ mt: "15px" }}>
-                $48,352 Income Amount
-              </Typography>
+              <Typography color="#EDEDED" sx={{ mt: "15px" }}></Typography>
             </Box>
           </Box>
 
@@ -419,6 +425,25 @@ const Dashboard = ({ openModal }) => {
           </Box>
         </Box>
       </Box>
+      {!isDesktopOrLaptop && (
+        <Box height="300px" mt="-20px">
+          <BarChart
+            isDashboard={true}
+            data={filteredBarChartData}
+            dataKeys={["House", "Food", "Transportation", "Personal"]}
+          />
+        </Box>
+      )}
+      {!isDesktopOrLaptop && (
+        <Box height="250px" m="-20px 0 0 0">
+          <LineChart
+            isDashboard={true}
+            data={filteredData}
+            legendText={legendText}
+            isMobile={true}
+          />
+        </Box>
+      )}
       {!isDesktopOrLaptop && (
         <Box display="flex" gap="5px" marginY="20px">
           <Button
