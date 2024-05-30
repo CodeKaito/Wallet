@@ -200,7 +200,7 @@ const Dashboard = ({ openModal }) => {
                 justifyContent="center"
                 alignItems="center"
                 sx={{
-                  borderRadius: "12px",
+                  borderradius: "12px",
                   bgcolor: "#141B2D",
                   padding: "10px",
                   marginBottom: "10px",
@@ -208,7 +208,7 @@ const Dashboard = ({ openModal }) => {
                 }}
                 onClick={openModal}
               >
-                <IconButton borderRadius="50%">
+                <IconButton borderradius="50%">
                   <AddIcon sx={{ color: "white" }} />
                 </IconButton>
                 <Typography sx={{ fontSize: "15px", marginLeft: "2px" }}>
@@ -275,7 +275,7 @@ const Dashboard = ({ openModal }) => {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            borderRadius="10px"
+            borderradius="10px"
           >
             <StatBox
               title={`€${formatValue(totalEarned)}`}
@@ -291,7 +291,7 @@ const Dashboard = ({ openModal }) => {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            borderRadius="10px"
+            borderradius="10px"
           >
             <StatBox
               title={`€${formatValue(totalExpenses)}`}
@@ -307,7 +307,7 @@ const Dashboard = ({ openModal }) => {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            borderRadius="10px"
+            borderradius="10px"
           >
             <StatBox
               title={`€${formatValue(filteredProfitData)}/€${formatValue(
@@ -327,7 +327,7 @@ const Dashboard = ({ openModal }) => {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            borderRadius="10px"
+            borderradius="10px"
           >
             <StatBox
               title={`${formatValue(debtAmount)}`}
@@ -340,7 +340,7 @@ const Dashboard = ({ openModal }) => {
 
         {/* SECOND ROW */}
         <Box
-          marginTop={2}
+          margintop={2}
           display="grid"
           gridTemplateColumns={{
             xs: "1fr",
@@ -354,7 +354,7 @@ const Dashboard = ({ openModal }) => {
             gridColumn={{ xs: "span 12", lg: "span 8" }}
             gridRow="span 2"
             color="#EDEDED"
-            borderRadius="10px"
+            borderradius="10px"
             className="hidden xs:block"
           >
             <Box
@@ -391,7 +391,7 @@ const Dashboard = ({ openModal }) => {
               borderBottom={`4px solid #141B2D"`}
               colors="gray"
               p="15px"
-              borderRadius="10px"
+              borderradius="10px"
             >
               {isDesktopOrLaptop && (
                 <Typography
@@ -452,7 +452,7 @@ const Dashboard = ({ openModal }) => {
 
         {/* THIRD ROW */}
         <Box
-          marginTop={2}
+          margintop={2}
           display="grid"
           gridTemplateColumns={{
             xs: "1fr",
@@ -469,7 +469,7 @@ const Dashboard = ({ openModal }) => {
             gridRow="span 2"
             backgroundColor="#141B2D"
             p="30px"
-            borderRadius="10px"
+            borderradius="10px"
             className="hidden xs:block"
           >
             <Typography variant="h4" fontWeight="600" color="#EDEDED">
@@ -494,7 +494,7 @@ const Dashboard = ({ openModal }) => {
           <Box
             gridColumn={{ xs: "span 12", lg: "span 8" }}
             gridRow="span 2"
-            borderRadius="10px"
+            borderradius="10px"
             className="hidden xs:block"
           >
             <Typography

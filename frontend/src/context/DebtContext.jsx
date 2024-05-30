@@ -5,6 +5,7 @@ import React, {
   useContext,
   useCallback,
 } from "react";
+import { useUser } from "./UserContext";
 
 const DebtDataContext = createContext();
 

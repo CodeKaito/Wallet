@@ -175,7 +175,6 @@ const Calendar = () => {
                   padding: "10px",
                   border: "1px solid #141B2D",
                   borderRadius: "10px",
-                  margin: "10px 0",
                 }}
               >
                 <Box width="100%">
@@ -243,7 +242,7 @@ const Calendar = () => {
                       }
                       borderRadius="12px"
                       color="#FFFFFF"
-                      paddingX="25px"
+                      paddingX="15px"
                     >
                       <Typography>
                         {event.extendedProps.type
@@ -300,7 +299,7 @@ const Calendar = () => {
                     day: "numeric",
                   })}
                 </Typography>
-                <Typography variant="h5" display="flex" justifyContent="center">
+                <Typography variant="h5" display="flex">
                   {!selectedEvent.extendedProps.type
                     ? "Task: " + selectedEvent.title
                     : selectedEvent.extendedProps.type === "Expenses"
@@ -308,17 +307,13 @@ const Calendar = () => {
                     : "Income: " + selectedEvent.title + "€"}
                 </Typography>
                 {selectedEvent.extendedProps.subtitle && (
-                  <Typography
-                    variant="body1"
-                    display="flex"
-                    justifyContent="center"
-                  >
+                  <Typography variant="body1" display="flex">
                     Reason: {selectedEvent.extendedProps.subtitle}
                   </Typography>
                 )}
                 {!selectedEvent.extendedProps.type && (
                   <>
-                    <Box marginTop="20px">
+                    <Box margintop="20px">
                       <Button
                         variant="outlined"
                         color="error"

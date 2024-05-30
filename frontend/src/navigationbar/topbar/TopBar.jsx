@@ -51,16 +51,16 @@ const TopBar = ({ openPaymentModal, openSavingsModal, openDebtModal }) => {
           {/* <IconButton>
             <NotificationsOutlinedIcon />
           </IconButton>*/}
-          <IconButton>
-            <SavingsRoundedIcon onClick={openSavingsModal} />
+          <IconButton onClick={openSavingsModal}>
+            <SavingsRoundedIcon />
           </IconButton>
-          <IconButton>
-            <AccountBalanceRoundedIcon onClick={openDebtModal} />
+          <IconButton onClick={openDebtModal}>
+            <AccountBalanceRoundedIcon />
           </IconButton>
         </Box>
         <Box className="md:hidden">
-          <IconButton>
-            <LogoutRoundedIcon onClick={logout} />
+          <IconButton onClick={logout}>
+            <LogoutRoundedIcon />
           </IconButton>
         </Box>
       </Box>
