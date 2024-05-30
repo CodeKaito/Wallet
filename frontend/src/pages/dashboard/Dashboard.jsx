@@ -170,7 +170,7 @@ const Dashboard = ({ openModal }) => {
   }, [debtData]);
 
   return (
-    <Box mx="20px" className="h-full">
+    <Box mx="20px">
       <Box className="flex justify-between align-center">
         {isDesktopOrLaptop && <Header title="Dashboard" />}
 
@@ -351,11 +351,11 @@ const Dashboard = ({ openModal }) => {
         >
           {/* Line Chart */}
           <Box
-            gridColumn={{ md: "span 12", lg: "span 8" }}
+            gridColumn={{ xs: "span 12", lg: "span 8" }}
             gridRow="span 2"
             color="#EDEDED"
             borderRadius="10px"
-            className="hidden lg:block"
+            className="hidden xs:block"
           >
             <Box
               mt="25px"
@@ -381,7 +381,7 @@ const Dashboard = ({ openModal }) => {
 
           {/* Transactions */}
           <Box
-            gridColumn={{ md: "span 12", lg: "span 4" }}
+            gridColumn={{ xs: "span 12", lg: "span 4" }}
             gridRow="span 2"
             overflow="auto"
           >
@@ -465,12 +465,12 @@ const Dashboard = ({ openModal }) => {
         >
           {/* OPTIMIZED */}
           <Box
-            gridColumn="span 4"
+            gridColumn={{ xs: "span 12", lg: "span 4" }}
             gridRow="span 2"
             backgroundColor="#141B2D"
             p="30px"
             borderRadius="10px"
-            className="hidden lg:block"
+            className="hidden xs:block"
           >
             <Typography variant="h4" fontWeight="600" color="#EDEDED">
               Profit: €{formatValue(filteredProfitData)}
@@ -492,10 +492,10 @@ const Dashboard = ({ openModal }) => {
 
           {/* BAR CHART */}
           <Box
-            gridColumn="span 8"
+            gridColumn={{ xs: "span 12", lg: "span 8" }}
             gridRow="span 2"
             borderRadius="10px"
-            className="hidden lg:block"
+            className="hidden xs:block"
           >
             <Typography
               variant="h5"
