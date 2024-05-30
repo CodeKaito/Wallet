@@ -12,29 +12,29 @@ import { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
 import { CloseIcon } from "../icons";
 
-const AddSavingsModal = ({ open, onClose }) => {
+const AddDebtModal = ({ open, onClose }) => {
   const { userData } = useUser();
   const [formData, setFormData] = useState({
     user: "",
     amount: "",
   });
-  const [existingSaving, setExistingSaving] = useState(null);
+  const [existingDebt, setExistingDebt] = useState(null);
 
   useEffect(() => {
-    const fetchExistingSaving = async () => {
+    const fetchExistingDebt = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/saving");
+        const response = await fetch("http://localhost:5000/api/debt");
         if (response.ok) {
-          const savingData = await response.json();
-          setExistingSaving(savingData);
+          const debtData = await response.json();
+          setExistingDebt(debtData);
         } else {
-          throw new Error("Failed to fetch existing saving data");
+          throw new Error("Failed to fetch existing debt data");
         }
       } catch (error) {
         console.error("Error:", error);
       }
     };
-    fetchExistingSaving();
+    fetchExistingDebt();
   }, []);
 
   useEffect(() => {
@@ -47,10 +47,10 @@ const AddSavingsModal = ({ open, onClose }) => {
   }, [userData]);
 
   useEffect(() => {
-    if (existingSaving && existingSaving.length > 0) {
+    if (existingDebt && existingDebt.length > 0) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        amount: existingSaving[0].amount,
+        amount: existingDebt[0].amount,
       }));
     } else {
       setFormData((prevFormData) => ({
@@ -58,7 +58,7 @@ const AddSavingsModal = ({ open, onClose }) => {
         amount: "",
       }));
     }
-  }, [existingSaving]);
+  }, [existingDebt]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -73,12 +73,11 @@ const AddSavingsModal = ({ open, onClose }) => {
         amount: formData.amount,
       };
 
-      const method =
-        existingSaving && existingSaving.length > 0 ? "PUT" : "POST";
+      const method = existingDebt && existingDebt.length > 0 ? "PUT" : "POST";
       const url =
-        existingSaving && existingSaving.length > 0
-          ? `http://localhost:5000/api/saving/${existingSaving[0]._id}`
-          : "http://localhost:5000/api/saving";
+        existingDebt && existingDebt.length > 0
+          ? `http://localhost:5000/api/debt/${existingDebt[0]._id}`
+          : "http://localhost:5000/api/debt";
 
       const response = await fetch(url, {
         method: method,
@@ -125,9 +124,7 @@ const AddSavingsModal = ({ open, onClose }) => {
       <Box sx={style}>
         <CloseIcon className="mb-3 cursor-pointer" onClick={onClose} />
         <Typography variant="h6" gutterBottom>
-          {existingSaving && existingSaving.length > 0
-            ? "Edit Saving"
-            : "Add a Saving"}
+          {existingDebt && existingDebt.length > 0 ? "Edit Debt" : "Add a Debt"}
         </Typography>
         <form onSubmit={handleSubmit}>
           <Box className="my-5">
@@ -151,7 +148,7 @@ const AddSavingsModal = ({ open, onClose }) => {
           </Box>
 
           <Button type="submit" variant="contained" color="primary">
-            {existingSaving && existingSaving.length > 0 ? "Update" : "Submit"}
+            {existingDebt && existingDebt.length > 0 ? "Update" : "Submit"}
           </Button>
         </form>
       </Box>
@@ -159,4 +156,4 @@ const AddSavingsModal = ({ open, onClose }) => {
   );
 };
 
-export default AddSavingsModal;
+export default AddDebtModal;

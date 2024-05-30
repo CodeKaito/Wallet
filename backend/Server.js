@@ -11,6 +11,7 @@ const UserRoutes = require("./routes/UserRoutes");
 const PaymentRoutes = require("./routes/PaymentRoutes");
 const EventRoutes = require("./routes/EventRoutes");
 const SavingRoutes = require("./routes/SavingRoutes");
+const DebtRoutes = require("./routes/DebtRoutes");
 
 const PORT = process.env.PORT || 5001;
 const db = process.env.MONGO_URI;
@@ -18,7 +19,12 @@ const db = process.env.MONGO_URI;
 const app = express();
 app.use(express.json());
 
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 const startServer = async () => {
   try {
@@ -39,6 +45,7 @@ app.use("/api", UserRoutes);
 app.use("/api", PaymentRoutes);
 app.use("/api", EventRoutes);
 app.use("/api", SavingRoutes);
+app.use("/api", DebtRoutes);
 
 app.get("/", (req, res) => {
   fs.readFile("./pages/Server.html", "utf8", (err, data) => {

@@ -17,17 +17,22 @@ import Charts from "./mobile/charts/Charts";
 import { SideBar, TopBar, BottomBar } from "./navigationbar";
 import AddPaymentModal from "./utils/AddPaymentModal";
 import AddSavingModal from "./utils/AddSavingModal";
+import AddDebtModal from "./utils/AddDebtModal";
 import Savings from "./pages/savings/Savings";
 
 const App = () => {
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [openSavingModal, setOpenSavingModal] = useState(false);
+  const [openDebtModal, setOpenDebtModal] = useState(false);
 
   const handleOpenPaymentModal = () => setOpenPaymentModal(true);
   const handleClosePaymentModal = () => setOpenPaymentModal(false);
 
   const handleOpenSavingModal = () => setOpenSavingModal(true);
   const handleCloseSavingModal = () => setOpenSavingModal(false);
+
+  const handleOpenDebtModal = () => setOpenDebtModal(true);
+  const handleCloseDebtModal = () => setOpenDebtModal(false);
 
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 398px)",
@@ -42,14 +47,20 @@ const App = () => {
         onClose={handleClosePaymentModal}
       />
       <AddSavingModal open={openSavingModal} onClose={handleCloseSavingModal} />
+      <AddDebtModal open={openDebtModal} onClose={handleCloseDebtModal} />
+
       <div className="app">
         {isDesktopOrLaptop && isLogged && <SideBar />}
-        // TODO: aggiungere sm:pl-32 lg:pl-64
-        <main className="content ">
+        <main
+          className={`content ${
+            isDesktopOrLaptop ? "content pl-16 lg:pl-22" : ""
+          }`}
+        >
           {isLogged && (
             <TopBar
               openPaymentModal={handleOpenPaymentModal}
               openSavingsModal={handleOpenSavingModal}
+              openDebtModal={handleOpenDebtModal}
             />
           )}
           <Routes>

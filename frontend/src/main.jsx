@@ -24,6 +24,7 @@ import { AuthContextProvider } from "./context/AuthContext";
 import { UserProvider } from "./context/UserContext";
 import { ProfitDataContextProvider } from "./context/ProfitContext";
 import { SavingDataContextProvider } from "./context/SavingContext";
+import { DebtDataContextProvider } from "./context/DebtContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -31,37 +32,39 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
           <AuthContextProvider>
-            <SavingDataContextProvider>
-              <PaymentDataContextProvider>
-                <UserProvider>
-                  <ProfitDataContextProvider>
-                    <ExpensesDataContextProvider>
-                      <IncomeDataContextProvider>
-                        <DashboardPaymentDataContextProvider>
-                          <PieChartDataContextProvider>
-                            <BarChartDataContextProvider>
-                              <BarChartDataDaysIncomeContextProvider>
-                                <BarChartDataIncomeContextProvider>
-                                  <BarChartDataDaysContextProvider>
-                                    <LineChartDataContextProvider>
-                                      <LineChartDataIncomeContextProvider>
-                                        <LineChartDataDaysContextProvider>
-                                          <App />
-                                        </LineChartDataDaysContextProvider>
-                                      </LineChartDataIncomeContextProvider>
-                                    </LineChartDataContextProvider>
-                                  </BarChartDataDaysContextProvider>
-                                </BarChartDataIncomeContextProvider>
-                              </BarChartDataDaysIncomeContextProvider>
-                            </BarChartDataContextProvider>
-                          </PieChartDataContextProvider>
-                        </DashboardPaymentDataContextProvider>
-                      </IncomeDataContextProvider>
-                    </ExpensesDataContextProvider>
-                  </ProfitDataContextProvider>
-                </UserProvider>
-              </PaymentDataContextProvider>
-            </SavingDataContextProvider>
+            <DebtDataContextProvider>
+              <SavingDataContextProvider>
+                <PaymentDataContextProvider>
+                  <UserProvider>
+                    <ProfitDataContextProvider>
+                      <ExpensesDataContextProvider>
+                        <IncomeDataContextProvider>
+                          <DashboardPaymentDataContextProvider>
+                            <PieChartDataContextProvider>
+                              <BarChartDataContextProvider>
+                                <BarChartDataDaysIncomeContextProvider>
+                                  <BarChartDataIncomeContextProvider>
+                                    <BarChartDataDaysContextProvider>
+                                      <LineChartDataContextProvider>
+                                        <LineChartDataIncomeContextProvider>
+                                          <LineChartDataDaysContextProvider>
+                                            <App />
+                                          </LineChartDataDaysContextProvider>
+                                        </LineChartDataIncomeContextProvider>
+                                      </LineChartDataContextProvider>
+                                    </BarChartDataDaysContextProvider>
+                                  </BarChartDataIncomeContextProvider>
+                                </BarChartDataDaysIncomeContextProvider>
+                              </BarChartDataContextProvider>
+                            </PieChartDataContextProvider>
+                          </DashboardPaymentDataContextProvider>
+                        </IncomeDataContextProvider>
+                      </ExpensesDataContextProvider>
+                    </ProfitDataContextProvider>
+                  </UserProvider>
+                </PaymentDataContextProvider>
+              </SavingDataContextProvider>
+            </DebtDataContextProvider>
           </AuthContextProvider>
         </LocalizationProvider>
       </BrowserRouter>

@@ -65,7 +65,6 @@ const Calendar = () => {
       }));
 
       setCurrentEvents([...updatedEvents, ...paymentEvents]);
-      console.log(currentEvents);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -92,8 +91,6 @@ const Calendar = () => {
           },
           body: JSON.stringify(event),
         });
-
-        console.log(event);
 
         if (!response.ok) {
           throw new Error("Failed to save event");

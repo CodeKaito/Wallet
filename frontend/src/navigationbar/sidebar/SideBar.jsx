@@ -50,8 +50,7 @@ const MySideBar = () => {
   };
 
   return (
-    // TODO: Add fixed top-0
-    <Box className="bg-gray-200">
+    <Box className="bg-gray-200 fixed top-0 z-50">
       <Sidebar
         className="h-screen"
         backgroundColor="#141B2D"

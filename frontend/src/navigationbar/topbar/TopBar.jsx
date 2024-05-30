@@ -1,5 +1,6 @@
 import React from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useUser } from "../../context/UserContext";
 import { Box, IconButton } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import {
@@ -7,32 +8,34 @@ import {
   SearchIcon,
   AddIcon,
   SavingsRoundedIcon,
+  AccountBalanceRoundedIcon,
 } from "../../icons";
 
-const TopBar = ({ openPaymentModal, openSavingsModal }) => {
+const TopBar = ({ openPaymentModal, openSavingsModal, openDebtModal }) => {
   const { logout } = useAuth();
+  const { userData } = useUser();
   const defaultAvatarUrl =
     "https://res.cloudinary.com/dkj3atfao/image/upload/v1716812728/users/x2gbjdreqfspgokuevtd.jpg";
   return (
     <>
       <Box
         display="flex"
-        justifyContent={{ xs: "space-between" }}
+        justifyContent={{ xs: "end" }}
         p={2}
-        className="lg:sticky lg:top-0 bg-white"
+        className="lg:sticky lg:top-0 bg-transparent"
       >
-        <Box className="hidden sm:flex bg-gray-100 rounded-lg z-999">
+        {/* <Box className="hidden sm:flex bg-gray-100 rounded-lg">
           <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search..." />
           <IconButton type="button" sx={{ p: 1 }}>
             <SearchIcon />
           </IconButton>
-        </Box>
+        </Box> */}
 
         <Box className="xs:block sm:hidden">
           <IconButton>
             <img
               alt="profile-user"
-              src={defaultAvatarUrl}
+              src={userData ? userData.avatar : defaultAvatarUrl}
               className="pointer rounded-full"
               width={50}
               height={50}
@@ -50,6 +53,9 @@ const TopBar = ({ openPaymentModal, openSavingsModal }) => {
           </IconButton>*/}
           <IconButton>
             <SavingsRoundedIcon onClick={openSavingsModal} />
+          </IconButton>
+          <IconButton>
+            <AccountBalanceRoundedIcon onClick={openDebtModal} />
           </IconButton>
         </Box>
         <Box className="md:hidden">

@@ -20,6 +20,7 @@ import { useExpensesData } from "../../context/ExpensesDataContext";
 import { useIncomeData } from "../../context/IncomeDataContext";
 import { useProfitData } from "../../context/ProfitContext";
 import { useSavingData } from "../../context/SavingContext";
+import { useDebtData } from "../../context/DebtContext";
 import { useBarChartData as useBarChartDataMonth } from "../../context/BarChartDataContext";
 import { useBarChartData as useBarChartDataDays } from "../../context/BarChartDataDaysContext";
 import { useLineChartData as useLineChartDataMonth } from "../../context/LineChartDataContext";
@@ -48,6 +49,7 @@ const Dashboard = ({ openModal }) => {
     previousYearProfit,
   } = useProfitData();
   const { savingData } = useSavingData();
+  const { debtData } = useDebtData();
   const dataLineChartMonth = useLineChartDataMonth();
   const dataLineChartDays = useLineChartDataDays();
   const dataBarChartMonth = useBarChartDataMonth();
@@ -61,6 +63,7 @@ const Dashboard = ({ openModal }) => {
   const [filterType, setFilterType] = useState("Year");
   const [legendText, setLegendText] = useState("Month");
   const [savingAmount, setSavingAmount] = useState(0);
+  const [debtAmount, setDebtAmount] = useState(0);
 
   useEffect(() => {
     filterByYear();
@@ -111,10 +114,10 @@ const Dashboard = ({ openModal }) => {
       ? monthlyPreviousTotals !== 0
         ? ((monthlyTotals - monthlyPreviousTotals) / monthlyPreviousTotals) *
           100
-        : 100
+        : 0
       : yearlyPreviousTotals !== 0
       ? ((yearlyTotals - yearlyPreviousTotals) / yearlyPreviousTotals) * 100
-      : 100;
+      : 0;
 
   const totalExpenses =
     filterType === "Month"
@@ -131,21 +134,21 @@ const Dashboard = ({ openModal }) => {
         ? ((currentMonthExpenses - previousMonthExpenses) /
             previousMonthExpenses) *
           100
-        : 100
+        : 0
       : previousYearExpenses !== 0
       ? ((currentYearExpenses - previousYearExpenses) / currentYearExpenses) *
         100
-      : 100;
+      : 0;
 
   const filteredTotalProfit =
     filterType === "Month"
       ? previousMonthProfit !== 0
         ? ((currentMonthProfit - previousMonthProfit) / previousMonthProfit) *
           100
-        : 100
+        : 0
       : previousYearProfit !== 0
       ? ((currentYearProfit - previousYearProfit) / previousYearProfit) * 100
-      : 100;
+      : 0;
 
   const formatValue = (value) => {
     if (value >= 1000) {
@@ -160,9 +163,14 @@ const Dashboard = ({ openModal }) => {
     }
   }, [savingData]);
 
+  useEffect(() => {
+    if (debtData.length > 0) {
+      setDebtAmount(debtData[0].amount);
+    }
+  }, [debtData]);
+
   return (
-    // TODO: Add className="h-full"
-    <Box mx="20px">
+    <Box mx="20px" className="h-full">
       <Box className="flex justify-between align-center">
         {isDesktopOrLaptop && <Header title="Dashboard" />}
 
@@ -307,7 +315,9 @@ const Dashboard = ({ openModal }) => {
               )}`}
               subtitle="Saved"
               progress={`${filteredProfitData / savingAmount}`}
-              stats={`${(filteredProfitData * 100) / savingAmount}%`}
+              stats={`${Math.floor(
+                (filteredProfitData * 100) / savingAmount
+              )}%`}
             />
           </Box>
           <Box
@@ -320,10 +330,10 @@ const Dashboard = ({ openModal }) => {
             borderRadius="10px"
           >
             <StatBox
-              title="€732"
-              subtitle="Others"
-              progress="0.80"
-              stats="43%"
+              title={`${formatValue(debtAmount)}`}
+              subtitle="Debts"
+              progress={`${debtAmount / debtAmount}/100`}
+              stats={`${Math.floor(debtAmount / debtAmount / 100)}%`}
             />
           </Box>
         </Box>

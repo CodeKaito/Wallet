@@ -23,6 +23,15 @@ router
   .put("/users/:id", updateUser)
   .delete("/users/:id", deleteUser)
 
+  .post("/logout", (req, res, next) => {
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/");
+    });
+  })
+
   .get(
     "/googleLogin",
     passport.authenticate("google", {
@@ -43,14 +52,6 @@ router
         res.status(500).send("Internal Server Error");
       }
     }
-  )
-  .post("/logout", (req, res, next) => {
-    req.logout(function (err) {
-      if (err) {
-        return next(err);
-      }
-      res.redirect("/");
-    });
-  });
+  );
 
 module.exports = router;
