@@ -281,7 +281,7 @@ const Dashboard = ({ openModal }) => {
               title={`€${formatValue(totalEarned)}`}
               subtitle="Earned"
               progress={`${filteredTotalEarned}`}
-              stats={`${filteredTotalEarned}%`}
+              stats={`${Math.floor(filteredTotalEarned)}%`}
             />
           </Box>
           <Box
@@ -297,7 +297,7 @@ const Dashboard = ({ openModal }) => {
               title={`€${formatValue(totalExpenses)}`}
               subtitle="Expenses"
               progress={`${filteredTotalExpenses}`}
-              stats={`${filteredTotalExpenses}%`}
+              stats={`${Math.floor(filteredTotalExpenses)}%`}
             />
           </Box>
           <Box
