@@ -6,12 +6,14 @@ import React, {
   useCallback,
 } from "react";
 import { useUser } from "./UserContext";
+import CustomLoader from "../utils/CustomLoader";
 
 const DataContext = createContext();
 
 const PaymentDataContextProvider = ({ children }) => {
-  const { userData, isLoading } = useUser();
+  const { userData, isLoading: userLoading } = useUser();
   const [paymentData, setPaymentData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
     if (!userData) {
@@ -21,26 +23,27 @@ const PaymentDataContextProvider = ({ children }) => {
       const response = await fetch("http://localhost:5000/api/payments");
       if (response.ok) {
         const data = await response.json();
-        const paymentData = data.filter(
+        const filteredData = data.filter(
           (data) => data.user._id === userData._id
         );
-        const transformedData = paymentData.map((item) => ({
+        const transformedData = filteredData.map((item) => ({
           ...item,
           date: new Date(item.date),
-          amount: `€${item.amount}`,
         }));
         setPaymentData(transformedData);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+      setIsLoading(false);
     }
   }, [userData]);
 
   useEffect(() => {
-    if (!isLoading && userData) {
+    if (!userLoading && userData && isLoading) {
       fetchData();
     }
-  }, [fetchData, isLoading, userData]);
+  }, [fetchData, userLoading, userData, isLoading]);
 
   const updatePaymentData = async (newPaymentData) => {
     try {
@@ -49,6 +52,10 @@ const PaymentDataContextProvider = ({ children }) => {
       console.error("Error updating data:", error);
     }
   };
+
+  if (isLoading || userLoading) {
+    return <CustomLoader />;
+  }
 
   return (
     <DataContext.Provider value={{ paymentData, updatePaymentData }}>
