@@ -340,7 +340,7 @@ const Dashboard = ({ openModal }) => {
 
         {/* SECOND ROW */}
         <Box
-          margintop={2}
+          marginTop={2}
           display="grid"
           gridTemplateColumns={{
             xs: "1fr",
@@ -452,7 +452,7 @@ const Dashboard = ({ openModal }) => {
 
         {/* THIRD ROW */}
         <Box
-          margintop={2}
+          marginTop={2}
           display="grid"
           gridTemplateColumns={{
             xs: "1fr",

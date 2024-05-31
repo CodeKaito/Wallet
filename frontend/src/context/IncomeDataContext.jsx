@@ -1,8 +1,16 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
+import { useUser } from "./UserContext";
 
 const DataContext = createContext();
 
 const IncomeDataContextProvider = ({ children }) => {
+  const { userData, isLoading } = useUser();
   const [paymentData, setPaymentData] = useState([]);
   const [filteredByMonth, setFilteredByMonth] = useState([]);
   const [filteredByYear, setFilteredByYear] = useState([]);
@@ -13,25 +21,33 @@ const IncomeDataContextProvider = ({ children }) => {
   const [monthlyPreviousTotals, setMonthlyPreviousTotals] = useState(0);
   const [yearlyPreviousTotals, setYearlyPreviousTotals] = useState(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/payments");
-        if (response.ok) {
-          const paymentData = await response.json();
-          const transformedData = paymentData.map((item) => ({
-            ...item,
-            date: new Date(item.date),
-          }));
-          setPaymentData(transformedData);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
+  const fetchData = useCallback(async () => {
+    if (!userData) {
+      return;
+    }
+    try {
+      const response = await fetch("http://localhost:5000/api/payments");
+      if (response.ok) {
+        const data = await response.json();
+        const paymentData = data.filter(
+          (data) => data.user._id === userData._id
+        );
+        const transformedData = paymentData.map((item) => ({
+          ...item,
+          date: new Date(item.date),
+        }));
+        setPaymentData(transformedData);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, [userData]);
 
-    fetchData();
-  }, []);
+  useEffect(() => {
+    if (!isLoading && userData) {
+      fetchData();
+    }
+  }, [fetchData, isLoading, userData]);
 
   useEffect(() => {
     const monthlyData = filterIncomePaymentsByMonth();

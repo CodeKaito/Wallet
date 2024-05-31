@@ -243,7 +243,7 @@ const Home = () => {
                 variant="h5"
                 display="flex"
                 justifyContent="center"
-                margintop="5px"
+                marginTop="5px"
                 textAlign="center"
               >
                 Navigate your finances with confidence. Track spending, budgets,
@@ -262,7 +262,7 @@ const Home = () => {
             </Box>
           </div>
         </Box>
-        <Box margintop="200px" minHeight="400px">
+        <Box marginTop="200px" minHeight="400px">
           <Typography
             variant="h3"
             color="#D2DAE4"
@@ -318,7 +318,7 @@ const Home = () => {
                       textAlign="center"
                       width="300px"
                       marginX="auto"
-                      margintop="10px"
+                      marginTop="10px"
                     >
                       Review your recent spending, check on that refund, and see
                       what bills are coming up
@@ -359,7 +359,7 @@ const Home = () => {
                       textAlign="center"
                       width="300px"
                       marginX="auto"
-                      margintop="10px"
+                      marginTop="10px"
                     >
                       Our data-driven categorization engine creates custom rules
                       to fit your spending
@@ -401,7 +401,7 @@ const Home = () => {
                       textAlign="center"
                       width="300px"
                       marginX="auto"
-                      margintop="10px"
+                      marginTop="10px"
                     >
                       Set budgets to carry your remaining balance from one month
                       to the next
@@ -443,7 +443,7 @@ const Home = () => {
                       textAlign="center"
                       width="300px"
                       marginX="auto"
-                      margintop="10px"
+                      marginTop="10px"
                     >
                       Get a high-level overview with monthly summaries of your
                       income and expenses
@@ -454,22 +454,22 @@ const Home = () => {
             </Grid>
           </Container>
         </Box>
-        <Container margintop="20px" height="600px">
+        <Container marginTop="20px" height="600px">
           <Box>
-            <Typography variant="h4" color="#D2DAE4" margintop="100px">
+            <Typography variant="h4" color="#D2DAE4" marginTop="100px">
               We're on a mission to help you reclaim your data from the banks
             </Typography>
           </Box>
           <Box>
-            <Typography variant="h5" color="#5D7696" margintop="10px">
+            <Typography variant="h5" color="#5D7696" marginTop="10px">
               We believe providing access to better financial tools improves
               people’s lives, so we’re taking money matters into our own hands.
             </Typography>
           </Box>
-          <Box margintop="100px">
+          <Box marginTop="100px">
             <img src="https://raw.githubusercontent.com/CodeKaito/Wallet/main/frontend/src/assets/image5.webp" />
           </Box>
-          <Box margintop="40px">
+          <Box marginTop="40px">
             <Typography variant="h6" color="#5D7696">
               Staying on top of finances takes way too much time and energy. We
               built Copilot because we got tired of waiting around for someone
@@ -483,7 +483,7 @@ const Home = () => {
             </Typography>
           </Box>
         </Container>
-        <Box component="footer" color="#D2DAE4" py={6} margintop="300px">
+        <Box component="footer" color="#D2DAE4" py={6} marginTop="300px">
           <Container>
             <Grid container spacing={3}>
               <Grid item xs={12} md={3}>

@@ -313,7 +313,7 @@ const Calendar = () => {
                 )}
                 {!selectedEvent.extendedProps.type && (
                   <>
-                    <Box margintop="20px">
+                    <Box marginTop="20px">
                       <Button
                         variant="outlined"
                         color="error"

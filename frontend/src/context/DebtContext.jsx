@@ -13,7 +13,7 @@ export const DebtDataContextProvider = ({ children }) => {
   const [debtData, setDebtData] = useState([]);
   const { userData, isLoading } = useUser();
 
-  const fetchDebtData = useCallback(async () => {
+  const fetchData = useCallback(async () => {
     if (!userData) {
       return;
     }
@@ -23,7 +23,7 @@ export const DebtDataContextProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
         const filteredData = data.filter(
-          (debt) => debt.user._id === userData._id
+          (data) => data.user._id === userData._id
         );
         setDebtData(filteredData);
       } else {
@@ -36,14 +36,12 @@ export const DebtDataContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (!isLoading && userData) {
-      fetchDebtData();
+      fetchData();
     }
-  }, [fetchDebtData, isLoading, userData]);
+  }, [fetchData, isLoading, userData]);
 
   return (
-    <DebtDataContext.Provider
-      value={{ debtData, refreshDebtData: fetchDebtData }}
-    >
+    <DebtDataContext.Provider value={{ debtData, refreshDebtData: fetchData }}>
       {children}
     </DebtDataContext.Provider>
   );
