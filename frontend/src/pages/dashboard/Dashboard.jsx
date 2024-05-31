@@ -86,7 +86,7 @@ const Dashboard = ({ openModal }) => {
     });
     setFilteredData(dataLineChartDays);
     setFilteredBarChartData(dataBarChartDays);
-    setFilteredProfitData(currentYearProfit);
+    setFilteredProfitData(currentMonthProfit);
     setFilterType("Month");
     setLegendText(currentMonth);
   };
@@ -330,7 +330,7 @@ const Dashboard = ({ openModal }) => {
             borderRadius="10px"
           >
             <StatBox
-              title={`${formatValue(debtAmount)}`}
+              title={`€${formatValue(debtAmount)}`}
               subtitle="Debts"
               progress={`${debtAmount / debtAmount}/100`}
               stats={`${Math.floor(debtAmount / debtAmount / 100)}%`}

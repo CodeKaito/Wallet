@@ -175,6 +175,7 @@ const Calendar = () => {
                   padding: "10px",
                   border: "1px solid #141B2D",
                   borderRadius: "10px",
+                  margin: "10px 0",
                 }}
               >
                 <Box width="100%">

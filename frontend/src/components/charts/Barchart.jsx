@@ -8,7 +8,6 @@ const Barchart = ({
   dataKeys,
   isMobile = false,
 }) => {
-  // Funzione per formattare i valori aggiungendo il simbolo dell'euro
   const formatValue = (value) => `${value} €`;
 
   return (

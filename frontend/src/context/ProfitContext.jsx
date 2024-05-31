@@ -6,53 +6,57 @@ import React, {
   useCallback,
 } from "react";
 import { useUser } from "./UserContext";
+import CustomLoader from "../utils/CustomLoader";
 
 const DataContext = createContext();
 
 const ProfitDataContextProvider = ({ children }) => {
-  const { userData, isLoading } = useUser();
+  const { userData, isLoading: userLoading } = useUser();
   const [paymentData, setPaymentData] = useState([]);
   const [currentMonthProfit, setCurrentMonthProfit] = useState(0);
   const [currentYearProfit, setCurrentYearProfit] = useState(0);
   const [previousMonthProfit, setPreviousMonthProfit] = useState(0);
   const [previousYearProfit, setPreviousYearProfit] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
+    if (!userData) {
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:5000/api/payments");
       if (response.ok) {
         const data = await response.json();
-        const paymentData = data.filter(
+        const profitData = data.filter(
           (data) => data.user._id === userData._id
         );
-        const transformedData = paymentData.map((item) => ({
+        const transformedData = profitData.map((item) => ({
           ...item,
           date: new Date(item.date),
         }));
         setPaymentData(transformedData);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+      setIsLoading(false);
     }
   }, [userData]);
 
   useEffect(() => {
-    if (!isLoading && userData) {
+    if (!userLoading && userData) {
       fetchData();
     }
-  }, [fetchData, isLoading, userData]);
+  }, [fetchData, userLoading, userData]);
 
   useEffect(() => {
-    setCurrentMonthProfit(calculateCurrentMonthProfit());
-    setCurrentYearProfit(calculateCurrentYearProfit());
-  }, [paymentData]);
-
-  useEffect(() => {
-    setPreviousMonthProfit(calculatePreviousMonthProfit());
-  }, [paymentData]);
-
-  useEffect(() => {
-    setPreviousYearProfit(calculatePreviousYearProfit());
+    if (paymentData.length > 0) {
+      setCurrentMonthProfit(calculateCurrentMonthProfit());
+      setCurrentYearProfit(calculateCurrentYearProfit());
+      setPreviousMonthProfit(calculatePreviousMonthProfit());
+      setPreviousYearProfit(calculatePreviousYearProfit());
+    }
   }, [paymentData]);
 
   const updatePaymentData = async (newPaymentData) => {
@@ -147,6 +151,10 @@ const ProfitDataContextProvider = ({ children }) => {
 
     return previousYearIncome - previousYearExpenses;
   };
+
+  if (isLoading || userLoading) {
+    return <CustomLoader />;
+  }
 
   return (
     <DataContext.Provider
