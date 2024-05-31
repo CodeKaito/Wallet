@@ -32,10 +32,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
           <AuthContextProvider>
-            <DebtDataContextProvider>
-              <SavingDataContextProvider>
-                <PaymentDataContextProvider>
-                  <UserProvider>
+            <UserProvider>
+              <DebtDataContextProvider>
+                <SavingDataContextProvider>
+                  <PaymentDataContextProvider>
                     <ProfitDataContextProvider>
                       <ExpensesDataContextProvider>
                         <IncomeDataContextProvider>
@@ -61,10 +61,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                         </IncomeDataContextProvider>
                       </ExpensesDataContextProvider>
                     </ProfitDataContextProvider>
-                  </UserProvider>
-                </PaymentDataContextProvider>
-              </SavingDataContextProvider>
-            </DebtDataContextProvider>
+                  </PaymentDataContextProvider>
+                </SavingDataContextProvider>
+              </DebtDataContextProvider>
+            </UserProvider>
           </AuthContextProvider>
         </LocalizationProvider>
       </BrowserRouter>

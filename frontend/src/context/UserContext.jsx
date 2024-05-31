@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         if (isLogged) {
-          const response = await fetch("http://localhost:5000/api/me/", {
+          const response = await fetch("http://localhost:5000/api/me", {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -29,10 +29,8 @@ export const UserProvider = ({ children }) => {
           const data = await response.json();
           setUserData(data);
           localStorage.setItem("isLogged", true);
-          setIsLoading(false);
-        } else {
-          setIsLoading(false);
         }
+        setIsLoading(false);
       } catch (error) {
         setError(error);
         setIsLoading(false);

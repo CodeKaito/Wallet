@@ -53,7 +53,7 @@ const App = () => {
         {isDesktopOrLaptop && isLogged && <SideBar />}
         <main
           className={`content ${
-            isDesktopOrLaptop ? "content pl-16 lg:pl-22" : ""
+            isDesktopOrLaptop && isLogged ? "content pl-16 lg:pl-22" : ""
           }`}
         >
           {isLogged && (
