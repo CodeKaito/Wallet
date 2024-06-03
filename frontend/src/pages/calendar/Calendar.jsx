@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import { formatDate } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -17,6 +17,7 @@ import { useUser } from "../../context/UserContext";
 import { Header } from "../../components";
 import CalendarModal from "./CalendarModal";
 import { CloseIcon } from "../../icons";
+import CustomLoader from "../../utils/CustomLoader";
 
 const Calendar = () => {
   const [currentEvents, setCurrentEvents] = useState([]);
@@ -25,13 +26,15 @@ const Calendar = () => {
   const [eventTitle, setEventTitle] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const { userData } = useUser();
+  const { userData, isLoading: userLoading } = useUser();
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    fetchAllData();
-  }, []);
-
-  const fetchAllData = async () => {
+  const fetchAllData = useCallback(async () => {
+    setIsLoading(true);
+    if (!userData) {
+      setIsLoading(false);
+      return;
+    }
     try {
       const eventsResponse = await fetch("http://localhost:5000/api/events");
       const paymentsResponse = await fetch(
@@ -43,16 +46,23 @@ const Calendar = () => {
       }
 
       const events = await eventsResponse.json();
+      const payments = await paymentsResponse.json();
 
-      const updatedEvents = events.map((event) => ({
+      const filteredEvents = events.filter(
+        (event) => event.user._id === userData._id
+      );
+
+      const filteredPayments = payments.filter(
+        (payment) => payment.user._id === userData._id
+      );
+
+      const updatedEvents = filteredEvents.map((event) => ({
         id: event._id,
         title: event.title,
         start: event.start,
       }));
 
-      const payments = await paymentsResponse.json();
-
-      const paymentEvents = payments.map((payment) => ({
+      const paymentEvents = filteredPayments.map((payment) => ({
         id: payment._id,
 
         title:
@@ -65,10 +75,18 @@ const Calendar = () => {
       }));
 
       setCurrentEvents([...updatedEvents, ...paymentEvents]);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.error("Error fetching data:", error);
     }
-  };
+  }, [userData]);
+
+  useEffect(() => {
+    if (!userLoading && userData) {
+      fetchAllData();
+    }
+  }, [fetchAllData, userLoading, userData]);
 
   const handleDateClick = (arg) => {
     setSelectedDate(arg);
@@ -147,6 +165,10 @@ const Calendar = () => {
       }
     }
   };
+
+  if (isLoading || userLoading) {
+    return <CustomLoader />;
+  }
 
   return (
     <Box m="20px">

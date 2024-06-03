@@ -17,7 +17,7 @@ const ProfitDataContextProvider = ({ children }) => {
   const [currentYearProfit, setCurrentYearProfit] = useState(0);
   const [previousMonthProfit, setPreviousMonthProfit] = useState(0);
   const [previousYearProfit, setPreviousYearProfit] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = useCallback(async () => {
     if (!userData) {
@@ -152,9 +152,9 @@ const ProfitDataContextProvider = ({ children }) => {
     return previousYearIncome - previousYearExpenses;
   };
 
-  if (isLoading || userLoading) {
-    return <CustomLoader />;
-  }
+  // if (isLoading || userLoading) {
+  //   return <CustomLoader />;
+  // }
 
   return (
     <DataContext.Provider

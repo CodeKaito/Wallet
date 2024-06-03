@@ -25,7 +25,10 @@ const AddDebtModal = ({ open, onClose }) => {
       try {
         const response = await fetch("http://localhost:5000/api/debt");
         if (response.ok) {
-          const debtData = await response.json();
+          const data = await response.json();
+          const debtData = data.filter(
+            (data) => data.user._id === userData._id
+          );
           setExistingDebt(debtData);
         } else {
           throw new Error("Failed to fetch existing debt data");

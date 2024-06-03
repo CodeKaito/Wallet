@@ -13,7 +13,7 @@ const DataContext = createContext({});
 const BarChartDataContextProvider = ({ children }) => {
   const { userData, isLoading: userLoading } = useUser();
   const [dataBarChart, setDataBarChart] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const generateMonthlyData = () => {
     const months = [
@@ -52,6 +52,7 @@ const BarChartDataContextProvider = ({ children }) => {
     }
     try {
       const response = await fetch("http://localhost:5000/api/payments");
+      setIsLoading(true);
       if (response.ok) {
         const data = await response.json();
         const barchartData = data.filter(
@@ -107,8 +108,9 @@ const BarChartDataContextProvider = ({ children }) => {
           };
         });
 
-        setDataBarChart(updatedDataBarChart);
         setIsLoading(false);
+
+        setDataBarChart(updatedDataBarChart);
       } else {
         console.log("Error fetching chart data");
         setIsLoading(false);
@@ -120,10 +122,10 @@ const BarChartDataContextProvider = ({ children }) => {
   }, [userData]);
 
   useEffect(() => {
-    if (!userLoading && userData && isLoading) {
+    if (!userLoading && userData) {
       fetchData();
     }
-  }, [fetchData, userLoading, userData, isLoading]);
+  }, [fetchData, userLoading, userData]);
 
   if (isLoading || userLoading) {
     return <CustomLoader />;

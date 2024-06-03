@@ -28,7 +28,7 @@ import { useLineChartData as useLineChartDataDays } from "../../context/LineChar
 import { Header } from "../../components";
 import { AddIcon } from "../../icons";
 
-const Dashboard = ({ openModal }) => {
+const Dashboard = ({ openPaymentModal }) => {
   const { paymentData } = usePaymentData();
   const {
     currentMonthExpenses,
@@ -206,7 +206,7 @@ const Dashboard = ({ openModal }) => {
                   marginBottom: "10px",
                   color: "white",
                 }}
-                onClick={openModal}
+                onClick={openPaymentModal}
               >
                 <IconButton borderRadius="50%">
                   <AddIcon sx={{ color: "white" }} />
@@ -332,7 +332,7 @@ const Dashboard = ({ openModal }) => {
             <StatBox
               title={`€${formatValue(debtAmount)}`}
               subtitle="Debts"
-              progress={`${debtAmount / debtAmount}/100`}
+              progress={`${debtAmount / debtAmount}`}
               stats={`${Math.floor(debtAmount / debtAmount / 100)}%`}
             />
           </Box>

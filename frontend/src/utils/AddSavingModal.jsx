@@ -25,7 +25,10 @@ const AddSavingsModal = ({ open, onClose }) => {
       try {
         const response = await fetch("http://localhost:5000/api/saving");
         if (response.ok) {
-          const savingData = await response.json();
+          const data = await response.json();
+          const savingData = data.filter(
+            (data) => data.user._id === userData._id
+          );
           setExistingSaving(savingData);
         } else {
           throw new Error("Failed to fetch existing saving data");

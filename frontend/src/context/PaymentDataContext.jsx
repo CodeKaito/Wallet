@@ -13,37 +13,45 @@ const DataContext = createContext();
 const PaymentDataContextProvider = ({ children }) => {
   const { userData, isLoading: userLoading } = useUser();
   const [paymentData, setPaymentData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = useCallback(async () => {
     if (!userData) {
+      setIsLoading(false);
       return;
     }
     try {
+      setIsLoading(true);
       const response = await fetch("http://localhost:5000/api/payments");
       if (response.ok) {
         const data = await response.json();
         const filteredData = data.filter(
           (data) => data.user._id === userData._id
         );
+        console.log(filteredData);
         const transformedData = filteredData.map((item) => ({
           ...item,
           date: new Date(item.date),
         }));
-        setPaymentData(transformedData);
         setIsLoading(false);
+        setPaymentData(transformedData);
+      } else {
+        setIsLoading(false);
+        console.error("Error fetching data:", response.statusText);
       }
     } catch (error) {
+      setIsLoading(false);
       console.error("Error fetching data:", error);
+    } finally {
       setIsLoading(false);
     }
   }, [userData]);
 
   useEffect(() => {
-    if (!userLoading && userData && isLoading) {
+    if (!userLoading && userData) {
       fetchData();
     }
-  }, [fetchData, userLoading, userData, isLoading]);
+  }, [fetchData, userLoading, userData]);
 
   const updatePaymentData = async (newPaymentData) => {
     try {

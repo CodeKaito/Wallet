@@ -20,8 +20,10 @@ import {
 import { BarChart, LineChart, Header } from "../../components";
 import { useBarChartData } from "../../context/BarChartDataIncomeContext";
 import { useLineChartData } from "../../context/LineChartDataIncomeContext";
+import { useUser } from "../../context/UserContext";
 
 const Income = () => {
+  const { userData } = useUser();
   const [selectedView, setSelectedView] = useState("table");
   const [payments, setPayments] = useState([]);
   const dataBarChart = useBarChartData();
@@ -33,7 +35,8 @@ const Income = () => {
         const response = await fetch("http://localhost:5000/api/payments");
         const data = await response.json();
         const incomePayments = data.filter(
-          (payment) => payment.type === "Income"
+          (payment) =>
+            payment.type === "Income" && payment.user._id === userData._id
         );
         incomePayments.sort((b, a) => new Date(a.date) - new Date(b.date));
         setPayments(incomePayments);
