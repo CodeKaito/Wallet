@@ -46,14 +46,18 @@ const Barchart = ({
       }}
       axisTop={null}
       axisRight={null}
-      axisBottom={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: isDashboard ? undefined : isMobile ? undefined : legendText,
-        legendPosition: isMobile ? null : "middle",
-        legendOffset: isMobile ? null : 32,
-      }}
+      axisBottom={
+        isMobile
+          ? null
+          : {
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: isDashboard ? null : isMobile ? null : legendText,
+              legendPosition: isMobile ? null : "middle",
+              legendOffset: isMobile ? null : 32,
+            }
+      }
       axisLeft={{
         tickSize: 5,
         tickValues: isDashboard ? 4 : 10,
@@ -71,34 +75,30 @@ const Barchart = ({
         modifiers: [["darker", 1.6]],
       }}
       valueFormat={formatValue}
-      legends={
-        !isMobile
-          ? [
-              {
-                dataFrom: "keys",
-                anchor: "bottom-right",
-                direction: "column",
-                justify: false,
-                translateX: 120,
-                translateY: 0,
-                itemsSpacing: 2,
-                itemWidth: 100,
-                itemHeight: 20,
-                itemDirection: "left-to-right",
-                itemOpacity: 0.85,
-                symbolSize: 20,
-                effects: [
-                  {
-                    on: "hover",
-                    style: {
-                      itemOpacity: 1,
-                    },
-                  },
-                ],
+      legends={[
+        {
+          dataFrom: "keys",
+          anchor: "bottom-right",
+          direction: "column",
+          justify: false,
+          translateX: 120,
+          translateY: 0,
+          itemsSpacing: 2,
+          itemWidth: 100,
+          itemHeight: 20,
+          itemDirection: "left-to-right",
+          itemOpacity: 0.85,
+          symbolSize: 20,
+          effects: [
+            {
+              on: "hover",
+              style: {
+                itemOpacity: 1,
               },
-            ]
-          : []
-      }
+            },
+          ],
+        },
+      ]}
       role="application"
       barAriaLabel={function (e) {
         e.id + ": " + e.formattedValue + " in month: " + e.indexValue;

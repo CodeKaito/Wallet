@@ -20,7 +20,7 @@ const TopBar = ({ openPaymentModal, openSavingsModal, openDebtModal }) => {
     <>
       <Box
         display="flex"
-        justifyContent={{ xs: "end" }}
+        justifyContent={{ xs: "space-between", lg: "end" }}
         p={2}
         className="lg:sticky lg:top-0 bg-transparent"
       >
@@ -58,7 +58,7 @@ const TopBar = ({ openPaymentModal, openSavingsModal, openDebtModal }) => {
             <AccountBalanceRoundedIcon />
           </IconButton>
         </Box>
-        <Box className="md:hidden">
+        <Box className="xs:block md:hidden">
           <IconButton onClick={logout}>
             <LogoutRoundedIcon />
           </IconButton>
