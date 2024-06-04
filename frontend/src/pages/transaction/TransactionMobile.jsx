@@ -1,13 +1,26 @@
 import * as React from "react";
 import { Table, Box } from "@mui/joy";
 import { usePaymentData } from "../../context/DashboardPaymentDataContext";
+import { useNavigate } from "react-router-dom";
 
-const TransactionMobile = () => {
-  const { paymentData } = usePaymentData();
+const TransactionMobile = ({ onUpdateSuccess }) => {
+  const { paymentData, refreshData } = usePaymentData();
   const sortedPaymentData = [...paymentData].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
   const recentTransactions = sortedPaymentData.slice(0, 5);
+  const navigate = useNavigate();
+
+  const handleRowClick = (transactionId) => {
+    navigate(`/transactionMobile/${transactionId}`);
+  };
+
+  React.useEffect(() => {
+    if (onUpdateSuccess) {
+      refreshData();
+    }
+  }, [onUpdateSuccess, refreshData]);
+
   return (
     <Box p={1} className="h-screen">
       <Table aria-label="basic table">
@@ -21,7 +34,11 @@ const TransactionMobile = () => {
         </thead>
         <tbody>
           {recentTransactions.map((transaction) => (
-            <tr key={transaction._id}>
+            <tr
+              key={transaction._id}
+              onClick={() => handleRowClick(transaction._id)}
+              style={{ cursor: "pointer" }}
+            >
               <td>{transaction.date}</td>
               <td>{transaction.category}</td>
               <td>{transaction.label}</td>

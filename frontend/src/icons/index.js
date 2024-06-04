@@ -30,6 +30,7 @@ import CancelIcon from "@mui/icons-material/Close";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import StackedLineChartIcon from "@mui/icons-material/StackedLineChart";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export {
   // TopBar icons
@@ -65,7 +66,7 @@ export {
   DirectionsCarFilledIcon,
   LunchDiningIcon,
 
-  // Tahle
+  // Table
   EditIcon,
   DeleteIcon,
   SaveIcon,
@@ -73,4 +74,5 @@ export {
   TableChartIcon,
   InsertChartIcon,
   StackedLineChartIcon,
+  ArrowBackIcon,
 };

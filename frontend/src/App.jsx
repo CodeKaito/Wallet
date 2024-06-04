@@ -12,18 +12,22 @@ import {
   Line,
   Home,
   TransactionMobile,
+  TransactionMobileDetails,
 } from "./pages";
 import Charts from "./mobile/charts/Charts";
 import { SideBar, TopBar, BottomBar } from "./navigationbar";
 import AddPaymentModal from "./utils/AddPaymentModal";
 import AddSavingModal from "./utils/AddSavingModal";
 import AddDebtModal from "./utils/AddDebtModal";
+import UpdateModal from "./utils/UpdateModal";
 import Savings from "./pages/savings/Savings";
 
 const App = () => {
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [openSavingModal, setOpenSavingModal] = useState(false);
   const [openDebtModal, setOpenDebtModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [transactionToEdit, setTransactionToEdit] = useState(null);
 
   const handleOpenPaymentModal = () => setOpenPaymentModal(true);
   const handleClosePaymentModal = () => setOpenPaymentModal(false);
@@ -33,6 +37,19 @@ const App = () => {
 
   const handleOpenDebtModal = () => setOpenDebtModal(true);
   const handleCloseDebtModal = () => setOpenDebtModal(false);
+
+  const handleOpenUpdateModal = (transaction) => {
+    setTransactionToEdit(transaction);
+    setOpenUpdateModal(true);
+  };
+  const handleCloseUpdateModal = () => {
+    setOpenUpdateModal(false);
+    setTransactionToEdit(null);
+  };
+
+  const handleUpdateSuccess = () => {
+    handleCloseUpdateModal();
+  };
 
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 398px)",
@@ -48,6 +65,12 @@ const App = () => {
       />
       <AddSavingModal open={openSavingModal} onClose={handleCloseSavingModal} />
       <AddDebtModal open={openDebtModal} onClose={handleCloseDebtModal} />
+      <UpdateModal
+        transaction={transactionToEdit}
+        open={openUpdateModal}
+        onClose={handleCloseUpdateModal}
+        onUpdateSuccess={handleUpdateSuccess}
+      />
 
       <div className="app">
         {isDesktopOrLaptop && isLogged && <SideBar />}
@@ -80,8 +103,19 @@ const App = () => {
                 <Route path="/home" element={<Home />} />
                 <Route path="transaction" element={<Transaction />} />
                 <Route
+                  path="transactionMobile/:transactionId"
+                  element={
+                    <TransactionMobileDetails
+                      openUpdateModal={handleOpenUpdateModal}
+                      onUpdateSuccess={handleUpdateSuccess}
+                    />
+                  }
+                />
+                <Route
                   path="transactionMobile"
-                  element={<TransactionMobile />}
+                  element={
+                    <TransactionMobile onUpdateSuccess={handleUpdateSuccess} />
+                  }
                 />
                 <Route path="income" element={<Income />} />
                 <Route path="savings" element={<Savings />} />

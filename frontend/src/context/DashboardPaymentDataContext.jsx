@@ -36,6 +36,10 @@ const DashboardPaymentDataContextProvider = ({ children }) => {
     }
   }, [userData]);
 
+  const refreshData = useCallback(() => {
+    fetchData();
+  }, [fetchData]);
+
   useEffect(() => {
     if (!isLoading && userData) {
       fetchData();
@@ -43,7 +47,7 @@ const DashboardPaymentDataContextProvider = ({ children }) => {
   }, [fetchData, isLoading, userData]);
 
   return (
-    <DataContext.Provider value={{ paymentData }}>
+    <DataContext.Provider value={{ paymentData, refreshData }}>
       {children}
     </DataContext.Provider>
   );

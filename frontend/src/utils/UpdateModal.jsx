@@ -13,16 +13,12 @@ import {
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { incomeData, expensesData } from "../data";
 import { CloseIcon } from "../icons";
-import { useSavingData } from "../context/SavingContext";
 
-const AddPaymentModal = ({ open, onClose }) => {
+const UpdateModal = ({ open, onClose, transaction, onUpdateSuccess }) => {
   const { userData } = useUser();
-  const { refreshSavingData } = useSavingData();
   const [formData, setFormData] = useState({
-    date: new Date(),
     user: "",
     amount: "",
     note: "",
@@ -30,6 +26,19 @@ const AddPaymentModal = ({ open, onClose }) => {
     category: "",
     label: "",
   });
+
+  useEffect(() => {
+    if (transaction) {
+      setFormData({
+        user: transaction.user || "",
+        amount: transaction.amount || "",
+        note: transaction.note || "",
+        type: transaction.type || "",
+        category: transaction.category || "",
+        label: transaction.label || "",
+      });
+    }
+  }, [transaction]);
 
   useEffect(() => {
     if (userData && userData._id) {
@@ -40,22 +49,15 @@ const AddPaymentModal = ({ open, onClose }) => {
     }
   }, [userData]);
 
-  const handleDateChange = (date) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      date: date,
-    }));
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const requestBody = {
-        date: formData.date,
         user: formData.user,
         amount: formData.amount,
         type: formData.type,
@@ -64,18 +66,22 @@ const AddPaymentModal = ({ open, onClose }) => {
         note: formData.note,
       };
 
-      const response = await fetch("http://localhost:5000/api/payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/payment/${transaction._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
 
       const paymentData = await response.json();
       if (response.ok) {
-        refreshSavingData();
         console.log("response.ok: ", paymentData);
+        onUpdateSuccess();
+        onClose();
       } else {
         console.log("response.nok: ", paymentData);
         throw new Error("Failed to upload form data");
@@ -112,18 +118,9 @@ const AddPaymentModal = ({ open, onClose }) => {
       <Box sx={style}>
         <CloseIcon className="mb-3 cursor-pointer" onClick={onClose} />
         <Typography variant="h6" gutterBottom>
-          Register a Transaction
+          Update Transaction
         </Typography>
         <form onSubmit={handleSubmit}>
-          <DatePicker
-            label="Date"
-            inputFormat="DD/MM/YYYY"
-            name="date"
-            views={["day", "month", "year"]}
-            textField={(params) => <TextField {...params} />}
-            slotProps={{ textField: { fullWidth: true } }}
-            onChange={handleDateChange}
-          />
           <Box className="mt-5">
             <FormControl fullWidth>
               <InputLabel htmlFor="outlined-adornment-amount">
@@ -217,7 +214,7 @@ const AddPaymentModal = ({ open, onClose }) => {
           </Box>
 
           <Button type="submit" variant="contained" color="primary">
-            Submit
+            Save changes
           </Button>
         </form>
       </Box>
@@ -225,4 +222,4 @@ const AddPaymentModal = ({ open, onClose }) => {
   );
 };
 
-export default AddPaymentModal;
+export default UpdateModal;
