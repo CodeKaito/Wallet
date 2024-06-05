@@ -16,11 +16,13 @@ import { useUser } from "../context/UserContext";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { incomeData, expensesData } from "../data";
 import { CloseIcon } from "../icons";
+import { useExpensesData } from "../context/ExpensesDataContext";
 import { useSavingData } from "../context/SavingContext";
 
 const AddPaymentModal = ({ open, onClose }) => {
   const { userData } = useUser();
   const { refreshSavingData } = useSavingData();
+  const { refreshExpensesData } = useExpensesData();
   const [formData, setFormData] = useState({
     date: new Date(),
     user: "",
@@ -75,6 +77,7 @@ const AddPaymentModal = ({ open, onClose }) => {
       const paymentData = await response.json();
       if (response.ok) {
         refreshSavingData();
+        refreshExpensesData();
         console.log("response.ok: ", paymentData);
       } else {
         console.log("response.nok: ", paymentData);

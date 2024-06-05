@@ -36,6 +36,10 @@ const ExpensesDataContextProvider = ({ children }) => {
     }
   }, [userData]);
 
+  const refreshExpensesData = useCallback(() => {
+    fetchData();
+  }, [fetchData]);
+
   useEffect(() => {
     if (!isLoading && userData) {
       fetchData();
@@ -131,6 +135,7 @@ const ExpensesDataContextProvider = ({ children }) => {
         currentYearExpenses,
         previousMonthExpenses,
         previousYearExpenses,
+        refreshExpensesData,
       }}
     >
       {children}

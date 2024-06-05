@@ -35,9 +35,7 @@ const getDateRange = (period) => {
       break;
     case "week":
       startDate = startOfWeek(today, { weekStartsOn: 1 });
-
       endDate = endOfWeek(today, { weekStartsOn: 1 });
-
       break;
     case "month":
       startDate = startOfMonth(today);
@@ -61,6 +59,7 @@ const Pie = () => {
   const houseData = useHouseData();
   const foodData = useFoodData();
   const transportData = useTransportData();
+  console.log(transportData);
   const personalData = usePersonalData();
   const filterData = useFilterData();
 
@@ -91,10 +90,15 @@ const Pie = () => {
       default:
         data = [];
     }
-    return data.length > 0 ? (
-      <PieChart data={data} />
-    ) : (
-      <Typography>No data available for the filter selected</Typography>
+
+    if (data.length === 0) {
+      return <Typography>No data available for the filter selected</Typography>;
+    }
+
+    console.log(data);
+
+    return (
+      <PieChart data={data.map((item, index) => ({ ...item, id: index }))} />
     );
   };
 
@@ -104,82 +108,80 @@ const Pie = () => {
   })} - ${format(endDate, "PPP", { locale: enLocale })}`;
 
   return (
-    <>
-      <Container>
-        <Box m="20px">
-          <Header
-            title={`Expenses for ${selectedCategory} (${formattedDateRange})`}
-          />
-          <Box display="flex" alignItems="center">
-            <IconButton
-              color={selectedChart === "house" ? "primary" : "default"}
-              onClick={() => handleChartChange("house", "House")}
-            >
-              <CottageIcon />
-            </IconButton>
-            <IconButton
-              color={selectedChart === "food" ? "primary" : "default"}
-              onClick={() => handleChartChange("food", "Food")}
-            >
-              <LunchDiningIcon />
-            </IconButton>
-            <IconButton
-              color={selectedChart === "transport" ? "primary" : "default"}
-              onClick={() => handleChartChange("transport", "Transport")}
-            >
-              <DirectionsCarFilledIcon />
-            </IconButton>
-            <IconButton
-              color={selectedChart === "personal" ? "primary" : "default"}
-              onClick={() => handleChartChange("personal", "Personal")}
-            >
-              <SelfImprovementIcon />
-            </IconButton>
-          </Box>
-          <Box display="flex" justifyContent="center" mt="20px">
-            <Button
-              variant={selectedPeriod === "day" ? "contained" : "outlined"}
-              color="primary"
-              onClick={() => handlePeriodChange("day")}
-            >
-              Day
-            </Button>
-            <Button
-              variant={selectedPeriod === "week" ? "contained" : "outlined"}
-              color="primary"
-              onClick={() => handlePeriodChange("week")}
-              style={{ marginLeft: "10px" }}
-            >
-              Week
-            </Button>
-            <Button
-              variant={selectedPeriod === "month" ? "contained" : "outlined"}
-              color="primary"
-              onClick={() => handlePeriodChange("month")}
-              style={{ marginLeft: "10px" }}
-            >
-              Month
-            </Button>
-            <Button
-              variant={selectedPeriod === "year" ? "contained" : "outlined"}
-              color="primary"
-              onClick={() => handlePeriodChange("year")}
-              style={{ marginLeft: "10px" }}
-            >
-              Year
-            </Button>
-          </Box>
+    <Container>
+      <Box m="20px">
+        <Header
+          title={`Expenses for ${selectedCategory} (${formattedDateRange})`}
+        />
+        <Box display="flex" alignItems="center">
+          <IconButton
+            color={selectedChart === "house" ? "primary" : "default"}
+            onClick={() => handleChartChange("house", "House")}
+          >
+            <CottageIcon />
+          </IconButton>
+          <IconButton
+            color={selectedChart === "food" ? "primary" : "default"}
+            onClick={() => handleChartChange("food", "Food")}
+          >
+            <LunchDiningIcon />
+          </IconButton>
+          <IconButton
+            color={selectedChart === "transport" ? "primary" : "default"}
+            onClick={() => handleChartChange("transport", "Transport")}
+          >
+            <DirectionsCarFilledIcon />
+          </IconButton>
+          <IconButton
+            color={selectedChart === "personal" ? "primary" : "default"}
+            onClick={() => handleChartChange("personal", "Personal")}
+          >
+            <SelfImprovementIcon />
+          </IconButton>
         </Box>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="70vh"
-        >
-          {renderSelectedChart()}
+        <Box display="flex" justifyContent="center" mt="20px">
+          <Button
+            variant={selectedPeriod === "day" ? "contained" : "outlined"}
+            color="primary"
+            onClick={() => handlePeriodChange("day")}
+          >
+            Day
+          </Button>
+          <Button
+            variant={selectedPeriod === "week" ? "contained" : "outlined"}
+            color="primary"
+            onClick={() => handlePeriodChange("week")}
+            style={{ marginLeft: "10px" }}
+          >
+            Week
+          </Button>
+          <Button
+            variant={selectedPeriod === "month" ? "contained" : "outlined"}
+            color="primary"
+            onClick={() => handlePeriodChange("month")}
+            style={{ marginLeft: "10px" }}
+          >
+            Month
+          </Button>
+          <Button
+            variant={selectedPeriod === "year" ? "contained" : "outlined"}
+            color="primary"
+            onClick={() => handlePeriodChange("year")}
+            style={{ marginLeft: "10px" }}
+          >
+            Year
+          </Button>
         </Box>
-      </Container>
-    </>
+      </Box>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="70vh"
+      >
+        {renderSelectedChart()}
+      </Box>
+    </Container>
   );
 };
 

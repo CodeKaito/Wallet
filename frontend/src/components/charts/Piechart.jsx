@@ -15,6 +15,7 @@ const PieChart = ({ data }) => {
         from: "color",
         modifiers: [["darker", 0.2]],
       }}
+      enableArcLinkLabels={false}
       arcLinkLabelsSkipAngle={45}
       arcLinkLabelsTextOffset={36}
       arcLinkLabelsTextColor="#000000"

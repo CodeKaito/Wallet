@@ -280,7 +280,7 @@ const Dashboard = ({ openPaymentModal }) => {
             <StatBox
               title={`€${formatValue(totalEarned)}`}
               subtitle="Earned"
-              progress={`${filteredTotalEarned}`}
+              progress={`${Math.floor(filteredTotalEarned) / 100}`}
               stats={`${Math.floor(filteredTotalEarned)}%`}
             />
           </Box>
@@ -296,7 +296,7 @@ const Dashboard = ({ openPaymentModal }) => {
             <StatBox
               title={`€${formatValue(totalExpenses)}`}
               subtitle="Expenses"
-              progress={`${filteredTotalExpenses}`}
+              progress={`${Math.floor(filteredTotalExpenses) / 100}`}
               stats={`${Math.floor(filteredTotalExpenses)}%`}
             />
           </Box>
@@ -472,9 +472,12 @@ const Dashboard = ({ openPaymentModal }) => {
             borderRadius="10px"
             className="hidden xs:block"
           >
-            <Typography variant="h4" fontWeight="600" color="#EDEDED">
-              Profit: €{formatValue(filteredProfitData)}
-            </Typography>
+            <Box className="flex justify-center align-center">
+              <Typography variant="h4" fontWeight="600" color="#EDEDED">
+                Profit: €{formatValue(filteredProfitData)}
+              </Typography>
+            </Box>
+
             <Box
               display="flex"
               flexDirection="column"
@@ -486,7 +489,6 @@ const Dashboard = ({ openPaymentModal }) => {
                 progress={`${filteredTotalProfit}`}
                 stats="20%"
               />
-              <Typography color="#EDEDED" sx={{ mt: "15px" }}></Typography>
             </Box>
           </Box>
 

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -8,12 +9,13 @@ import {
   OutlinedInput,
   Modal,
 } from "@mui/material";
-import { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
+import { useSavingData } from "../context/SavingContext";
 import { CloseIcon } from "../icons";
 
 const AddSavingsModal = ({ open, onClose }) => {
   const { userData } = useUser();
+  const { refreshSavingData } = useSavingData();
   const [formData, setFormData] = useState({
     user: "",
     amount: "",
@@ -94,6 +96,7 @@ const AddSavingsModal = ({ open, onClose }) => {
       const responseData = await response.json();
       if (response.ok) {
         console.log("Response:", responseData);
+        refreshSavingData(); // Refresh data after successful save
       } else {
         console.error("Error:", responseData);
         throw new Error("Failed to save data");

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -8,12 +9,13 @@ import {
   OutlinedInput,
   Modal,
 } from "@mui/material";
-import { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
+import { useDebtData } from "../context/DebtContext";
 import { CloseIcon } from "../icons";
 
 const AddDebtModal = ({ open, onClose }) => {
   const { userData } = useUser();
+  const { refreshDebtData } = useDebtData();
   const [formData, setFormData] = useState({
     user: "",
     amount: "",
@@ -38,7 +40,7 @@ const AddDebtModal = ({ open, onClose }) => {
       }
     };
     fetchExistingDebt();
-  }, []);
+  }, [userData]);
 
   useEffect(() => {
     if (userData && userData._id) {
@@ -93,6 +95,7 @@ const AddDebtModal = ({ open, onClose }) => {
       const responseData = await response.json();
       if (response.ok) {
         console.log("Response:", responseData);
+        refreshDebtData(); // Refresh data after successful save
       } else {
         console.error("Error:", responseData);
         throw new Error("Failed to save data");
