@@ -46,7 +46,6 @@ const LineChart = ({
         legendPosition: "middle",
       }}
       enableGridX={false}
-      enableGridY={false}
       pointSize={8}
       pointBorderWidth={2}
       pointBorderColor={{ from: "serieColor" }}
