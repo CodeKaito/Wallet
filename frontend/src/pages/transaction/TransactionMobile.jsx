@@ -1,18 +1,23 @@
 import * as React from "react";
-import { Table, Box } from "@mui/joy";
+import { Table, Box, Button } from "@mui/joy";
 import { usePaymentData } from "../../context/DashboardPaymentDataContext";
 import { useNavigate } from "react-router-dom";
 
 const TransactionMobile = ({ onUpdateSuccess }) => {
   const { paymentData, refreshData } = usePaymentData();
+  const [numItemsToShow, setNumItemsToShow] = React.useState(5);
   const sortedPaymentData = [...paymentData].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
-  const recentTransactions = sortedPaymentData.slice(0, 5);
+  const recentTransactions = sortedPaymentData.slice(0, numItemsToShow);
   const navigate = useNavigate();
 
   const handleRowClick = (transactionId) => {
     navigate(`/transactionMobile/${transactionId}`);
+  };
+
+  const handleLoadMore = () => {
+    setNumItemsToShow((prevNum) => prevNum + 5);
   };
 
   React.useEffect(() => {
@@ -61,6 +66,13 @@ const TransactionMobile = ({ onUpdateSuccess }) => {
           ))}
         </tbody>
       </Table>
+      {numItemsToShow < sortedPaymentData.length && (
+        <Box display="flex" justifyContent="center" mt={2} pb={10}>
+          <Button onClick={handleLoadMore} variant="contained">
+            Load More
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };
