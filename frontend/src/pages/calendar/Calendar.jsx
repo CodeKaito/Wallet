@@ -21,6 +21,8 @@ import CustomLoader from "../../utils/CustomLoader";
 
 const Calendar = () => {
   const [currentEvents, setCurrentEvents] = useState([]);
+  const [displayedEvents, setDisplayedEvents] = useState([]);
+  const [numEventsToShow, setNumEventsToShow] = useState(5);
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openDetailsModal, setOpenDetailsModal] = useState(false);
   const [eventTitle, setEventTitle] = useState("");
@@ -51,7 +53,6 @@ const Calendar = () => {
       const filteredEvents = events.filter(
         (event) => event.user._id === userData._id
       );
-
       const filteredPayments = payments.filter(
         (payment) => payment.user._id === userData._id
       );
@@ -64,7 +65,6 @@ const Calendar = () => {
 
       const paymentEvents = filteredPayments.map((payment) => ({
         id: payment._id,
-
         title:
           payment.type === "Income"
             ? `+${payment.amount}`
@@ -74,13 +74,19 @@ const Calendar = () => {
         start: payment.date,
       }));
 
-      setCurrentEvents([...updatedEvents, ...paymentEvents]);
+      const allEvents = [...updatedEvents, ...paymentEvents];
+      const sortedEvents = allEvents.sort(
+        (a, b) => new Date(b.start) - new Date(a.start)
+      );
+
+      setCurrentEvents(sortedEvents);
+      setDisplayedEvents(sortedEvents.slice(0, numEventsToShow));
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
       console.error("Error fetching data:", error);
     }
-  }, [userData]);
+  }, [userData, numEventsToShow]);
 
   useEffect(() => {
     if (!userLoading && userData) {
@@ -115,7 +121,6 @@ const Calendar = () => {
         }
 
         await fetchAllData();
-
         setOpenAddModal(false);
         setEventTitle("");
       } catch (error) {
@@ -166,6 +171,12 @@ const Calendar = () => {
     }
   };
 
+  const handleLoadMore = () => {
+    const nextEvents = currentEvents.slice(0, numEventsToShow + 5);
+    setNumEventsToShow(numEventsToShow + 5);
+    setDisplayedEvents(nextEvents);
+  };
+
   if (isLoading || userLoading) {
     return <CustomLoader />;
   }
@@ -188,7 +199,7 @@ const Calendar = () => {
         >
           <Typography variant="h5">Events</Typography>
           <List>
-            {currentEvents.map((event, index) => (
+            {displayedEvents.map((event, index) => (
               <ListItem
                 key={`${event.id}-${index}`}
                 sx={{
@@ -226,6 +237,15 @@ const Calendar = () => {
               </ListItem>
             ))}
           </List>
+          {currentEvents.length > numEventsToShow && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleLoadMore}
+            >
+              Load More
+            </Button>
+          )}
         </Box>
 
         {/* CALENDAR */}
